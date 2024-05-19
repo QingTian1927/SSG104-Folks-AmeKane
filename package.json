@@ -26,6 +26,7 @@
   "devDependencies": {
     "eslint": "^8.0.0",
     "eslint-config-react-app": "^7.0.1",
-    "supabase": "^1.167.4"
+    "supabase": "^1.167.4",
+    "vitest": "^1.6.0"
   }
 }
