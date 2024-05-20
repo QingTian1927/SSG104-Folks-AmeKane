@@ -1,11 +1,12 @@
 {
-  "name": "",
+  "name": "ssg104-folks-amekane",
   "type": "module",
   "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro check && astro build",
+    "test": "vitest",
     "preview": "astro preview",
     "astro": "astro"
   },
