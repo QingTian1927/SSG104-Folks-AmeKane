@@ -18,6 +18,9 @@ export default defineConfig({
 
     i18n: {
         defaultLocale: "vi",
+        locales: [
+            "vi",
+        ]
     },
 
     integrations: [
