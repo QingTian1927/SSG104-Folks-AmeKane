@@ -13,8 +13,6 @@ test("'Password123' -> checkPassword() -> true", () => {
     expect(checkPassword("Password123")).toBe(true);
 })
 
-function lmao() {
-    expect(checkPassword("")).toBe(true);
-}
-
-test("'password' -> checkPassword() -> false", lmao);
+test("'password' -> checkPassword() -> false",
+    expect(checkPassword("password")).toBe(false);
+);
