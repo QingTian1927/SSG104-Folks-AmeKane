@@ -1,4 +1,4 @@
-create table public."Category" (
+create table if not exists public."Category" (
     id uuid not null default gen_random_uuid (),
     user_id uuid not null,
     title text not null,
@@ -13,4 +13,4 @@ create policy "Users can only view their own categories"
 on public."Category" for select
 using ( (select auth.uid()) = user_id );
 
-alter table "public"."Category" enable row level security;
+alter table public."Category" enable row level security;

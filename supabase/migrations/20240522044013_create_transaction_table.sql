@@ -1,4 +1,4 @@
-create table public."Transaction" (
+create table if not exists public."Transaction" (
     id uuid not null default gen_random_uuid (),
     account_id uuid not null,
     category_id uuid not null,
@@ -17,4 +17,4 @@ create policy "Accounts can only view associated transactions"
 on public."Transaction" to public
 using ( (select public."Transaction".id) = account_id );
 
-alter table "public"."Transaction" enable row level security;
+alter table public."Transaction" enable row level security;

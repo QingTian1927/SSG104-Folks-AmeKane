@@ -1,4 +1,4 @@
-create table public."Account" (
+create table if not exists public."Account" (
     id uuid not null default gen_random_uuid (),
     user_id uuid not null,
     title text not null,
@@ -12,4 +12,4 @@ create policy "Users can only view their own accounts"
 on public."Account" for select
 using ( (select auth.uid()) = user_id );
 
-alter table "public"."Account" enable row level security;
+alter table public."Account" enable row level security;

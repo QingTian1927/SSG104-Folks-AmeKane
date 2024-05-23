@@ -1,4 +1,4 @@
-create table public."Goal" (
+create table if not exists public."Goal" (
     id uuid not null default gen_random_uuid(),
     user_id uuid not null,
     target double precision not null,
@@ -14,4 +14,4 @@ create policy "Users can only view their own goals"
 on public."Goal" for select
 using ( (select auth.uid()) = user_id );
 
-alter table "public"."Goal" enable row level security;
+alter table public."Goal" enable row level security;
