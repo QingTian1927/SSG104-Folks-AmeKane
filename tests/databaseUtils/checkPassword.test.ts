@@ -12,3 +12,7 @@ import { checkPassword } from "../../src/database/databaseUtils";
 test("'Password123' -> checkPassword() -> true", () => {
     expect(checkPassword("Password123")).toBe(true);
 })
+
+test("'password' -> checkPassword() -> false",
+    expect(checkPassword("password")).toBe(false);
+);
