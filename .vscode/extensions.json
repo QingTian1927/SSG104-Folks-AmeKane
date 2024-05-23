@@ -1,11 +1,12 @@
 {
-  "recommendations": [
-    "astro-build.astro-vscode",
-    "dbaeumer.vscode-eslint",
-    "esbenp.prettier-vscode",
-    "bradlc.vscode-tailwindcss",
-    "YoavBls.pretty-ts-errors",
-    "streetsidesoftware.code-spell-checker",
-  ],
-  "unwantedRecommendations": []
+    "recommendations": [
+        "astro-build.astro-vscode",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss",
+        "YoavBls.pretty-ts-errors",
+        "streetsidesoftware.code-spell-checker",
+        "EditorConfig.EditorConfig",
+    ],
+    "unwantedRecommendations": []
 }
