@@ -3,8 +3,10 @@
         "amekane",
         "astro",
         "astrojs",
+        "Khoản",
         "SUPABASE",
-        "tailwindcss"
+        "tailwindcss",
+        "typname"
     ],
     "cSpell.ignoreWords": [
         "fkey",
