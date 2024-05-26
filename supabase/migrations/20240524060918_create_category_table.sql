@@ -4,6 +4,8 @@ create table if not exists public."Category" (
 
     title text not null,
     description text null default ''::text,
+
+    spending_limit double precision not null default '0'::double precision,
     is_necessity boolean not null default false,
     this_color public."Color" not null default 'blue'::"Color",
 
