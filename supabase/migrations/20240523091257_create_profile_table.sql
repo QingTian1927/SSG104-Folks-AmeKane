@@ -4,13 +4,13 @@ create table if not exists public."Profile" (
     display_name text null default ''::text,
 
     default_account uuid null,
-    currency character varying default 'đ'::character varying,
+    currency character varying not null default 'đ'::character varying,
     created_at timestamp with time zone default now() not null,
 
     unique (user_id),
-    constraint profile_pkey primary key (id),
+    constraint Profile_pkey primary key (id),
 
-    constraint profile_user_id_fkey foreign key (user_id)
+    constraint Profile_user_id_fkey foreign key (user_id)
     references auth.users (id) on update cascade on delete cascade
 );
 
