@@ -15,7 +15,7 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
         const { data, error } = await supabase.auth.signInWithOAuth({
             provider: provider as Provider,
             options: {
-                redirectTo: "http://localhost:6969/api/auth/callback",
+                redirectTo: "https://fundrella.onrender.com/api/auth/callback",
             },
         });
 
