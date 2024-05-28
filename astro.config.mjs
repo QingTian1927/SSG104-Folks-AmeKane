@@ -1,4 +1,5 @@
 import { defineConfig } from 'astro/config';
+import { loadEnv } from 'vite';
 
 import tailwind from "@astrojs/tailwind";
 import node from "@astrojs/node";
@@ -11,6 +12,7 @@ export default defineConfig({
         mode: "standalone"
     }),
 
+    site: "https://fundrella.onrender.com",
     server: {
         host: true,
         port: 6969,
