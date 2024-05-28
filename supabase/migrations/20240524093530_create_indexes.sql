@@ -1,18 +1,18 @@
 create index concurrently if not exists
-    idx_account_profile_id
-on public."Account" (profile_id);
+    idx_account_user_id
+on public."Account" (user_id);
 
 create index concurrently if not exists
-    idx_category_profile_id
-on public."Category" (profile_id);
+    idx_category_user_id
+on public."Category" (user_id);
 
 create index concurrently if not exists
-    idx_goal_profile_id
-on public."Goal" (profile_id);
+    idx_goal_user_id
+on public."Goal" (user_id);
 
 create index concurrently if not exists
-    idx_goal_profile_id
-on public."Goal" (profile_id);
+    idx_goal_user_id
+on public."Goal" (user_id);
 
 create index concurrently if not exists
     idx_transaction_account_id
