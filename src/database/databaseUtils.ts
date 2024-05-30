@@ -1,8 +1,7 @@
-// W3C HTML5 Specification:
-// http://www.w3.org/TR/html5/forms.html#valid-e-mail-address
-
 import { getAccount, getCategory, getGoal, getPreferences, getTransaction } from "./supabaseClient";
 
+// W3C HTML5 Specification:
+// http://www.w3.org/TR/html5/forms.html#valid-e-mail-address
 //
 const EMAIL_REGEX = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$";
 
