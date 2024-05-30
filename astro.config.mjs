@@ -5,6 +5,8 @@ import tailwind from "@astrojs/tailwind";
 import node from "@astrojs/node";
 import react from "@astrojs/react";
 
+const { SITE_URL } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
+
 // https://astro.build/config
 export default defineConfig({
     output: "server",
@@ -12,7 +14,7 @@ export default defineConfig({
         mode: "standalone"
     }),
 
-    site: "https://fundrella.onrender.com",
+    site: SITE_URL,
     server: {
         host: true,
         port: 6969,
