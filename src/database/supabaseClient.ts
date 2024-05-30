@@ -14,7 +14,15 @@ export const supabase = createClient<Database>(
 export async function getAccount() {
     return await supabase.from("Account").select();
 }
-
 export async function getPreferences() {
     return await supabase.from("Preferences").select();
+}
+export async function getCategory() {
+    return await supabase.from("Category").select();
+}
+export async function getGoal() {
+    return await supabase.from("Goal").select();
+}
+export async function getTransaction() {
+    return await supabase.from("Transaction").select();
 }
