@@ -1,5 +1,5 @@
 ---
-import * as supa from "../database/supabaseClient";
+import { supabase } from "../database/supabaseClient";
 
 const { cookies, redirect } = Astro;
 
@@ -10,7 +10,7 @@ if (!accessToken || !refreshToken) {
     return redirect("/signin");
 }
 
-const { data, error } = await supa.supabase.auth.setSession({
+const { data, error } = await supabase.auth.setSession({
     refresh_token: refreshToken.value,
     access_token: accessToken.value,
 });
@@ -27,10 +27,6 @@ if (error) {
 }
 
 const email = data.user?.email;
-
-const { data: prepData, error: prepError } = await supa.getPreferences()
-const { data: accData, error: accError } = await supa.getAccount()
-
 ---
 
 <html lang="en">
@@ -42,7 +38,7 @@ const { data: accData, error: accError } = await supa.getAccount()
         <title>Astro</title>
     </head>
     <body>
-        <h1>Welcome {prepData && (prepData.map(acc=><p>{acc.currency}</p>))}</h1>
+        <h1>Welcome {email}</h1>
         <p>We are happy to see you here</p>
         <form action="/api/auth/signout">
             <button type="submit">Sign out</button>
