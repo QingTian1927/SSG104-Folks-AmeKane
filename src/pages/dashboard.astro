@@ -1,5 +1,7 @@
 ---
+import { object } from "astro/zod";
 import { supabase } from "../database/supabaseClient";
+import { db } from "../database/databaseUtils";
 
 const { cookies, redirect } = Astro;
 
@@ -26,7 +28,10 @@ if (error) {
     return redirect("/signin");
 }
 
-const email = data.user?.email;
+const userId = data.user?.id;
+
+const { data: accountData, error: accountError } = await db.data.getAccount(userId);
+console.log({data: accountData, error: accountError});
 ---
 
 <html lang="en">
@@ -38,8 +43,11 @@ const email = data.user?.email;
         <title>Astro</title>
     </head>
     <body>
-        <h1>Welcome {email}</h1>
+        <h1>Welcome {userId}</h1>
         <p>We are happy to see you here</p>
+        
+        { accountData && (accountData.map((account) => <p>{account.title}</p>))}
+
         <form action="/api/auth/signout">
             <button type="submit">Sign out</button>
         </form>
