@@ -9,12 +9,18 @@ const { SITE_URL } = loadEnv(process.env.NODE_ENV, process.cwd(), "");
 
 // https://astro.build/config
 export default defineConfig({
+    site: SITE_URL,
+
     output: "server",
     adapter: node({
         mode: "standalone"
     }),
 
-    site: SITE_URL,
+    build: {
+        server: "./dist/server",
+        serverEntry: "entry.mjs",
+    },
+
     server: {
         host: true,
         port: 6969,
