@@ -10,3 +10,11 @@ export const supabase = createClient<Database>(
         },
     },
 );
+
+export async function getAccount() {
+    return await supabase.from("Account").select();
+}
+
+export async function getPreferences() {
+    return await supabase.from("Preferences").select();
+}
