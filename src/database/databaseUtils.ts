@@ -1,9 +1,12 @@
 // W3C HTML5 Specification:
 // http://www.w3.org/TR/html5/forms.html#valid-e-mail-address
+
+import { getAccount, getCategory, getGoal, getPreferences, getTransaction } from "./supabaseClient";
+
 //
 const EMAIL_REGEX = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$";
 
-export function checkEmail(email: string) {
+function checkEmail(email: string) {
     if (!email) {
         return false;
     }
@@ -13,7 +16,7 @@ export function checkEmail(email: string) {
 export const MIN_PASSWORD_LENGTH = 6;
 export const PASSWORD_REGEX = `^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{${MIN_PASSWORD_LENGTH},}$`;
 
-export function checkPassword(password: string) {
+function checkPassword(password: string) {
     if (!password || password.length < MIN_PASSWORD_LENGTH) {
         return false;
     }
@@ -42,22 +45,23 @@ export function checkPassword(password: string) {
 }
 
 // TODO: use DOMPurify to sanitize input.
-export function sanitizeInput(input: string) {
+function sanitizeInput(input: string) {
     const result = "";
     return result;
 }
 
-export interface DatabaseHandler {
-    getCurrentUser: () => any,
-    signOutCurrentUser: () => void,
-    signUpUser: (email: string, password: string) => { error: any },
-    signInUser: (email: string, password: string) => { data: any, error: any },
-
-    getAccount: (userId: string) => any,
-    getCategories: (userId: string) => string[],
-    getTransactions: (accountId: string) => any[],
-}
-
 export const db = {
+    auth: {
+        checkEmail: checkEmail,
+        checkPassword: checkPassword,
+        sanitizeInput: sanitizeInput,
+    },
 
+    data: {
+        getAccount: getAccount,
+        getPreferences: getPreferences,
+        getCategory: getCategory,
+        getGoal: getGoal,
+        getTransaction: getTransaction,
+    }
 }
