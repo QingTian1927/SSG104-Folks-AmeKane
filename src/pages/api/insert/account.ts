@@ -21,7 +21,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         );
     }
 
-    const { error } = await db.insert.account({
+    const { data, error } = await db.insert.account({
         user_id: userId,
         title: title,
         balance: toNumber(balance),
@@ -35,5 +35,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         );
     }
 
-    return redirect("/dashboard");
+    return new Response(
+        JSON.stringify({ data }), { status: 200 }
+    );
 }
