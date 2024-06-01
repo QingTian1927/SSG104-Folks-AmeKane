@@ -1,19 +1,15 @@
-import { createClient } from "@supabase/supabase-js";
-import { type Database } from "./database.types";
+import { supabase } from "./client";
+import type { TablesInsert } from "../database.types";
+import { UndefinedUserIdError, type UserId } from "../models";
 
-export const supabase = createClient<Database>(
-    import.meta.env.SUPABASE_URL,
-    import.meta.env.SUPABASE_ANON_KEY,
-    {
-        auth: {
-            flowType: "pkce",
-        },
-    },
-);
+export async function getUserId() {
+    const { data } = await supabase.auth.getUser();
 
-export type UserId = string | undefined;
-
-const UndefinedUserIdError = (userId: any) => `User ID is undefined: "${userId}"`;
+    if (!data || !data.user || !data.user.id) {
+        return undefined;
+    }
+    return data.user?.id;
+}
 
 export async function getAccount(userId: UserId) {
     if (!userId) {
@@ -45,4 +41,17 @@ export async function getGoal(userId: UserId) {
 
 export async function getTransaction() {
     return await supabase.from("Transaction").select();
+}
+
+export async function createAccount(account: TablesInsert<"Account">) {
+    if (!account.user_id) {
+        return { data: [], error: UndefinedUserIdError(account.user_id) };
+    }
+
+    if (!account.balance || account.balance < 0) {
+        account.balance = 0;
+    }
+    account.is_saving = account.is_saving ?? false;
+
+    return await supabase.from("Account").insert(account).select();
 }

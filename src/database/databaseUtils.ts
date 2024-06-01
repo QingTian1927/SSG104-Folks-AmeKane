@@ -1,4 +1,4 @@
-import { getAccount, getCategory, getGoal, getPreferences, getTransaction } from "./supabaseClient";
+import * as supaUtils from "./supabase/utils";
 
 // W3C HTML5 Specification:
 // http://www.w3.org/TR/html5/forms.html#valid-e-mail-address
@@ -54,13 +54,19 @@ export const db = {
         checkEmail: checkEmail,
         checkPassword: checkPassword,
         sanitizeInput: sanitizeInput,
+
+        getUserId: supaUtils.getUserId,
     },
 
-    data: {
-        getAccount: getAccount,
-        getPreferences: getPreferences,
-        getCategory: getCategory,
-        getGoal: getGoal,
-        getTransaction: getTransaction,
+    select: {
+        account: supaUtils.getAccount,
+        preferences: supaUtils.getPreferences,
+        category: supaUtils.getCategory,
+        goal: supaUtils.getGoal,
+        transaction: supaUtils.getTransaction,
+    },
+
+    insert: {
+        account: supaUtils.createAccount,
     }
 }
