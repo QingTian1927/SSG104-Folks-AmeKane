@@ -5,7 +5,7 @@ create table if not exists public."Goal" (
     target double precision not null,
     current double precision not null,
 
-    title text not null,
+    title text not null default 'Mục Tiêu Của Tôi'::text,
     description text null,
 
     constraint Goal_pkey primary key (id),
