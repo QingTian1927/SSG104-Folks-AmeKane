@@ -68,5 +68,6 @@ export const db = {
 
     insert: {
         account: supaUtils.createAccount,
+        goal: supaUtils.createGoal,
     }
 }

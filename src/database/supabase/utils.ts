@@ -48,10 +48,25 @@ export async function createAccount(account: TablesInsert<"Account">) {
         return { data: [], error: UndefinedUserIdError(account.user_id) };
     }
 
-    if (!account.balance || account.balance < 0) {
+    if (!account.balance || account.balance < 0 || isNaN(account.balance)) {
         account.balance = 0;
     }
     account.is_saving = account.is_saving ?? false;
 
     return await supabase.from("Account").insert(account).select();
+}
+
+export async function createGoal(goal: TablesInsert<"Goal">) {
+    if (!goal.user_id) {
+        return { data: [], error: UndefinedUserIdError(goal.user_id) };
+    }
+
+    if (!goal.target || goal.target < 0 || isNaN(goal.target)) {
+        goal.target = 0;
+    }
+    if (!goal.current || goal.current < 0 || goal.current > goal.target || isNaN(goal.current)) {
+        goal.current = 0;
+    }
+
+    return await supabase.from("Goal").insert(goal).select();
 }
