@@ -118,7 +118,7 @@ export type Database = {
                     description?: string | null
                     id?: string
                     target: number
-                    title: string
+                    title?: string
                     user_id: string
                 }
                 Update: {
