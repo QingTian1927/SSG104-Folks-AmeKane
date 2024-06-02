@@ -3,11 +3,17 @@
         "amekane",
         "astro",
         "astrojs",
+        "autodetection",
+        "bucketid",
+        "bucketname",
         "Khoản",
         "signin",
+        "sortcolumn",
+        "sortorder",
         "supa",
         "SUPABASE",
         "tailwindcss",
+        "Tiêu",
         "typname"
     ],
     "cSpell.ignoreWords": [
