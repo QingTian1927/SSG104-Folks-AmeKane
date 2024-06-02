@@ -8,6 +8,9 @@ interface ImportMetaEnv {
 
     readonly GOOGLE_CLIENT_ID: string,
     readonly GOOGLE_SECRET: string,
+
+    readonly FACEBOOK_CLIENT_ID: string,
+    readonly FACEBOOK_SECRET: string,
 }
 
 interface ImportMeta {

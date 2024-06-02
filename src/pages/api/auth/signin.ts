@@ -9,7 +9,7 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
     const password = formData.get("password")?.toString();
     const provider = formData.get("provider")?.toString();
 
-    const validProviders = ["google"];
+    const validProviders = ["google", "facebook"];
 
     if (provider && validProviders.includes(provider)) {
         const { data, error } = await supabase.auth.signInWithOAuth({
