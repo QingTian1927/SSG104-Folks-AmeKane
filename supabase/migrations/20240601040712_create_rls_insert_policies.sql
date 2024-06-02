@@ -13,7 +13,11 @@ on public."Category" for insert
 to authenticated
 with check ( (select auth.uid()) = user_id );
 
-create policy "Accounts can create transactions"
+create policy "Users can create transactions if they have at least one account"
 on public."Transaction" for insert
 to authenticated
-with check ( (select id from public."Account") = account_id );
+with check ((
+    select exists (
+        select id from public."Account" where (select auth.uid()) = user_id
+    )
+));

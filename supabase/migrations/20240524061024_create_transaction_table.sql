@@ -20,8 +20,12 @@ create table if not exists public."Transaction" (
     references "Category" (id) on update cascade on delete cascade
 ) tablespace pg_default;
 
-create policy "Accounts can only view associated transactions"
-on public."Transaction" to public
-using ( (select id from public."Account") = account_id );
+create policy "Users can view transactions if they have at least one account"
+on public."Transaction" for select to public
+using ((
+    select exists (
+        select id from public."Account" where (select auth.uid()) = user_id
+    )
+));
 
 alter table public."Transaction" enable row level security;
