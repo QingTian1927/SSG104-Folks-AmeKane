@@ -1,6 +1,5 @@
 ---
-import { object } from "astro/zod";
-import { supabase } from "../database/supabaseClient";
+import { supabase } from "../database/supabase/client";
 import { db } from "../database/databaseUtils";
 
 const { cookies, redirect } = Astro;
@@ -30,8 +29,7 @@ if (error) {
 
 const userId = data.user?.id;
 
-const { data: accountData, error: accountError } = await db.data.getAccount(userId);
-console.log({data: accountData, error: accountError});
+const { data: accountData, error: accountError } = await db.select.account(userId);
 ---
 
 <html lang="en">
@@ -45,8 +43,20 @@ console.log({data: accountData, error: accountError});
     <body>
         <h1>Welcome {userId}</h1>
         <p>We are happy to see you here</p>
-        
+
         { accountData && (accountData.map((account) => <p>{account.title}</p>))}
+
+        <form action="/api/insert/transaction" method="POST">
+            <label for="title">Title:</label>
+            <input type="text" name="title" id="title" />
+            <label for="category_id">Category:</label>
+            <input type="text" name="category_id" id="category_id" />
+            <label for="account_id">Account:</label>
+            <input type="text" name="account_id" id="account_id" />
+            <label for="value">Value:</label>
+            <input type="text" name="value" id="value" />
+            <button type="submit">Create transaction</button>
+        </form>
 
         <form action="/api/auth/signout">
             <button type="submit">Sign out</button>
