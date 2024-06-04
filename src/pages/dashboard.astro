@@ -46,16 +46,37 @@ const { data: accountData, error: accountError } = await db.select.account(userI
 
         { accountData && (accountData.map((account) => <p>{account.title}</p>))}
 
-        <form action="/api/insert/transaction" method="POST">
+        <form action="/api/update/account" method="POST">
+            <label for="account_id">AccountID:</label>
+            <input type="text" name="account_id" id="account_id" />
             <label for="title">Title:</label>
             <input type="text" name="title" id="title" />
-            <label for="category_id">Category:</label>
-            <input type="text" name="category_id" id="category_id" />
-            <label for="account_id">Account:</label>
-            <input type="text" name="account_id" id="account_id" />
-            <label for="value">Value:</label>
-            <input type="text" name="value" id="value" />
-            <button type="submit">Create transaction</button>
+            <label for="balance">Balance:</label>
+            <input type="text" name="balance" id="balance" />
+            <button type="submit">Update account</button>
+        </form>
+
+
+        <form action="/api/update/goal" method="POST">
+            <label for="goal_id">GoalID:</label>
+            <input type="text" name="goal_id" id="goal_id" />
+            <label for="title">Title:</label>
+            <input type="text" name="title" id="title" />
+            <button type="submit">Update goal</button>
+        </form>
+
+        <form action="/api/update/transaction" method="POST">
+            <label for="transaction_id">TransactionID:</label>
+            <input type="text" name="transaction_id" id="transaction_id" />
+            <label for="title">Title:</label>
+            <input type="text" name="title" id="title" />
+            <button type="submit">Update transaction</button>
+        </form>
+
+        <form action="/api/update/preferences" method="POST">
+            <label for="default_account">AccountID:</label>
+            <input type="text" name="default_account" id="default_account" />
+            <button type="submit">Update preferences</button>
         </form>
 
         <form action="/api/auth/signout">
