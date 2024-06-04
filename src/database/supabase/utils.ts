@@ -170,3 +170,10 @@ export async function updateGoal(goalId: ID, contents: TablesUpdate<"Goal">) {
 
     return await supabase.from("Goal").update(contents).eq('id', goalId).select();
 }
+
+export async function updatePreferences(userId: ID, contents: TablesUpdate<"Preferences">) {
+    if (!userId) {
+        return errorResponse(userId, ERROR_MESSAGES.UNDEFINED_USER_ID);
+    }
+    return await supabase.from("Preferences").update(contents).eq('user_id', userId).select();
+}
