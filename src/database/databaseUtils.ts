@@ -71,5 +71,9 @@ export const db = {
         goal: supaUtils.createGoal,
         category: supaUtils.createCategory,
         transaction: supaUtils.createTransaction,
+    },
+
+    update: {
+        account: supaUtils.updateAccount,
     }
 }
