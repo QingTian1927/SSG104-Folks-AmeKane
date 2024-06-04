@@ -1,6 +1,6 @@
 import { supabase } from "./client";
-import type { TablesInsert } from "../database.types";
-import { ERROR_MESSAGES, errorResponse, type UserId } from "../models";
+import type { TablesInsert, TablesUpdate } from "../database.types";
+import { ERROR_MESSAGES, errorResponse, type ID } from "../models";
 
 export async function getUserId() {
     const { data } = await supabase.auth.getUser();
@@ -11,28 +11,28 @@ export async function getUserId() {
     return data.user?.id;
 }
 
-export async function getAccount(userId: UserId) {
+export async function getAccount(userId: ID) {
     if (!userId) {
         return errorResponse(userId, ERROR_MESSAGES.UNDEFINED_USER_ID);
     }
     return await supabase.from("Account").select().eq('user_id', userId);
 }
 
-export async function getPreferences(userId: UserId) {
+export async function getPreferences(userId: ID) {
     if (!userId) {
         return errorResponse(userId, ERROR_MESSAGES.UNDEFINED_USER_ID);
     }
     return await supabase.from("Preferences").select().eq('user_id', userId);
 }
 
-export async function getCategory(userId: UserId) {
+export async function getCategory(userId: ID) {
     if (!userId) {
         return errorResponse(userId, ERROR_MESSAGES.UNDEFINED_USER_ID);
     }
     return await supabase.from("Category").select().eq('user_id', userId);
 }
 
-export async function getGoal(userId: UserId) {
+export async function getGoal(userId: ID) {
     if (!userId) {
         return errorResponse(userId, ERROR_MESSAGES.UNDEFINED_USER_ID);
     }
@@ -101,4 +101,16 @@ export async function createTransaction(transaction: TablesInsert<"Transaction">
     }
 
     return await supabase.from("Transaction").insert(transaction).select();
+}
+
+export async function updateAccount(accountId: ID, contents: TablesUpdate<"Account">) {
+    if (!accountId) {
+        return errorResponse(accountId, ERROR_MESSAGES.UNDEFINED_ACCOUNT_ID);
+    }
+
+    if (!contents.balance || isNaN(contents.balance) || contents.balance <= 0) {
+        return errorResponse(contents.balance, ERROR_MESSAGES.INVALID_ACCOUNT_BALANCE);
+    }
+
+    return await supabase.from("Account").update(contents).eq('id', accountId).select();
 }
