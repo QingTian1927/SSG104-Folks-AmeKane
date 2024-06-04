@@ -10,6 +10,12 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     const balance = formData.get("balance")?.toString();
     const is_saving = formData.get("is_saving")?.toString();
 
+    if (!accountId) {
+        return new Response(
+            "Account ID is required", { status: 400 },
+        );
+    }
+
     const { data, error } = await db.update.account(
         accountId,
         {
