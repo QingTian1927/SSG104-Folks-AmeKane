@@ -177,3 +177,25 @@ export async function updatePreferences(userId: ID, contents: TablesUpdate<"Pref
     }
     return await supabase.from("Preferences").update(contents).eq('user_id', userId).select();
 }
+
+export async function updateTransaction(transactionId: ID, contents: TablesUpdate<"Transaction">) {
+    if (!transactionId) {
+        return errorResponse(transactionId, ERROR_MESSAGES.UNDEFINED_TRANSACTION_ID);
+    }
+    if (contents.account_id === null || contents.category_id === null) {
+        return errorResponse("", "Cannot set Account ID or Category ID to null");
+    }
+
+    const isInvalidValue = (
+        contents.value !== undefined && (
+            contents.value === null ||
+            isNaN(contents.value) ||
+            contents.value < 0
+        )
+    );
+    if (isInvalidValue) {
+        return errorResponse(contents.value, ERROR_MESSAGES.INVALID_TRANSACTION_VALUE);
+    }
+
+    return await supabase.from("Transaction").update(contents).eq('id', transactionId).select();
+}

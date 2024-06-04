@@ -78,5 +78,6 @@ export const db = {
         category: supaUtils.updateCategory,
         goal: supaUtils.updateGoal,
         preferences: supaUtils.updatePreferences,
+        transaction: supaUtils.updateTransaction,
     }
 }
