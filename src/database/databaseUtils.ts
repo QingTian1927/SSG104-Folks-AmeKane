@@ -77,5 +77,6 @@ export const db = {
         account: supaUtils.updateAccount,
         category: supaUtils.updateCategory,
         goal: supaUtils.updateGoal,
+        preferences: supaUtils.updatePreferences,
     }
 }
