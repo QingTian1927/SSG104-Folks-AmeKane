@@ -129,3 +129,44 @@ export async function updateCategory(categoryId: ID, contents: TablesUpdate<"Cat
     }
     return await supabase.from("Category").update(contents).eq('id', categoryId).select();
 }
+
+export async function updateGoal(goalId: ID, contents: TablesUpdate<"Goal">) {
+    if (!goalId) {
+        return errorResponse(goalId, ERROR_MESSAGES.UNDEFINED_CATEGORY_ID);
+    }
+
+    const { data: currentTargetData, error } = await supabase.from("Goal").select('target').eq('id', goalId);
+
+    if (error) {
+        return errorResponse(
+            error, "Could not retrieve the current target of the given spending goal\n"
+        );
+    }
+
+    if (contents.target === undefined && contents.current === undefined) {
+        return await supabase.from("Goal").update(contents).eq('id', goalId).select();
+    }
+
+    const isInvalidTarget = (
+        contents.target !== undefined && (
+            contents.target === null || isNaN(contents.target) || contents.target < 0
+        )
+    );
+    if (isInvalidTarget) {
+        return errorResponse(contents.target, ERROR_MESSAGES.INVALID_GOAL_TARGET);
+    }
+
+    const isInvalidCurrent = (
+        contents.current !== undefined && (
+            contents.current === null ||
+            isNaN(contents.current) ||
+            contents.current < 0 ||
+            contents.current > currentTargetData[0].target
+        )
+    );
+    if (isInvalidCurrent) {
+        return errorResponse(contents.target, ERROR_MESSAGES.INVALID_GOAL_TARGET);
+    }
+
+    return await supabase.from("Goal").update(contents).eq('id', goalId).select();
+}
