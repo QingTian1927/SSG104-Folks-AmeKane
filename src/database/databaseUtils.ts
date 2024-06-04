@@ -75,5 +75,6 @@ export const db = {
 
     update: {
         account: supaUtils.updateAccount,
+        category: supaUtils.updateCategory,
     }
 }

@@ -108,9 +108,24 @@ export async function updateAccount(accountId: ID, contents: TablesUpdate<"Accou
         return errorResponse(accountId, ERROR_MESSAGES.UNDEFINED_ACCOUNT_ID);
     }
 
-    if (!contents.balance || isNaN(contents.balance) || contents.balance <= 0) {
+    if (!contents.balance || isNaN(contents.balance)) {
         return errorResponse(contents.balance, ERROR_MESSAGES.INVALID_ACCOUNT_BALANCE);
     }
 
     return await supabase.from("Account").update(contents).eq('id', accountId).select();
+}
+
+export async function updateCategory(categoryId: ID, contents: TablesUpdate<"Category">) {
+    if (!categoryId) {
+        return errorResponse(categoryId, ERROR_MESSAGES.UNDEFINED_CATEGORY_ID);
+    }
+
+    if (contents.spending_limit === undefined) {
+        return await supabase.from("Category").update(contents).eq('id', categoryId).select();
+    }
+
+    if (contents.spending_limit === null || isNaN(contents.spending_limit) || contents.spending_limit < 0) {
+        return errorResponse(categoryId, ERROR_MESSAGES.INVALID_CATEGORY_SPENDING_LIMIT);
+    }
+    return await supabase.from("Category").update(contents).eq('id', categoryId).select();
 }
