@@ -79,5 +79,9 @@ export const db = {
         goal: supaUtils.updateGoal,
         preferences: supaUtils.updatePreferences,
         transaction: supaUtils.updateTransaction,
+    },
+
+    delete: {
+        account: supaUtils.deleteAcc,
     }
 }
