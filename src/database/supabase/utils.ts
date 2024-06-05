@@ -295,15 +295,30 @@ export async function updateTransaction(
         .select();
 }
 
-export async function deleteAcc(accId: string) {
-    return await supabase.from("Account").delete().eq("id", accId).select();
+export async function deleteAccount(accountId: ID) {
+    if (!accountId) {
+        return errorMessage(accountId, ERROR_MESSAGE.UNDEFINED_ACCOUNT_ID);
+    }
+    return await supabase.from("Account").delete().eq("id", accountId).select();
 }
-export async function deleteCate(accId: string) {
-    return await supabase.from("Category").delete().eq("id", accId).select();
+
+export async function deleteCategory(categoryId: ID) {
+    if (!categoryId) {
+        return errorMessage(categoryId, ERROR_MESSAGE.UNDEFINED_CATEGORY_ID);
+    }
+    return await supabase.from("Category").delete().eq("id", categoryId).select();
 }
-export async function deleteGoal(accId: string) {
-    return await supabase.from("Goal").delete().eq("id", accId).select();
+
+export async function deleteGoal(goalId: ID) {
+    if (!goalId) {
+        return errorMessage(goalId, ERROR_MESSAGE.UNDEFINED_GOAL_ID);
+    }
+    return await supabase.from("Goal").delete().eq("id", goalId).select();
 }
-export async function deleteTran(accId: string) {
-    return await supabase.from("Transaction").delete().eq("id", accId).select();
+
+export async function deleteTransaction(transactionId: ID) {
+    if (!transactionId) {
+        return errorMessage(transactionId, ERROR_MESSAGE.UNDEFINED_TRANSACTION_ID);
+    }
+    return await supabase.from("Transaction").delete().eq("id", transactionId).select();
 }
