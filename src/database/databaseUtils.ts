@@ -83,9 +83,9 @@ export const db = {
     },
 
     delete: {
-        account: supaUtils.deleteAcc,
-        category: supaUtils.deleteCate,
+        account: supaUtils.deleteAccount,
+        category: supaUtils.deleteCategory,
         goal: supaUtils.deleteGoal,
-        transition: supaUtils.deleteTran,
+        transition: supaUtils.deleteTransaction,
     },
 };

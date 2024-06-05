@@ -297,28 +297,28 @@ export async function updateTransaction(
 
 export async function deleteAccount(accountId: ID) {
     if (!accountId) {
-        return errorMessage(accountId, ERROR_MESSAGE.UNDEFINED_ACCOUNT_ID);
+        return errorResponse(accountId, ERROR_MESSAGES.UNDEFINED_ACCOUNT_ID);
     }
     return await supabase.from("Account").delete().eq("id", accountId).select();
 }
 
 export async function deleteCategory(categoryId: ID) {
     if (!categoryId) {
-        return errorMessage(categoryId, ERROR_MESSAGE.UNDEFINED_CATEGORY_ID);
+        return errorResponse(categoryId, ERROR_MESSAGES.UNDEFINED_CATEGORY_ID);
     }
     return await supabase.from("Category").delete().eq("id", categoryId).select();
 }
 
 export async function deleteGoal(goalId: ID) {
     if (!goalId) {
-        return errorMessage(goalId, ERROR_MESSAGE.UNDEFINED_GOAL_ID);
+        return errorResponse(goalId, ERROR_MESSAGES.UNDEFINED_GOAL_ID);
     }
     return await supabase.from("Goal").delete().eq("id", goalId).select();
 }
 
 export async function deleteTransaction(transactionId: ID) {
     if (!transactionId) {
-        return errorMessage(transactionId, ERROR_MESSAGE.UNDEFINED_TRANSACTION_ID);
+        return errorResponse(transactionId, ERROR_MESSAGES.UNDEFINED_TRANSACTION_ID);
     }
     return await supabase.from("Transaction").delete().eq("id", transactionId).select();
 }
