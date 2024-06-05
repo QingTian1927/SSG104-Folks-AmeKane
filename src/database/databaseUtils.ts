@@ -3,7 +3,8 @@ import * as supaUtils from "./supabase/utils";
 // W3C HTML5 Specification:
 // http://www.w3.org/TR/html5/forms.html#valid-e-mail-address
 //
-const EMAIL_REGEX = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$";
+const EMAIL_REGEX =
+    "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$";
 
 function checkEmail(email: string) {
     if (!email) {
@@ -40,7 +41,7 @@ function checkPassword(password: string) {
         }
     }
 
-    return (containsUppercase && containsLowercase && containsDigit);
+    return containsUppercase && containsLowercase && containsDigit;
 }
 
 // TODO: use DOMPurify to sanitize input.
@@ -83,5 +84,8 @@ export const db = {
 
     delete: {
         account: supaUtils.deleteAcc,
-    }
-}
+        category: supaUtils.deleteCate,
+        goal: supaUtils.deleteGoal,
+        transition: supaUtils.deleteTran,
+    },
+};

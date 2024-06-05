@@ -298,3 +298,12 @@ export async function updateTransaction(
 export async function deleteAcc(accId: string) {
     return await supabase.from("Account").delete().eq("id", accId).select();
 }
+export async function deleteCate(accId: string) {
+    return await supabase.from("Category").delete().eq("id", accId).select();
+}
+export async function deleteGoal(accId: string) {
+    return await supabase.from("Goal").delete().eq("id", accId).select();
+}
+export async function deleteTran(accId: string) {
+    return await supabase.from("Transaction").delete().eq("id", accId).select();
+}
