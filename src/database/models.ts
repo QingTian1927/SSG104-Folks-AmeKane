@@ -4,6 +4,7 @@ export const ERROR_MESSAGES = {
     UNDEFINED_USER_ID: "User ID is undefined",
     UNDEFINED_ACCOUNT_ID: "Account ID is undefined",
     UNDEFINED_CATEGORY_ID: "Category ID is undefined",
+    UNDEFINED_GOAL_ID: "Goal ID is undefined",
     UNDEFINED_TRANSACTION_ID: "Transaction ID is undefined",
 
     INVALID_TRANSACTION_VALUE: "Transaction value must be greater than 0",
