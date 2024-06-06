@@ -2,6 +2,10 @@ import { supabase } from "./client";
 import type { TablesInsert, TablesUpdate } from "../database.types";
 import { ERROR_MESSAGES, errorResponse, type ID } from "../models";
 
+// ---------------
+// USER MANAGEMENT
+// ---------------
+
 export async function getUserId() {
     const { data } = await supabase.auth.getUser();
 
@@ -10,6 +14,10 @@ export async function getUserId() {
     }
     return data.user?.id;
 }
+
+// -------------
+// DATABASE READ
+// -------------
 
 export async function getAccount(userId: ID) {
     if (!userId) {
@@ -48,6 +56,10 @@ export async function getTransaction(accountId: string) {
         .select()
         .eq("account_id", accountId);
 }
+
+// ---------------
+// DATABASE INSERT
+// ---------------
 
 export async function createAccount(account: TablesInsert<"Account">) {
     if (!account.user_id) {
@@ -132,6 +144,10 @@ export async function createTransaction(
 
     return await supabase.from("Transaction").insert(transaction).select();
 }
+
+// ---------------
+// DATABASE UPDATE
+// ---------------
 
 export async function updateAccount(
     accountId: ID,
@@ -294,6 +310,10 @@ export async function updateTransaction(
         .eq("id", transactionId)
         .select();
 }
+
+// ---------------
+// DATABASE DELETE
+// ---------------
 
 export async function deleteAccount(accountId: ID) {
     if (!accountId) {
