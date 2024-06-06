@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
 import { db, auth } from "../../../database/databaseUtils";
-import { toBoolean, toNumber } from "../../../database/typeConversion";
+import { toBoolean, toNumber } from "../../../database/typeUtils";
 import type { Enums } from "../../../database/database.types";
 
 export const POST: APIRoute = async ({ request, redirect }) => {

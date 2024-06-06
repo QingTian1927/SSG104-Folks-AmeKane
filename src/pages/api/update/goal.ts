@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
 import { db } from "../../../database/databaseUtils";
-import { toNumber } from "../../../database/typeConversion";
+import { toNumber } from "../../../database/typeUtils";
 
 export const POST: APIRoute = async ({ request, redirect }) => {
     const formData = await request.formData();
