@@ -1,6 +1,11 @@
-import { supabase } from "./client";
+import { supabase, supabaseElevated } from "./client";
 import type { TablesInsert, TablesUpdate } from "../database.types";
-import { ERROR_MESSAGES, errorResponse, type ID } from "../models";
+import { ERROR_MESSAGES, errorResponse, isValidProvider, type ID } from "../models";
+import type { Provider } from "@supabase/supabase-js";
+
+// ---------------
+// USER MANAGEMENT
+// ---------------
 
 export async function getUserId() {
     const { data } = await supabase.auth.getUser();
@@ -10,6 +15,45 @@ export async function getUserId() {
     }
     return data.user?.id;
 }
+
+export async function signOutUser() {
+    return await supabase.auth.signOut();
+}
+
+export async function signInWithOAuth(provider: string) {
+    if (!provider || !isValidProvider(provider)) {
+        return errorResponse(provider, ERROR_MESSAGES.INVALID_OAUTH_PROVIDER);
+    }
+
+    return await supabase.auth.signInWithOAuth({
+        provider: provider as Provider,
+        options: {
+            redirectTo: `${import.meta.env.SITE_URL}/api/auth/callback`,
+        }
+    });
+}
+
+export async function exchangeCodeForSession(code: string) {
+    return await supabase.auth.exchangeCodeForSession(code);
+}
+
+export async function signInWithPassword(email: string, password: string) {
+    return await supabase.auth.signInWithPassword({
+        email,
+        password,
+    });
+}
+
+export async function deleteUser(userId: ID) {
+    if (!userId) {
+        return errorResponse(userId, ERROR_MESSAGES.UNDEFINED_USER_ID);
+    }
+    return await supabaseElevated.auth.admin.deleteUser(userId);
+}
+
+// -------------
+// DATABASE READ
+// -------------
 
 export async function getAccount(userId: ID) {
     if (!userId) {
@@ -48,6 +92,10 @@ export async function getTransaction(accountId: string) {
         .select()
         .eq("account_id", accountId);
 }
+
+// ---------------
+// DATABASE INSERT
+// ---------------
 
 export async function createAccount(account: TablesInsert<"Account">) {
     if (!account.user_id) {
@@ -132,6 +180,10 @@ export async function createTransaction(
 
     return await supabase.from("Transaction").insert(transaction).select();
 }
+
+// ---------------
+// DATABASE UPDATE
+// ---------------
 
 export async function updateAccount(
     accountId: ID,
@@ -294,6 +346,10 @@ export async function updateTransaction(
         .eq("id", transactionId)
         .select();
 }
+
+// ---------------
+// DATABASE DELETE
+// ---------------
 
 export async function deleteAccount(accountId: ID) {
     if (!accountId) {

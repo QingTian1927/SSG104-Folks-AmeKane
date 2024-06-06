@@ -82,5 +82,11 @@ const { data: accountData, error: accountError } = await db.select.account(userI
         <form action="/api/auth/signout">
             <button type="submit">Sign out</button>
         </form>
+
+        <form action="/api/auth/delete" method="POST">
+            <label for="user_id">UserID:</label>
+            <input type="text" name="user_id" id="user_id" />
+            <button type="submit">Delete account</button>
+        </form>
     </body>
 </html>

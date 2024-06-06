@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
-import { db } from "../../../database/databaseUtils";
-import { toNumber } from "../../../database/typeConversion";
+import { db, auth } from "../../../database/databaseUtils";
+import { toNumber } from "../../../database/typeUtils";
 
 export const POST: APIRoute = async ({ request, redirect }) => {
     const formData = await request.formData();
@@ -16,7 +16,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         );
     }
 
-    const userId = await db.auth.getUserId();
+    const userId = await auth.user.getId();
     if (!userId) {
         return new Response(
             "Could not retrieve the User ID", { status: 500 }
