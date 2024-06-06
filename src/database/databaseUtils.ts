@@ -8,11 +8,16 @@ function sanitizeInput(input: string) {
 
 export const auth = {
     sanitizeInput: sanitizeInput,
+
+    admin: {
+        deleteUser: supaUtils.deleteUser,
+    }
 }
 
 export const db = {
     user: {
         getId: supaUtils.getUserId,
+        signOut: supaUtils.signOutUser,
     },
 
     select: {

@@ -1,4 +1,4 @@
-import { supabase } from "./client";
+import { supabase, supabaseElevated } from "./client";
 import type { TablesInsert, TablesUpdate } from "../database.types";
 import { ERROR_MESSAGES, errorResponse, type ID } from "../models";
 
@@ -13,6 +13,17 @@ export async function getUserId() {
         return undefined;
     }
     return data.user?.id;
+}
+
+export async function signOutUser() {
+    return await supabase.auth.signOut();
+}
+
+export async function deleteUser(userId: ID) {
+    if (!userId) {
+        return errorResponse(userId, ERROR_MESSAGES.UNDEFINED_USER_ID);
+    }
+    return await supabaseElevated.auth.admin.deleteUser(userId);
 }
 
 // -------------
