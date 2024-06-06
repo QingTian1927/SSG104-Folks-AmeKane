@@ -8,9 +8,12 @@ function sanitizeInput(input: string) {
 
 export const auth = {
     sanitizeInput: sanitizeInput,
+    exchangeCodeForSession: supaUtils.exchangeCodeForSession,
 
     user: {
         getId: supaUtils.getUserId,
+        signInWithOAuth: supaUtils.signInWithOAuth,
+        signInWithPassword: supaUtils.signInWithPassword,
         signOut: supaUtils.signOutUser,
     },
 

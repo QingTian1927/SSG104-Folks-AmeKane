@@ -1,6 +1,7 @@
 import { supabase, supabaseElevated } from "./client";
 import type { TablesInsert, TablesUpdate } from "../database.types";
-import { ERROR_MESSAGES, errorResponse, type ID } from "../models";
+import { ERROR_MESSAGES, errorResponse, isValidProvider, type ID } from "../models";
+import type { Provider } from "@supabase/supabase-js";
 
 // ---------------
 // USER MANAGEMENT
@@ -17,6 +18,30 @@ export async function getUserId() {
 
 export async function signOutUser() {
     return await supabase.auth.signOut();
+}
+
+export async function signInWithOAuth(provider: string) {
+    if (!provider || !isValidProvider(provider)) {
+        return errorResponse(provider, ERROR_MESSAGES.INVALID_OAUTH_PROVIDER);
+    }
+
+    return await supabase.auth.signInWithOAuth({
+        provider: provider as Provider,
+        options: {
+            redirectTo: `${import.meta.env.SITE_URL}/api/auth/callback`,
+        }
+    });
+}
+
+export async function exchangeCodeForSession(code: string) {
+    return await supabase.auth.exchangeCodeForSession(code);
+}
+
+export async function signInWithPassword(email: string, password: string) {
+    return await supabase.auth.signInWithPassword({
+        email,
+        password,
+    });
 }
 
 export async function deleteUser(userId: ID) {

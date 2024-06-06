@@ -7,6 +7,7 @@ export const ERROR_MESSAGES = {
     UNDEFINED_GOAL_ID: "Goal ID is undefined",
     UNDEFINED_TRANSACTION_ID: "Transaction ID is undefined",
 
+    INVALID_OAUTH_PROVIDER: "Invalid OAuth provider",
     INVALID_TRANSACTION_VALUE: "Transaction value must be greater than 0",
     INVALID_ACCOUNT_BALANCE: "Account balance must be a real number",
     INVALID_CATEGORY_SPENDING_LIMIT: "Category spending limit must be greater or equal to zero",
@@ -19,4 +20,17 @@ export function errorResponse(param: any, message: string) {
         data: [],
         error: { message: `${message}: "${param}"` },
     };
+}
+
+export const VALID_PROVIDERS = [
+    "google",
+    "facebook"
+] as const;
+
+export function isIn<T>(values: readonly T[], x: any): x is T {
+    return values.includes(x);
+}
+
+export function isValidProvider(provider: string) {
+    return isIn(VALID_PROVIDERS, provider);
 }

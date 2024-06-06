@@ -1,6 +1,5 @@
 import type { APIRoute } from "astro";
-import type { Provider } from "@supabase/supabase-js";
-import { supabase } from "../../../database/supabase/client";
+import { auth } from "../../../database/databaseUtils";
 
 export const POST: APIRoute = async ({ request, cookies, redirect }) => {
     const formData = await request.formData();
@@ -9,15 +8,8 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
     const password = formData.get("password")?.toString();
     const provider = formData.get("provider")?.toString();
 
-    const validProviders = ["google", "facebook"];
-
-    if (provider && validProviders.includes(provider)) {
-        const { data, error } = await supabase.auth.signInWithOAuth({
-            provider: provider as Provider,
-            options: {
-                redirectTo: `${import.meta.env.SITE_URL}/api/auth/callback`,
-            },
-        });
+    if (provider) {
+        const { data, error } = await auth.user.signInWithOAuth(provider);
 
         if (error) {
             return new Response(error.message, { status: 500 });
@@ -31,10 +23,7 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
         );
     }
 
-    const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-    });
+    const { data, error } = await auth.user.signInWithPassword(email, password);
 
     if (error) {
         return new Response( error.message, { status: 500 });
