@@ -10,3 +10,13 @@ export const supabase = createClient<Database>(
         },
     },
 );
+
+export const supabaseElevated = createClient<Database>(
+    import.meta.env.SUPABASE_URL,
+    import.meta.env.SUPABASE_SERVICE_KEY,
+    {
+        auth: {
+            flowType: "pkce",
+        },
+    },
+);
