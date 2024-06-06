@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { db } from "../../../database/databaseUtils";
+import { db, auth } from "../../../database/databaseUtils";
 import { toBoolean, toNumber } from "../../../database/typeConversion";
 import type { Enums } from "../../../database/database.types";
 
@@ -18,7 +18,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         );
     }
 
-    const userId = await db.user.getId();
+    const userId = await auth.user.getId();
     if (!userId) {
         return new Response(
             "Could not retrieve the User ID", { status: 500 }
