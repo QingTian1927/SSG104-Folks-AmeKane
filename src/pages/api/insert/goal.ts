@@ -16,7 +16,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         );
     }
 
-    const userId = await db.auth.getUserId();
+    const userId = await db.user.getId();
     if (!userId) {
         return new Response(
             "Could not retrieve the User ID", { status: 500 }

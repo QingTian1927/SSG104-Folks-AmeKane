@@ -9,7 +9,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     const defaultTheme = formData.get("default_theme")?.toString();
     const currency = formData.get("currency")?.toString();
 
-    const userId = await db.auth.getUserId();
+    const userId = await db.user.getId();
     if (!userId) {
         return new Response(
             "Could not retrieve the User ID", { status: 500 }
