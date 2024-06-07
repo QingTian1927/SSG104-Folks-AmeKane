@@ -1,0 +1,18 @@
+---
+import type { Provider } from '@supabase/supabase-js';
+
+interface Props {
+    provider: Provider
+    text: string,
+    hint?: string,
+}
+
+const { text, provider, hint = undefined } = Astro.props;
+---
+
+<button value={ provider } name="provider" type="submit" title={ hint }>
+    <div>
+        <slot />
+        { text }
+    </div>
+</button>
