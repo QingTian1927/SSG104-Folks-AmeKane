@@ -1,0 +1,37 @@
+---
+export const prerender = true;
+
+import type { GetStaticPaths } from "astro";
+import { getEntry } from "astro:content";
+import { getLangFromUrl } from "../../i18n/utils"
+import Basehead from "../../layouts/basehead.astro";
+
+export const getStaticPaths = (async () => {
+    return [
+        { params: { legal: "privacy" } },
+        { params: { legal: "terms" } },
+    ];
+}) satisfies GetStaticPaths;
+
+const { legal } = Astro.params;
+const lang = getLangFromUrl(Astro.url);
+
+const entry = await getEntry("legal", legal);
+if (!entry) {
+    return Astro.redirect("/404", 404);
+}
+
+const { Content, headings } = await entry.render();
+---
+
+<html lang={ lang }>
+    <head>
+        <Basehead title={ entry.data.title } url={ Astro.url.toString() } type="article" />
+    </head>
+
+    <body>
+        <article class="prose">
+            <Content />
+        </article>
+    </body>
+</html>
