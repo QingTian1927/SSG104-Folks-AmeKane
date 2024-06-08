@@ -1,0 +1,24 @@
+---
+import type { Provider } from '@supabase/supabase-js';
+
+interface Props {
+    provider: Provider
+    text: string,
+    hint?: string,
+}
+
+const { text, provider, hint = undefined } = Astro.props;
+---
+
+<button
+    value={ provider }
+    name="provider"
+    type="submit"
+    title={ hint }
+    class="group w-full p-3 rounded-md bg-zinc-800 text-zinc-50 hover:bg-zinc-600"
+>
+    <div class="w-full flex items-center justify-center">
+        <slot />
+        <p class="ml-4 leading-6 font-semibold text-base">{ text }</p>
+    </div>
+</button>

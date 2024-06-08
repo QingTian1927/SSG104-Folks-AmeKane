@@ -1,0 +1,29 @@
+---
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const translate = useTranslations(lang);
+
+interface Props {
+    type: "email" | "password";
+    label: string;
+    placeholder: string;
+}
+
+const { type, label, placeholder } = Astro.props;
+---
+
+<div class="w-full flex flex-col items-start justify-center text-zinc-800">
+    <div class="w-full mb-2 flex items-start justify-between">
+        <label for={type} class="grow font-semibold leading-6">{label}</label>
+    </div>
+
+    <input
+        type={type}
+        name={type}
+        id={type}
+        placeholder={placeholder}
+        required
+        class="appearance-none w-full p-3 rounded-md bg-zinc-200 text-zinc-900 placeholder:text-zinc-500 focus:outline focus:outline-cyan-500"
+    />
+</div>
