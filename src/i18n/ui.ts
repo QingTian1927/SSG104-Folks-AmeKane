@@ -14,6 +14,7 @@ export const ui = {
         "signin.email.placeholder": "nguyenvana@example.com",
         "signin.password": "Mật khẩu",
         "signin.password.placeholder": "Mật khẩu",
+        "signin.error": "Thông tin đăng nhập không chính xác.",
         "signin.login-button.text": "Đăng Nhập",
         "signin.login-button.hint": "Đăng nhập vào tài khoản chi tiêu",
         "signin.legal.by-continuing": "Bằng việc tiếp tục, bạn đồng ý với",

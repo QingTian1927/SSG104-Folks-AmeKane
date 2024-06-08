@@ -1,22 +1,40 @@
 ---
 import { getRelativeLocaleUrl } from "astro:i18n";
-
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
 import Basehead from "../layouts/basehead.astro";
 import OAuthButton from "../components/signin/oauthButton.astro";
-import LoginField from "../components/loginField.astro";
+import LoginField from "../components/signin/loginField.astro";
+import type { LoginErrorResponse } from "../database/models";
 
-const { cookies, redirect } = Astro;
+const { cookies } = Astro;
+const lang = getLangFromUrl(Astro.url);
+const translate = useTranslations(lang);
 
 const accessToken = cookies.get("sb-access-token");
 const refreshToken = cookies.get("sb-refresh-token");
+const loginError = cookies.get("login-error");
 
 if (accessToken && refreshToken) {
     return redirect("/dashboard");
 }
 
-const lang = getLangFromUrl(Astro.url);
-const translate = useTranslations(lang);
+let displayLoginError = false;
+let errorResponse = undefined;
+
+if (loginError) {
+    displayLoginError = true;
+    errorResponse = JSON.parse(loginError.value) as LoginErrorResponse;
+
+    console.log(errorResponse)
+    const isNotClientsideError = (
+        errorResponse.error &&
+        errorResponse.error.status &&
+        errorResponse.error.status !== 400
+    );
+    if (isNotClientsideError) {
+        return Astro.redirect(getRelativeLocaleUrl(lang, "/500"));
+    }
+}
 ---
 
 <html lang={lang}>
@@ -24,10 +42,18 @@ const translate = useTranslations(lang);
         <Basehead title={translate("signin.title")} />
     </head>
 
-    <body>
+    <body class="selection:bg-cyan-500 dark:selection:bg-blue-900" 6>
         <main
-            class="w-svw h-svh p-8 flex flex-col items-center justify-center bg-zinc-100 text-zinc-800"
+            class="w-svw h-svh p-8 flex flex-col items-center justify-center bg-zinc-100 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-100"
         >
+            <aside class="w-full flex items-center justify-start">
+                <a
+                    href={getRelativeLocaleUrl(lang, "/")}
+                    class="font-bold text-xl hover:text-cyan-500 dark:hover:text-blue-600"
+                    >Rainboot</a
+                >
+            </aside>
+
             <div
                 class="w-full sm:w-1/2 lg:w-1/3 h-full flex flex-col items-start justify-center"
             >
@@ -35,7 +61,9 @@ const translate = useTranslations(lang);
                     <h1 class="font-bold text-3xl md:text-4xl mb-2">
                         {translate("signin.header.title")}
                     </h1>
-                    <p class="text-sm md:text-base text-zinc-600">
+                    <p
+                        class="text-sm md:text-base text-zinc-600 dark:text-zinc-300"
+                    >
                         {translate("signin.header.subtitle")}
                     </p>
                 </header>
@@ -80,9 +108,15 @@ const translate = useTranslations(lang);
                     </form>
 
                     <div class="flex items-center justify-between gap-2">
-                        <hr class="w-full mx-0 my-8 border-zinc-400" />
-                        <p class="text-sm text-zinc-800">Hoặc</p>
-                        <hr class="w-full mx-0 my-8 border-zinc-400" />
+                        <hr
+                            class="w-full mx-0 my-8 border-zinc-400 dark:border-zinc-600"
+                        />
+                        <p class="text-sm font-semibold text-zinc-800 dark:text-zinc-50">
+                            Hoặc
+                        </p>
+                        <hr
+                            class="w-full mx-0 my-8 border-zinc-400 dark:border-zinc-600"
+                        />
                     </div>
 
                     <form
@@ -90,10 +124,19 @@ const translate = useTranslations(lang);
                         method="POST"
                         class="w-full flex flex-col items-center justify-center gap-4"
                     >
+                        {
+                            displayLoginError && (
+                                <p class="font-bold text-rose-500 dark:text-rose-400">
+                                    {translate("signin.error")}
+                                </p>
+                            )
+                        }
+
                         <LoginField
                             type="email"
                             label={translate("signin.email")}
                             placeholder={translate("signin.email.placeholder")}
+                            value={errorResponse?.email}
                         />
                         <LoginField
                             type="password"
@@ -106,14 +149,16 @@ const translate = useTranslations(lang);
                         <button
                             type="submit"
                             title={translate("signin.login-button.hint")}
-                            class="w-full p-3 mt-8 text-base rounded-md font-semibold bg-cyan-500 hover:bg-cyan-600"
+                            class="w-full p-3 mt-8 text-base rounded-md font-semibold bg-cyan-500 dark:bg-blue-700 hover:bg-cyan-600 dark:hover:bg-blue-900"
                             >{translate("signin.login-button.text")}</button
                         >
                     </form>
                 </div>
             </div>
 
-            <div class="text-xs w-full md:w-1/2 lg:w-1/3 text-zinc-600">
+            <div
+                class="text-xs w-full md:w-1/2 lg:w-1/3 text-zinc-600 dark:text-zinc-400"
+            >
                 <p class="text-pretty text-center">
                     {translate("signin.legal.by-continuing")}
                     <a
