@@ -2,8 +2,6 @@
 title: "Điều khoản sử dụng"
 date: "2024-06-07"
 ---
-# Điều khoản sử dụng
-
 ## 1. Chấp nhận các điều khoản
 
 Bằng cách truy cập và sử dụng trang web Rainboot, bạn đồng ý tuân thủ các Điều khoản sử dụng này. Nếu bạn không đồng ý với bất kỳ phần nào của các điều khoản này, vui lòng không sử dụng dịch vụ của chúng tôi.
