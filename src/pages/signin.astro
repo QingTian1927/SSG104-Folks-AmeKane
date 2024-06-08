@@ -1,4 +1,6 @@
 ---
+export const prerender = true;
+
 import { getRelativeLocaleUrl } from "astro:i18n";
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
 import Basehead from "../layouts/basehead.astro";
@@ -42,7 +44,7 @@ if (loginError) {
         <Basehead title={translate("signin.title")} />
     </head>
 
-    <body class="selection:bg-cyan-500 dark:selection:bg-blue-900" 6>
+    <body class="selection:bg-cyan-500 dark:selection:bg-blue-900">
         <main
             class="w-svw h-svh p-8 flex flex-col items-center justify-center bg-zinc-100 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-100"
         >
@@ -149,7 +151,7 @@ if (loginError) {
                         <button
                             type="submit"
                             title={translate("signin.login-button.hint")}
-                            class="w-full p-3 mt-8 text-base rounded-md font-semibold bg-cyan-500 dark:bg-blue-700 hover:bg-cyan-600 dark:hover:bg-blue-900"
+                            class="w-full p-3 mt-8 text-base rounded-md font-semibold bg-cyan-500 dark:bg-blue-700 hover:bg-cyan-600 hover:text-zinc-100 dark:hover:bg-blue-900"
                             >{translate("signin.login-button.text")}</button
                         >
                     </form>
