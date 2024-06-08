@@ -26,9 +26,16 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
     const { data, error } = await auth.user.signInWithPassword(email, password);
 
     if (error) {
-        return new Response( error.message, { status: 500 });
+        cookies.set(
+            "login-error",
+            { email, password, error },
+            { path: "/signin", maxAge: 60 }  // 1 minute
+        );
+        return redirect("/signin");
     }
     const { access_token, refresh_token } = data.session;
+
+    cookies.delete("login-error", { path: "/signin" });
 
     cookies.set("sb-access-token", access_token, {
         path: "/",

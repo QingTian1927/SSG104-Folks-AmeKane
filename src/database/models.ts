@@ -1,3 +1,5 @@
+import type { AuthError } from "@supabase/supabase-js";
+
 export type ID = string | undefined;
 
 export const ERROR_MESSAGES = {
@@ -33,4 +35,10 @@ export function isIn<T>(values: readonly T[], x: any): x is T {
 
 export function isValidProvider(provider: string) {
     return isIn(VALID_PROVIDERS, provider);
+}
+
+export type LoginErrorResponse = {
+    email: string,
+    password: string,
+    error?: AuthError | null,
 }
