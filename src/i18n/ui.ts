@@ -7,6 +7,8 @@ export const currentYear = new Date().getFullYear();
 
 export const ui = {
     vi: {
+        "navbar.about": "Giới thiệu",
+
         "signin.title": "Đăng Nhập",
         "signin.header.title": "Chào mừng trở lại",
         "signin.header.subtitle": "Đăng nhập vào tài khoản của bạn",
@@ -20,10 +22,11 @@ export const ui = {
         "signin.legal.by-continuing": "Bằng việc tiếp tục, bạn đồng ý với",
         "signin.legal.of-rainboot": "của Rainboot.",
 
-        "privacy": "Chính Sách Quyền Riêng Tư",
-        "terms": "Điều Khoản Sử Dụng",
-
         "oauth.google": "Đăng nhập với Google",
         "oauth.facebook": "Đăng nhập với Facebook",
+
+        "legal.last-updated": "Cập nhật lần cuối:",
+        "privacy": "Chính Sách Quyền Riêng Tư",
+        "terms": "Điều Khoản Sử Dụng",
     },
 }
