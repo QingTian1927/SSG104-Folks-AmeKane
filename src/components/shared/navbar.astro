@@ -1,0 +1,30 @@
+---
+import { getRelativeLocaleUrl } from "astro:i18n";
+import type { languages } from "../../i18n/ui";
+import { useTranslations } from "../../i18n/utils";
+
+interface Props {
+    lang?: keyof typeof languages;
+}
+
+const { lang = "vi" } = Astro.props;
+const translate = useTranslations(lang);
+---
+
+<div class="w-svw flex items-center justify-center px-8 py-6 border-b-2 border-zinc-300 dark:border-zinc-700 text-zinc-800 dark:text-zinc-100">
+    <nav class="w-full lg:w-3/4 xl:w-3/5 flex items-center justify-start leading-6">
+        <a
+            href={getRelativeLocaleUrl(lang, "/")}
+            class="grow font-bold text-2xl hover:text-cyan-500 dark:hover:text-blue-600"
+            >Rainboot</a
+        >
+
+        <a href={getRelativeLocaleUrl(lang, "/about")} class="p-2 text-sm font-medium">
+            {translate("navbar.about")}
+        </a>
+
+        <a href="/signin" class="ml-2 py-2 px-4 rounded-md text-sm font-medium bg-cyan-500 dark:bg-blue-700 hover:bg-cyan-600 hover:text-zinc-100 dark:hover:bg-blue-900">
+            {translate("signin.title")}
+        </a>
+    </nav>
+</div>
