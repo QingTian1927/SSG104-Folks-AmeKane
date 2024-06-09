@@ -8,6 +8,7 @@ import { getLangFromUrl } from "../../i18n/utils";
 import Basehead from "../../layouts/basehead.astro";
 import LegalPost from "../../layouts/legal/legalPost.astro";
 import Navbar from "../../components/shared/navbar.astro";
+import Footer from "../../components/shared/footer.astro";
 
 export const getStaticPaths = (async () => {
     return [{ params: { legal: "privacy" } }, { params: { legal: "terms" } }];
@@ -27,11 +28,15 @@ if (!entry) {
         <Basehead title={entry.data.title} type="article" />
     </head>
 
-    <body class="selection:bg-cyan-500 dark:selection:bg-blue-900 bg-zinc-100 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100">
+    <body class="relative selection:bg-cyan-500 dark:selection:bg-blue-900">
         <Navbar lang={lang} />
 
-        <div class="w-full h-full flex items-center justify-center p-8">
+        <main
+            class="relative w-full h-full flex items-center justify-center p-8 bg-zinc-100 dark:bg-zinc-900"
+        >
             <LegalPost entry={entry} lang={lang} />
-        </div>
+        </main>
+
+        <Footer />
     </body>
 </html>
