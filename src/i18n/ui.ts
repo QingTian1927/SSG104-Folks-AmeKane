@@ -7,7 +7,17 @@ export const currentYear = new Date().getFullYear();
 
 export const ui = {
     vi: {
-        "navbar.about": "Giới thiệu",
+        "navbar.about": "Giới Thiệu",
+        "navbar.signin": "Đăng Nhập",
+
+        "footer.copyright": `© ${currentYear} Folks.`,
+        "footer.privacy": "Quyền Riêng Tư",
+        "footer.terms": "Điều Khoản",
+        "footer.slogan": "Vững Tài Chính, Chắc Tương Lai",
+        "footer.contact.facebook": "Trang Facebook của nhóm Folks",
+        "footer.contact.github": "Trang mã nguồn Github của Rainboot",
+        "footer.contact.email": "Email liên lạc của nhóm Folks",
+        "footer.contact.phone": "Số điện thoại liên lạc của trưởng nhóm nhóm Folks",
 
         "signin.title": "Đăng Nhập",
         "signin.header.title": "Chào mừng trở lại",
