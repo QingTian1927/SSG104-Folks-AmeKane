@@ -1,0 +1,27 @@
+---
+import { useTranslations } from "../../i18n/utils";
+
+const { entry, lang } = Astro.props;
+const translate = useTranslations(lang);
+
+const { Content } = await entry.render();
+const date = new Date(entry.data.date);
+---
+
+<article class="h-full w-full lg:w-3/4 xl:w-3/5 max-w-none prose prose-zinc dark:prose-invert">
+    <header class="not-prose text-zinc-900 dark:text-zinc-100">
+        <h1 class="mb-2 font-bold text-4xl text-pretty">{entry.data.title}</h1>
+        <p class="text-base"
+            >{translate("legal.last-updated")}
+            <time datetime={date.toDateString()}
+                >{date.toLocaleDateString()}</time
+            ></p
+        >
+    </header>
+
+    <hr class="not-prose w-full mx-0 my-8 border-zinc-400 dark:border-zinc-600" />
+
+    <main>
+        <Content />
+    </main>
+</article>
