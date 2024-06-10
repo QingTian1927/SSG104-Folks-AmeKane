@@ -14,18 +14,18 @@ const iconSize = "1.5rem";
 ---
 
 <footer
-    class="relative w-svw flex flex-col items-center justify-center px-8 py-6 bg-zinc-100 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-100"
+    class="relative w-full flex flex-col items-center justify-center p-8 bg-zinc-100 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-100"
 >
     <hr
-        class="w-full lg:w-3/4 xl:w-3/5 mx-0 my-8 border-zinc-400 dark:border-zinc-600"
+        class="w-full lg:w-3/4 xl:w-3/5 mx-0 mb-8 border-zinc-400 dark:border-zinc-600"
     />
 
     <div
-        class="w-full lg:w-3/4 xl:w-3/5 flex items-center justify-between leading-6 text-[6px] md:text-sm xs:text-xs"
+        class="w-full lg:w-3/4 xl:w-3/5 flex items-center justify-between leading-6 text-[9px] xs:text-xs md:text-sm"
     >
         <p>{translate("footer.copyright")}</p>
 
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-2 xs:gap-4">
             <a
                 href={getRelativeLocaleUrl(lang, "/terms")}
                 class="no-underline hover:underline"
@@ -41,17 +41,15 @@ const iconSize = "1.5rem";
             </a>
         </div>
 
-        <div class="flex items-center gap-4">
+        <div class="flex items-center gap-2 xs:gap-4">
             <a
                 href="mailto:thefolks1104@gmail.com"
                 aria-label={translate("footer.contact.email")}
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width={iconSize}
-                    height="100%"
                     fill="currentColor"
-                    class="bi bi-envelope-fill"
+                    class="bi bi-envelope-fill h-full w-[1rem] xs:w-[1.25rem] sm:w-[1.5rem] hover:fill-cyan-500 dark:hover:fill-blue-600"
                     viewBox="0 0 16 16"
                 >
                     <path
@@ -66,10 +64,8 @@ const iconSize = "1.5rem";
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width={iconSize}
-                    height="100%"
                     fill="currentColor"
-                    class="bi bi-facebook"
+                    class="bi bi-facebook h-full w-[1rem] xs:w-[1.25rem] sm:w-[1.5rem] hover:fill-cyan-500 dark:hover:fill-blue-600"
                     viewBox="0 0 16 16"
                 >
                     <path
@@ -84,10 +80,8 @@ const iconSize = "1.5rem";
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
-                    width={iconSize}
-                    height="100%"
                     fill="currentColor"
-                    class="bi bi-github"
+                    class="bi bi-github w-[1rem] xs:w-[1.25rem] sm:w-[1.5rem] hover:fill-cyan-500 dark:hover:fill-blue-600"
                     viewBox="0 0 16 16"
                 >
                     <path
@@ -100,7 +94,7 @@ const iconSize = "1.5rem";
 </footer>
 
 <aside
-    class="sticky bottom-0 -z-10 w-svw px-8 sm:px-0 flex items-start justify-center select-none bg-cyan-500 dark:bg-blue-600 text-zinc-900"
+    class="sticky bottom-0 -z-10 w-full px-8 sm:px-0 flex items-start justify-center select-none bg-cyan-500 dark:bg-blue-600 text-zinc-900"
 >
     <p
         class="font-extrabold text-[18svw] tracking-wider align-text-bottom text-center"
