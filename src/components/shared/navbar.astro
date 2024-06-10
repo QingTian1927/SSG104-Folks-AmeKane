@@ -12,7 +12,7 @@ const translate = useTranslations(lang);
 ---
 
 <nav
-    class="relative w-svw flex items-center justify-center px-8 py-6 border-b-2 border-zinc-300 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-100"
+    class="relative w-svw flex flex-col lg:flex-row items-center justify-center px-8 py-6 border-b-2 border-zinc-300 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-100"
 >
     <div
         class="w-full lg:w-3/4 xl:w-3/5 flex items-center justify-between leading-6"
@@ -20,8 +20,33 @@ const translate = useTranslations(lang);
         <a href={getRelativeLocaleUrl(lang, "/")} class="font-bold text-2xl"
             >Rainboot</a
         >
+        <div class="flex items-center lg:hidden" id="menu">
+            <!-- Mobile menu button-->
+            <button
+                type="button"
+                class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+            >
+                <!--
+            Icon when menu is closed.
 
-        <div>
+            Menu open: "hidden", Menu closed: "block"
+          -->
+                <svg
+                    class="block h-6 w-6"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke-width="1.5"
+                    stroke="currentColor"
+                    aria-hidden="true"
+                >
+                    <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"></path>
+                </svg>
+            </button>
+        </div>
+        <div class="hidden lg:block">
             <a
                 href={getRelativeLocaleUrl(lang, "/about")}
                 class="py-2 px-4 rounded-md hover:text-cyan-600 dark:hover:text-blue-600 text-sm font-semibold"
@@ -37,4 +62,35 @@ const translate = useTranslations(lang);
             </a>
         </div>
     </div>
+    <!-- Mobile menu, show/hide based on menu state. -->
+    <div class="hidden w-full" id="mobile-menu">
+        <div class="space-y-1">
+            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+            <a
+                href={getRelativeLocaleUrl(lang, "/about")}
+                class="block rounded-md p-2 text-base font-medium text-zinc-800 dark:text-zinc-100 hover:bg-gray-700 hover:text-white"
+                aria-current="page">{translate("navbar.about")}</a
+            >
+            <a
+                href="/signin"
+                class="block rounded-md p-2 text-base font-medium text-zinc-800 dark:text-zinc-100 hover:bg-gray-700 hover:text-white"
+                >{translate("navbar.signin")}</a
+            >
+        </div>
+    </div>
 </nav>
+<script>
+    function getStyle(element, name) {
+        return element.currentStyle
+            ? element.currentStyle[name]
+            : window.getComputedStyle
+              ? window.getComputedStyle(element, null).getPropertyValue(name)
+              : null;
+    }
+
+    document.getElementById("menu").addEventListener("click", (e) => {
+        const navLinks = document.getElementById("mobile-menu");
+        const isMenuHidden = getStyle(navLinks, "display") === "none";
+        navLinks.style.display = isMenuHidden ? "block" : "none";
+    });
+</script>

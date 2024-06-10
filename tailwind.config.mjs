@@ -12,5 +12,9 @@ export default {
             },
         },
     },
+    screens: {
+        'xs': '480px',
+        ...defaultTheme.screens,
+    },
     plugins: [require("@tailwindcss/typography")],
 };
