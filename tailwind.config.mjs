@@ -11,10 +11,10 @@ export default {
                 sans: ['"Montserrat"', ...defaultTheme.fontFamily.sans],
             },
         },
-    },
-    screens: {
-        'xs': '480px',
-        ...defaultTheme.screens,
+        screens: {
+            xs: "480px",
+            ...defaultTheme.screens,
+        },
     },
     plugins: [require("@tailwindcss/typography")],
 };

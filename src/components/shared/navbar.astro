@@ -12,25 +12,20 @@ const translate = useTranslations(lang);
 ---
 
 <nav
-    class="relative w-svw flex flex-col lg:flex-row items-center justify-center px-8 py-6 border-b-2 border-zinc-300 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-100"
+    class="relative w-full flex flex-col lg:flex-row items-center justify-center p-8 border-b-2 border-zinc-300 dark:border-zinc-700 bg-zinc-100 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-100"
 >
     <div
         class="w-full lg:w-3/4 xl:w-3/5 flex items-center justify-between leading-6"
     >
-        <a href={getRelativeLocaleUrl(lang, "/")} class="font-bold text-2xl"
+        <a href={getRelativeLocaleUrl(lang, "/")} class="font-bold text-2xl no-underline hover:underline"
             >Rainboot</a
         >
-        <div class="flex items-center lg:hidden" id="menu">
-            <!-- Mobile menu button-->
+
+        <div class="flex items-center lg:hidden" id="menu-button">
             <button
                 type="button"
-                class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                class="relative inline-flex items-center justify-center rounded-md p-2 text-zinc-800 dark:text-zinc-100 hover:text-zinc-100 hover:bg-zinc-800 dark:hover:bg-zinc-100 dark:hover:text-zinc-800"
             >
-                <!--
-            Icon when menu is closed.
-
-            Menu open: "hidden", Menu closed: "block"
-          -->
                 <svg
                     class="block h-6 w-6"
                     fill="none"
@@ -46,10 +41,11 @@ const translate = useTranslations(lang);
                 </svg>
             </button>
         </div>
-        <div class="hidden lg:block">
+
+        <div class="hidden lg:block" id="desktop-menu">
             <a
                 href={getRelativeLocaleUrl(lang, "/about")}
-                class="py-2 px-4 rounded-md hover:text-cyan-600 dark:hover:text-blue-600 text-sm font-semibold"
+                class="py-2 px-4 rounded-md text-sm font-semibold hover:text-cyan-600 dark:hover:text-blue-600"
             >
                 {translate("navbar.about")}
             </a>
@@ -62,35 +58,51 @@ const translate = useTranslations(lang);
             </a>
         </div>
     </div>
-    <!-- Mobile menu, show/hide based on menu state. -->
-    <div class="hidden w-full" id="mobile-menu">
+
+    <div class="hidden w-full mt-6" id="mobile-menu">
         <div class="space-y-1">
-            <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
             <a
                 href={getRelativeLocaleUrl(lang, "/about")}
-                class="block rounded-md p-2 text-base font-medium text-zinc-800 dark:text-zinc-100 hover:bg-gray-700 hover:text-white"
+                class="block mb-2 p-2 rounded-md text-base font-medium text-zinc-800 dark:text-zinc-100 hover:bg-cyan-500 dark:hover:bg-blue-600"
                 aria-current="page">{translate("navbar.about")}</a
             >
             <a
                 href="/signin"
-                class="block rounded-md p-2 text-base font-medium text-zinc-800 dark:text-zinc-100 hover:bg-gray-700 hover:text-white"
+                class="block mt-2 p-2 rounded-md text-base font-medium text-zinc-800 dark:text-zinc-100 hover:bg-cyan-500 dark:hover:bg-blue-600"
                 >{translate("navbar.signin")}</a
             >
         </div>
     </div>
-</nav>
-<script>
-    function getStyle(element, name) {
-        return element.currentStyle
-            ? element.currentStyle[name]
-            : window.getComputedStyle
-              ? window.getComputedStyle(element, null).getPropertyValue(name)
-              : null;
-    }
 
-    document.getElementById("menu").addEventListener("click", (e) => {
-        const navLinks = document.getElementById("mobile-menu");
-        const isMenuHidden = getStyle(navLinks, "display") === "none";
-        navLinks.style.display = isMenuHidden ? "block" : "none";
-    });
-</script>
+    <script is:inline>
+        function getStyle(element, name) {
+            return element.currentStyle
+                ? element.currentStyle[name]
+                : window.getComputedStyle
+                  ? window
+                        .getComputedStyle(element, null)
+                        .getPropertyValue(name)
+                  : null;
+        }
+
+        document.getElementById("menu-button").addEventListener("click", () => {
+            const navLinks = document.getElementById("mobile-menu");
+            const isMenuHidden = getStyle(navLinks, "display") === "none";
+            navLinks.style.display = isMenuHidden ? "block" : "none";
+        });
+
+        window.addEventListener("resize", (e) => {
+            const TAILWIND_LG_BREAKPOINT = 1024;
+            const desktopMenu = document.getElementById("desktop-menu");
+            const mobileMenu = document.getElementById("mobile-menu");
+
+            const isLandscape = window.innerWidth >= TAILWIND_LG_BREAKPOINT;
+            if (isLandscape) {
+                desktopMenu.style.display = "flex";
+                mobileMenu.style.display = "none";
+            } else {
+                desktopMenu.style.display = "none";
+            }
+        });
+    </script>
+</nav>
