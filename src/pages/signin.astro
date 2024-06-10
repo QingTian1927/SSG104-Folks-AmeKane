@@ -6,7 +6,7 @@ import OAuthButton from "../components/signin/oauthButton.astro";
 import LoginField from "../components/signin/loginField.astro";
 import type { LoginErrorResponse } from "../database/models";
 
-const { cookies } = Astro;
+const { cookies, redirect } = Astro;
 const lang = getLangFromUrl(Astro.url);
 const translate = useTranslations(lang);
 
@@ -32,7 +32,7 @@ if (loginError) {
         errorResponse.error.status !== 400
     );
     if (isNotClientsideError) {
-        return Astro.redirect(getRelativeLocaleUrl(lang, "/500"));
+        return redirect(getRelativeLocaleUrl(lang, "/500"));
     }
 }
 ---
