@@ -25,7 +25,6 @@ if (loginError) {
     displayLoginError = true;
     errorResponse = JSON.parse(loginError.value) as LoginErrorResponse;
 
-    console.log(errorResponse)
     const isNotClientsideError = (
         errorResponse.error &&
         errorResponse.error.status &&
