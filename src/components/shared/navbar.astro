@@ -45,7 +45,7 @@ const translate = useTranslations(lang);
         <div class="hidden lg:block" id="desktop-menu">
             <a
                 href={getRelativeLocaleUrl(lang, "/about")}
-                class="py-2 px-4 rounded-md text-sm font-semibold hover:text-cyan-600 dark:hover:text-blue-600"
+                class="py-2 px-4 rounded-md text-sm font-semibold hover:text-cyan-600 dark:hover:text-blue-700"
             >
                 {translate("navbar.about")}
             </a>
@@ -63,12 +63,12 @@ const translate = useTranslations(lang);
         <div class="space-y-1">
             <a
                 href={getRelativeLocaleUrl(lang, "/about")}
-                class="block mb-2 p-2 rounded-md text-base font-medium text-zinc-800 dark:text-zinc-100 hover:bg-cyan-500 dark:hover:bg-blue-600"
+                class="block mb-2 p-2 rounded-md text-base font-medium text-zinc-800 dark:text-zinc-100 hover:bg-cyan-500 dark:hover:bg-blue-700"
                 aria-current="page">{translate("navbar.about")}</a
             >
             <a
                 href="/signin"
-                class="block mt-2 p-2 rounded-md text-base font-medium text-zinc-800 dark:text-zinc-100 hover:bg-cyan-500 dark:hover:bg-blue-600"
+                class="block mt-2 p-2 rounded-md text-base font-medium text-zinc-800 dark:text-zinc-100 hover:bg-cyan-500 dark:hover:bg-blue-700"
                 >{translate("navbar.signin")}</a
             >
         </div>
