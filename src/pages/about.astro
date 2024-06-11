@@ -1,0 +1,131 @@
+---
+export const prerender = true;
+
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import { sloganVariations } from "../i18n/ui";
+import type { Member } from "../components/about/memberCard.astro";
+import Basehead from "../layouts/basehead.astro";
+import Navbar from "../components/shared/navbar.astro";
+import Footer from "../components/shared/footer.astro";
+import MemberCard from "../components/about/memberCard.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const translate = useTranslations(lang);
+const defaultSlogan = translate("about.folks.slogan");
+
+const members: Member[] = [
+    {
+        name: "Bùi Việt Dũng",
+        role: "Kỹ Thuật",
+        quote: "Uyên zừ cờ yôn gơ shi wồ men đơ chình thiên",
+        avatar: "/members/BVD.jpg",
+        hashtags: ["wibu", "jrock", "vim"],
+    },
+    {
+        name: "Gigachad",
+        role: "Gigachad",
+        quote: "Súp pơ ai đồ đề xao rồng",
+        avatar: "/members/gigachad.webp",
+        avatarPosition: "object-top",
+        hashtags: ["haha", "💪"],
+    },
+    {
+        name: "Yuuko Aioi",
+        role: "Nichijou",
+        quote: "Super Ultra Great Delicious Wonderful Bad",
+        avatar: "/members/Lmao.jpg",
+        avatarPosition: "object-right-top",
+        hashtags: ["ゆっこ", "Trio Sucharaka"],
+    },
+];
+---
+
+<html lang={lang}>
+    <head>
+        <Basehead title={translate("navbar.about")} />
+    </head>
+
+    <body class="selection:bg-cyan-500 dark:selection:bg-blue-900">
+        <Navbar lang={lang} />
+
+        <main
+            class="relative w-full h-full p-8 pt-16 flex flex-col items-center justify-center gap-16 bg-zinc-100 dark:bg-zinc-900"
+        >
+            <div
+                class="group cursor-pointer h-full w-full lg:w-3/4 xl:w-3/5 p-10 rounded-2xl selection:bg-zinc-100 dark:selection:bg-zinc-800 bg-cyan-500 dark:bg-blue-700"
+                id="sloganBanner"
+            >
+                <h1
+                    class="font-extrabold text-left text-5xl xs:text-6xl sm:text-7xl lg:text-8xl"
+                    id="slogan-text"
+                >
+                    {translate("about.folks.slogan")}
+                </h1>
+
+                <p
+                    class="mt-2 text-pretty text-left text-sm sm:text-base lg:text-lg xl:text-xl font-medium"
+                >
+                    {translate("about.folks.subtitle")}
+                </p>
+            </div>
+
+            <div
+                class="h-full w-full lg:w-3/4 xl:w-3/5 prose dark:prose-invert max-w-none"
+            >
+                <h2 class="text-3xl">{translate("about.folks.title")}</h2>
+                <p>{translate("about.folks.description")}</p>
+
+                <h2 class="text-3xl">{translate("about.project.slogan")}</h2>
+                <p>{translate("about.project.cause")}</p>
+                <p>{translate("about.project.goal")}</p>
+
+                <h2 class="text-3xl">{translate("about.members.title")}</h2>
+                <div class="w-full grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8 items-stretch not-prose">
+                    {members.map((member) => (
+                        <MemberCard member={member} />
+                    ))}
+                </div>
+            </div>
+        </main>
+
+        <Footer />
+
+        <script define:vars={{ sloganVariations, defaultSlogan }}>
+            let sloganIndex = 0;
+            let sloganIntervalId = null;
+
+            const intervalDelay = 1000;
+            const sloganText = document.getElementById("slogan-text");
+
+            function animateSlogan() {
+                if (sloganIndex >= sloganVariations.length) {
+                    clearInterval(sloganIntervalId);
+                    sloganIntervalId = null;
+
+                    sloganIndex = 0;
+                    sloganText.innerText = defaultSlogan;
+                    return;
+                }
+
+                sloganText.innerText = sloganVariations[sloganIndex++];
+            }
+
+            function playAnimation() {
+                if (sloganIntervalId) {
+                    return;
+                }
+                sloganIntervalId = setInterval(animateSlogan, intervalDelay);
+            }
+
+            window.addEventListener("load", () => {
+                playAnimation();
+            });
+
+            document
+                .getElementById("sloganBanner")
+                .addEventListener("click", () => {
+                    playAnimation();
+                });
+        </script>
+    </body>
+</html>
