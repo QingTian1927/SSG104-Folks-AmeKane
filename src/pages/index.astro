@@ -1,16 +1,25 @@
 ---
+import Footer from "../components/shared/footer.astro";
+import Navbar from "../components/shared/navbar.astro";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import Basehead from "../layouts/basehead.astro";
 
+const lang = getLangFromUrl(Astro.url);
+const translate = useTranslations(lang);
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+<html lang={lang}>
+    <head>
+        <Basehead title="Rainboot" />
+    </head>
+
+    <body class="selection:bg-cyan-500 dark:selection:bg-blue-900">
+        <Navbar lang={lang} />
+
+        <main>
+
+        </main>
+
+        <Footer />
+    </body>
 </html>
