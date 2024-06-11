@@ -43,6 +43,7 @@ member.avatar = `${member.avatar}`;
         <img
             src={member.avatar}
             alt={`${translate("about.member.avatar.alt")} ${member.name}`}
+            loading="lazy"
             class:list={[
                 "aspect-square rounded-full object-cover",
                 member.avatarPosition,
