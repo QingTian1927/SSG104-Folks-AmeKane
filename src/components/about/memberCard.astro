@@ -1,0 +1,79 @@
+---
+import { Image } from "astro:assets";
+import { languages } from "../../i18n/ui";
+import { useTranslations } from "../../i18n/utils";
+
+type ObjectPosition =
+    | "object-left-top"
+    | "object-top"
+    | "object-right-top"
+    | "object-left"
+    | "object-center"
+    | "object-right"
+    | "object-left-bottom"
+    | "object-bottom"
+    | "object-right-bottom";
+
+export type Member = {
+    name: string;
+    role: string;
+    quote: string;
+    hashtags: string[];
+    avatar: string;
+    avatarPosition?: ObjectPosition;
+};
+
+interface Props {
+    member: Member;
+    lang?: keyof typeof languages;
+}
+
+const { member, lang = "vi" } = Astro.props;
+const translate = useTranslations(lang);
+
+if (!member.avatarPosition) {
+    member.avatarPosition = "object-center";
+}
+member.avatar = `${import.meta.env.SITE_URL}${member.avatar}`;
+---
+
+<article
+    class="group relative w-full h-auto p-8 rounded-2xl flex flex-col items-center justify-start bg-zinc-200 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-100"
+>
+    <div class="w-full aspect-square mb-8 flex items-center justify-center">
+        <Image
+            src={member.avatar}
+            alt={`${translate("about.member.avatar.alt")} ${member.name}`}
+            inferSize={true}
+            class:list={[
+                "aspect-square rounded-full object-cover",
+                member.avatarPosition,
+            ]}
+        />
+    </div>
+
+    <div class="w-full mb-4 text-left">
+        <p class="font-bold text-3xl">{member.name}</p>
+        <p class="font-medium text-zinc-600 dark:text-zinc-300">
+            {member.role}
+        </p>
+    </div>
+
+    <div class="grow relative w-full mb-4">
+        <p class="relative font-medium text-pretty text-left break-words hyphens-auto">
+            {member.quote}
+        </p>
+    </div>
+
+    <div
+        class="self-start w-full flex flex-wrap items-center justify-start gap-2"
+    >
+        {
+            member.hashtags.map((tag) => (
+                <p class="p-2 rounded-md font-medium text-xs bg-cyan-500 dark:bg-blue-700 text-zinc-800 dark:text-zinc-100 selection:bg-zinc-100 dark:selection:bg-zinc-100">
+                    {`#${tag}`}
+                </p>
+            ))
+        }
+    </div>
+</article>
