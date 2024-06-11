@@ -1,5 +1,4 @@
 ---
-import { Image } from "astro:assets";
 import { languages } from "../../i18n/ui";
 import { useTranslations } from "../../i18n/utils";
 
@@ -34,17 +33,16 @@ const translate = useTranslations(lang);
 if (!member.avatarPosition) {
     member.avatarPosition = "object-center";
 }
-member.avatar = `${import.meta.env.SITE_URL}${member.avatar}`;
+member.avatar = `${member.avatar}`;
 ---
 
 <article
     class="group relative w-full h-auto p-8 rounded-2xl flex flex-col items-center justify-start bg-zinc-200 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-100"
 >
     <div class="w-full aspect-square mb-8 flex items-center justify-center">
-        <Image
+        <img
             src={member.avatar}
             alt={`${translate("about.member.avatar.alt")} ${member.name}`}
-            inferSize={true}
             class:list={[
                 "aspect-square rounded-full object-cover",
                 member.avatarPosition,
