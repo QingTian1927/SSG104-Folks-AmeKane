@@ -45,6 +45,15 @@ export const ui = {
         "signin.legal.by-continuing": "Bằng việc tiếp tục, bạn đồng ý với",
         "signin.legal.of-rainboot": "của Rainboot.",
 
+        "dashboard.nav.home": "Trang Chủ",
+        "dashboard.nav.transactions": "Giao Dịch",
+        "dashboard.nav.accounts": "Tài Khoản",
+        "dashboard.nav.categories": "Danh Mục",
+        "dashboard.nav.savings": "Tiết Kiệm",
+        "dashboard.nav.help": "Trợ Giúp",
+        "dashboard.nav.settings": "Cài Đặt",
+        "dashboard.nav.signout": "Đăng Xuất",
+
         "oauth.google": "Đăng nhập với Google",
         "oauth.facebook": "Đăng nhập với Facebook",
 
