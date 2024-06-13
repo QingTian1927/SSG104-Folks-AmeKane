@@ -4,6 +4,7 @@ import { db } from "../database/databaseUtils";
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
 import Basehead from "../layouts/basehead.astro";
 import SideBar from "../components/dashboard/desktopSideBar/desktopSideBar.astro";
+import BottomNavbar from "../components/dashboard/mobileNavbar/bottomNavbar.astro";
 
 const { cookies, redirect } = Astro;
 
@@ -30,6 +31,7 @@ if (error) {
     return redirect("/signin");
 }
 
+const location = "home";
 const lang = getLangFromUrl(Astro.url);
 const translate = useTranslations(lang);
 ---
@@ -42,6 +44,7 @@ const translate = useTranslations(lang);
     <body
         class="w-screen bg-zinc-100 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-100 selection:bg-cyan-500 dark:selection:bg-blue-900"
     >
-        <SideBar lang={lang} location="home" />
+        <SideBar lang={lang} location={location} />
+        <BottomNavbar lang={lang} location={location} />
     </body>
 </html>
