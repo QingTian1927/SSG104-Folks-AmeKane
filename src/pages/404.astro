@@ -1,0 +1,29 @@
+---
+import Basehead from "../layouts/basehead.astro";
+---
+
+<html>
+    <head>
+        <Basehead title="404" />
+    </head>
+    <body>
+        <div class="w-full h-full px-[6%] flex-col mt-[7%] ">
+            <div class="text-[12rem] font-bold flex justify-center items-center">
+                <div>404</div>
+            </div>
+            <div class="mt-[6%]">
+                <div class="block w-3/5">
+                    <div class="mt-[4px] inline font-normal text-2xl">
+                        <div class="text-6xl font-medium">Oops!</div>
+                        Look like something went wrong and the page you are looking
+                        for can't be found
+                    </div>
+                </div>
+                <button
+                    class="bg-black text-white mt-4 py-3 px-5 rounded-[8px] font-medium text-2xl"
+                    ><a href="/">Go Back</a></button
+                >
+            </div>
+        </div>
+    </body>
+</html>
