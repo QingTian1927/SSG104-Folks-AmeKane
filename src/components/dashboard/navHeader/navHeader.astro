@@ -1,0 +1,121 @@
+---
+import type { languages } from "../../../i18n/ui";
+import { useTranslations } from "../../../i18n/utils";
+
+interface Props {
+    lang?: keyof typeof languages;
+    title: string;
+    userImage?: string;
+}
+
+const { lang = "vi", title, userImage } = Astro.props;
+const translate = useTranslations(lang);
+---
+
+<header
+    class="fixed z-0 w-full p-4 pb-5 lg:p-8 lg:pb-12 flex items-center bg-zinc-100 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-100"
+>
+    <div class="hidden lg:block w-[300px]"></div>
+
+    <div
+        class="grow h-full flex items-center justify-start lg:justify-center bg-zinc-100 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-100"
+    >
+        <div class="grow flex lg:hidden items-center gap-4">
+            <button id="mobile-sidebar-button">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1.75rem"
+                    height="75%"
+                    class="bi bi-list fill-zinc-800 dark:fill-zinc-100 hover:fill-cyan-500 dark:hover:fill-blue-700"
+                    viewBox="0 0 16 16"
+                >
+                    <path
+                        fill-rule="evenodd"
+                        d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"
+                    ></path>
+                </svg>
+            </button>
+            <h1 class="font-semibold text-lg">{title}</h1>
+        </div>
+
+        <search
+            class="hidden lg:w-2/3 xl:w-1/2 lg:flex items-center justify-center"
+        >
+            <form
+                action="/api/search/transactions"
+                method="POST"
+                class="w-full flex items-center justify-center gap-2"
+            >
+                <input
+                    type="search"
+                    name="search-input"
+                    id="search-input"
+                    required
+                    placeholder={translate("dashboard.search.placeholder") +
+                        " (Shift + F)"}
+                    aria-label={translate("dashboard.search.placeholder")}
+                    class="grow px-4 py-2 rounded-md bg-zinc-200 dark:bg-zinc-700 text-zinc-900 dark:text-zinc-50 placeholder:text-zinc-500 dark:placeholder:text-zinc-400 focus:outline focus:outline-cyan-500 dark:focus:outline-blue-700"
+                />
+
+                <button
+                    type="submit"
+                    class="aspect-square rounded-md p-2 bg-cyan-500 hover:bg-cyan-600 dark:bg-blue-700 dark:hover:bg-blue-900"
+                    title={translate("dashboard.search.placeholder")}
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="1.5rem"
+                        height="75%"
+                        class="bi bi-search fill-zinc-800 dark:fill-zinc-100"
+                        viewBox="0 0 16 16"
+                    >
+                        <path
+                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"
+                        ></path>
+                    </svg>
+                </button>
+            </form>
+        </search>
+
+        <button
+            class="group aspect-square block lg:hidden"
+            type="button"
+            id="mobile-search-button"
+            title={translate("dashboard.search.placeholder")}
+        >
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="1.75rem"
+                height="75%"
+                class="bi bi-search fill-zinc-800 group-hover:fill-cyan-500 dark:fill-zinc-100 dark:group-hover:fill-blue-700"
+                viewBox="0 0 16 16"
+            >
+                <path
+                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"
+                ></path>
+            </svg>
+        </button>
+    </div>
+
+    <script is:inline>
+        document.addEventListener("keydown", (e) => {
+            const searchKey = "F";
+
+            if (e.key !== searchKey) {
+                return;
+            }
+            e.preventDefault();
+
+            const searchInput = document.getElementById("search-input");
+            searchInput.focus();
+        });
+
+        document
+            .getElementById("mobile-sidebar-button")
+            .addEventListener("click", () => {
+                const sidebar = document.getElementById("sidebar");
+                sidebar.classList.remove("hidden");
+                sidebar.classList.add("flex");
+            });
+    </script>
+</header>
