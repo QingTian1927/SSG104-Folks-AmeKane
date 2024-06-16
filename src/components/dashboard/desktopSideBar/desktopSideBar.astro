@@ -16,16 +16,40 @@ const linkIdPrefix = "sidebar-";
 ---
 
 <nav
-    class="w-[300px] h-screen p-8 hidden lg:flex flex-col items-center justify-start text-zinc-100 bg-zinc-800"
+    class="fixed z-10 w-full lg:w-[300px] h-svh p-4 lg:p-8 hidden lg:flex flex-col items-center justify-start text-zinc-100 bg-zinc-800"
+    id="sidebar"
 >
-    <a
-        href="/"
-        class="w-full mt-4 mb-12 text-3xl tracking-wider font-bold text-left hover:text-cyan-500 dark:hover:text-blue-700"
-        >Rainboot</a
-    >
+    <div class="w-full pb-4 m-0 lg:pb-1 lg:mb-12 flex items-center">
+        <a
+            href="/"
+            class="grow text-2xl lg:text-3xl tracking-wider font-semibold lg:font-bold text-left"
+            >Rainboot</a
+        >
 
-    <main class="grow w-full mb-4 flex flex-col items-center justify-start">
-        <div class="grow w-full flex flex-col items-center justify-start gap-4">
+        <button
+            class="group aspect-square block lg:hidden"
+            type="button"
+            id="mobile-sidebar-close-button"
+            title={translate("dashboard.sidebar.close")}
+        >
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="1.75rem"
+                height="80%"
+                class="bi bi-x-lg fill-zinc-100 group-hover:fill-cyan-500 dark:fill-zinc-100 dark:group-hover:fill-blue-700"
+                viewBox="0 0 16 16"
+            >
+                <path
+                    d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"
+                ></path>
+            </svg>
+        </button>
+    </div>
+
+    <div class="grow w-full mb-4 flex flex-col items-center justify-start">
+        <div
+            class="lg:grow w-full flex flex-col items-center justify-start gap-4"
+        >
             <NavLink
                 text={translate("dashboard.nav.home")}
                 link="/dashboard"
@@ -133,6 +157,8 @@ const linkIdPrefix = "sidebar-";
             </NavLink>
         </div>
 
+        <hr class="block lg:hidden w-screen mx-0 my-4 border-zinc-500" />
+
         <div class="w-full flex flex-col items-center justify-start gap-4">
             <NavLink
                 text={translate("dashboard.nav.settings")}
@@ -174,10 +200,7 @@ const linkIdPrefix = "sidebar-";
                 </svg>
             </NavLink>
 
-            <NavLink
-                text={translate("dashboard.nav.signout")}
-                link="dashboard/signout"
-            >
+            <NavLink text={translate("dashboard.nav.signout")} link="/signout">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width={iconSize}
@@ -197,7 +220,7 @@ const linkIdPrefix = "sidebar-";
                 </svg>
             </NavLink>
         </div>
-    </main>
+    </div>
 
     <script define:vars={{ location, linkIdPrefix }}>
         function highlightSidebar() {
@@ -220,5 +243,37 @@ const linkIdPrefix = "sidebar-";
             );
         }
         highlightSidebar();
+
+        const sidebar = document.getElementById("sidebar");
+
+        document
+            .getElementById("mobile-sidebar-close-button")
+            .addEventListener("click", () => {
+                sidebar.classList.remove("flex");
+                sidebar.classList.add("hidden");
+            });
+
+        function getStyle(element, name) {
+            return element.currentStyle
+                ? element.currentStyle[name]
+                : window.getComputedStyle
+                  ? window
+                        .getComputedStyle(element, null)
+                        .getPropertyValue(name)
+                  : null;
+        }
+
+        window.addEventListener("resize", (e) => {
+            const TAILWIND_LG_BREAKPOINT = 1024;
+
+            const isLandscape = window.innerWidth >= TAILWIND_LG_BREAKPOINT;
+            if (isLandscape) {
+                sidebar.classList.remove("hidden");
+                sidebar.classList.add("flex");
+            } else {
+                sidebar.classList.remove("flex");
+                sidebar.classList.add("hidden");
+            }
+        });
     </script>
 </nav>

@@ -5,6 +5,8 @@ import { getLangFromUrl, useTranslations } from "../i18n/utils";
 import Basehead from "../layouts/basehead.astro";
 import SideBar from "../components/dashboard/desktopSideBar/desktopSideBar.astro";
 import BottomNavbar from "../components/dashboard/mobileNavbar/bottomNavbar.astro";
+import NavHeader from "../components/dashboard/navHeader/navHeader.astro";
+import MainViewport from "../layouts/dashboard/mainViewport.astro";
 
 const { cookies, redirect } = Astro;
 
@@ -45,6 +47,13 @@ const translate = useTranslations(lang);
         class="w-screen bg-zinc-100 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-100 selection:bg-cyan-500 dark:selection:bg-blue-900"
     >
         <SideBar lang={lang} location={location} />
+        <NavHeader lang={lang} title={translate("dashboard.nav.home")} />
+
+        <MainViewport>
+            <div class="w-full h-full flex flex-col">
+            </div>
+        </MainViewport>
+
         <BottomNavbar lang={lang} location={location} />
     </body>
 </html>

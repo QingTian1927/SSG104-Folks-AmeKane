@@ -53,6 +53,15 @@ export const ui = {
         "dashboard.nav.help": "Trợ Giúp",
         "dashboard.nav.settings": "Cài Đặt",
         "dashboard.nav.signout": "Đăng Xuất",
+        "dashboard.search.placeholder": "Tìm kiếm giao dịch",
+        "dashboard.search.mobile-button": "Tìm kiếm",
+        "dashboard.search.mobile-cancel": "Hủy",
+        "dashboard.sidebar.close": "Đóng thanh công cụ",
+
+        "error.return": "Trang Chủ",
+        "error.report": "Báo Lỗi",
+        "error.404.title": "Vỡ Nợ :<",
+        "error.404.subtitle": "Nội dung bạn đang tìm kiếm hiện không tồn tại.",
 
         "oauth.google": "Đăng nhập với Google",
         "oauth.facebook": "Đăng nhập với Facebook",
