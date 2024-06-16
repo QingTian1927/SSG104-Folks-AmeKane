@@ -1,14 +1,14 @@
 ---
 import type { languages } from "../../../i18n/ui";
 import { useTranslations } from "../../../i18n/utils";
+import SearchOverlay from "./searchOverlay.astro";
 
 interface Props {
     lang?: keyof typeof languages;
     title: string;
-    userImage?: string;
 }
 
-const { lang = "vi", title, userImage } = Astro.props;
+const { lang = "vi", title } = Astro.props;
 const translate = useTranslations(lang);
 ---
 
@@ -117,5 +117,17 @@ const translate = useTranslations(lang);
                 sidebar.classList.remove("hidden");
                 sidebar.classList.add("flex");
             });
+
+        document
+            .getElementById("mobile-search-button")
+            .addEventListener("click", () => {
+                const searchOverlay = document.getElementById(
+                    "mobile-search-overlay"
+                );
+                searchOverlay.classList.remove("hidden");
+                searchOverlay.classList.add("flex");
+            });
     </script>
 </header>
+
+<SearchOverlay />

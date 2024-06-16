@@ -54,6 +54,8 @@ export const ui = {
         "dashboard.nav.settings": "Cài Đặt",
         "dashboard.nav.signout": "Đăng Xuất",
         "dashboard.search.placeholder": "Tìm kiếm giao dịch",
+        "dashboard.search.mobile-button": "Tìm kiếm",
+        "dashboard.search.mobile-cancel": "Hủy",
         "dashboard.sidebar.close": "Đóng thanh công cụ",
 
         "error.return": "Trang Chủ",
