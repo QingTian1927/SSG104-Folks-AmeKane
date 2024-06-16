@@ -1,29 +1,42 @@
 ---
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
 import Basehead from "../layouts/basehead.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const translate = useTranslations(lang);
 ---
 
 <html>
     <head>
-        <Basehead title="404" />
+        <Basehead title="404 - Không Tồn Tại" />
     </head>
-    <body>
-        <div class="w-full h-full px-[6%] flex-col mt-[7%] ">
-            <div class="text-[12rem] font-bold flex justify-center items-center">
-                <div>404</div>
-            </div>
-            <div class="mt-[6%]">
-                <div class="block w-3/5">
-                    <div class="mt-[4px] inline font-normal text-2xl">
-                        <div class="text-6xl font-medium">Oops!</div>
-                        Look like something went wrong and the page you are looking
-                        for can't be found
-                    </div>
-                </div>
-                <button
-                    class="bg-black text-white mt-4 py-3 px-5 rounded-[8px] font-medium text-2xl"
-                    ><a href="/">Go Back</a></button
-                >
-            </div>
+
+    <body
+        class="w-screen min-h-svh p-8 flex flex-col items-center justify-center bg-zinc-200 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-100 selection:bg-cyan-500 dark:selection:bg-blue-900"
+    >
+        <h1 class="w-full mb-16 font-extrabold text-center text-9xl sm:text-[16rem]">404</h1>
+
+        <div class="mb-8 w-full flex flex-col items-center text-center">
+            <h2 class="mb-4 font-semibold text-3xl sm:text-4xl">
+                {translate("error.404.title")}
+            </h2>
+            <p class="text-xl">{translate("error.404.subtitle")}</p>
+        </div>
+
+        <div class="w-full flex items-center justify-center">
+            <a
+                href="/"
+                class="py-4 px-8 rounded-md font-semibold text-base sm:text-lg bg-cyan-500 hover:bg-cyan-600 dark:bg-blue-700 dark:hover:bg-blue-900 text-zinc-800 dark:text-zinc-100 "
+            >
+                {translate("error.return")}
+            </a>
+
+            <a
+                href="https://github.com/QingTian1927/SSG104-Folks-AmeKane/issues"
+                class="py-4 px-8 underline font-semibold text-base sm:text-lg"
+            >
+                {translate("error.report")}
+            </a>
         </div>
     </body>
 </html>
