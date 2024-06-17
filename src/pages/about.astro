@@ -15,6 +15,13 @@ const defaultSlogan = translate("about.folks.slogan");
 
 const members: Member[] = [
     {
+        name: "Phạm Tùng Dương",
+        role: "Trưởng Nhóm",
+        quote: "女子有丈夫，犹如花有盆！真汉子砸盆偷花！",
+        avatar: "/members/PTD.jpg",
+        hashtags: ["suuuu", "vuive"],
+    },
+    {
         name: "Bùi Việt Dũng",
         role: "Kỹ Thuật",
         quote: "Uyên zừ cờ yôn gơ shi wồ men đơ chình thiên",
@@ -22,20 +29,32 @@ const members: Member[] = [
         hashtags: ["wibu", "jrock", "vim"],
     },
     {
-        name: "Gigachad",
-        role: "Gigachad",
-        quote: "Súp pơ ai đồ đề xao rồng",
-        avatar: "/members/gigachad.webp",
-        avatarPosition: "object-top",
-        hashtags: ["haha", "💪"],
+        name: "Nguyễn Phương Thảo",
+        role: "Truyền Thông",
+        quote: "Vợ vui là đời vui",
+        avatar: "/members/NPT.jpg",
+        hashtags: ["wjbu", "makizenin", "nezukotamado"],
     },
     {
-        name: "Yuuko Aioi",
-        role: "Nichijou",
-        quote: "Super Ultra Great Delicious Wonderful Bad",
-        avatar: "/members/Lmao.jpg",
-        avatarPosition: "object-right-top",
-        hashtags: ["ゆっこ", "Trio Sucharaka"],
+        name: "Lê Phương Linh Nga",
+        role: "Nội Dung",
+        quote: "Sống trong đời sống cần có một tấm lòng (tự ái)",
+        avatar: "/members/LPLN.jpg",
+        hashtags: ["ngoanhien", "yeumauhong", "ghetbuivietdung"],
+    },
+    {
+        name: "Phạm Võ Bảo Duy",
+        role: "Nội Dung",
+        quote: "The worst feeling is not being lonely, but being forgotten by someone you can't forget.",
+        avatar: "/members/PVBD.jpg",
+        hashtags: ["radiant", "unrequited"],
+    },
+    {
+        name: "Đặng Văn Sơn",
+        role: "Thiết Kế",
+        quote: "Cờ Bạc Là Bạn Của Văn Sơn ",
+        avatar: "/members/DVS.jpg",
+        hashtags: ["allxiu", "smile", "jokerlỏ"],
     },
 ];
 ---
@@ -52,7 +71,7 @@ const members: Member[] = [
             class="relative w-full h-full p-8 pt-16 flex flex-col items-center justify-center gap-16 bg-zinc-100 dark:bg-zinc-900"
         >
             <div
-                class="group cursor-pointer h-full w-full lg:w-3/4 xl:w-3/5 p-10 rounded-2xl selection:bg-zinc-100 dark:selection:bg-zinc-800 text-zinc-800 dark:text-zinc-100 bg-cyan-500 dark:bg-blue-700"
+                class="group cursor-pointer h-full w-full lg:w-3/4 xl:w-3/5 p-8 md:p-10 rounded-2xl selection:bg-zinc-100 dark:selection:bg-zinc-800 text-zinc-800 dark:text-zinc-100 bg-cyan-500 dark:bg-blue-700"
                 id="sloganBanner"
             >
                 <h1
@@ -80,10 +99,10 @@ const members: Member[] = [
                 <p>{translate("about.project.goal")}</p>
 
                 <h2 class="text-3xl">{translate("about.members.title")}</h2>
-                <div class="w-full grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8 items-stretch not-prose">
-                    {members.map((member) => (
-                        <MemberCard member={member} />
-                    ))}
+                <div
+                    class="w-full grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8 items-stretch not-prose"
+                >
+                    {members.map((member) => <MemberCard member={member} />)}
                 </div>
             </div>
         </main>
