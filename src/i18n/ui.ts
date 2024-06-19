@@ -57,6 +57,11 @@ export const ui = {
         "dashboard.search.mobile-button": "Tìm kiếm",
         "dashboard.search.mobile-cancel": "Hủy",
         "dashboard.sidebar.close": "Đóng thanh công cụ",
+        "dashboard.see-more": "Xem thêm",
+        "dashboard.home.total": "Tổng tài sản",
+        "dashboard.home.income": "Tổng thu nhập",
+        "dashboard.home.expense": "Tổng chi tiêu",
+        "dashboard.home.saving": "Mục tiêu tiết kiệm",
 
         "error.return": "Trang Chủ",
         "error.report": "Báo Lỗi",

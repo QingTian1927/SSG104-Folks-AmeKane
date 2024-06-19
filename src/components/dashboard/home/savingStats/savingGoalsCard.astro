@@ -1,0 +1,61 @@
+---
+import { auth, db } from "../../../../database/databaseUtils";
+import type { ID } from "../../../../database/models";
+import type { languages } from "../../../../i18n/ui";
+import { useTranslations } from "../../../../i18n/utils";
+
+interface Props {
+    userId?: ID;
+    lang?: keyof typeof languages;
+}
+
+const { lang = "vi", userId = await auth.user.getId() } = Astro.props;
+const translate = useTranslations(lang);
+
+const savingGoals = [
+    { id: "1", current: 100, target: 500, title: "Saving Goal 1" },
+    { id: "2", current: 300, target: 700, title: "Saving Goal 2" },
+    { id: "3", current: 0, target: 300, title: "Saving Goal 3" },
+];
+---
+
+<article
+    class="w-full min-w-fit rounded-xl p-4 lg:p-8 flex flex-col items-start justify-start bg-zinc-200 dark:bg-zinc-700"
+>
+    <h2
+        class="w-full mb-4 font-medium text-xl lg:text-2xl text-zinc-600 dark:text-zinc-300"
+    >
+        {translate("dashboard.home.saving")}
+    </h2>
+
+    <div
+        class="grow w-full mb-4 flex flex-col items-start justify-start gap-2 font-medium text-lg text-zinc-900 dark:text-zinc-50"
+    >
+        {
+            savingGoals &&
+                savingGoals.map((goal) => (
+                    <a
+                        href={`/dashboard/transaction/${goal.id}`}
+                        class="w-full flex items-center justify-start"
+                    >
+                        <span class="grow truncate">{goal.title}</span>
+
+                        <div class="shrink-0 w-[40%] h-2.5 rounded-full bg-zinc-300 dark:bg-zinc-600">
+                            <div
+                                class="h-2.5 rounded-full bg-cyan-500 dark:bg-blue-700"
+                                style={`width: ${(goal.current / goal.target) * 100}%`}
+                            />
+                        </div>
+                    </a>
+                ))
+        }
+    </div>
+
+    <div class="w-full flex items-center justify-end">
+        <a
+            href="/dashboard/savings"
+            class="font-medium no-underline hover:underline text-sm lg:text-base text-zinc-600 dark:text-zinc-300"
+            >{translate("dashboard.see-more")}</a
+        >
+    </div>
+</article>
