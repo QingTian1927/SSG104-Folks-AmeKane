@@ -7,6 +7,7 @@ import SideBar from "../components/dashboard/desktopSideBar/desktopSideBar.astro
 import BottomNavbar from "../components/dashboard/mobileNavbar/bottomNavbar.astro";
 import NavHeader from "../components/dashboard/navHeader/navHeader.astro";
 import MainViewport from "../layouts/dashboard/mainViewport.astro";
+import NewItemButton from "../components/dashboard/newItemButton.astro";
 
 const { cookies, redirect } = Astro;
 
@@ -54,6 +55,7 @@ const translate = useTranslations(lang);
             </div>
         </MainViewport>
 
+        <NewItemButton link="/dashboard/new/transaction" item={translate("dashboard.nav.transactions")} />
         <BottomNavbar lang={lang} location={location} />
     </body>
 </html>
