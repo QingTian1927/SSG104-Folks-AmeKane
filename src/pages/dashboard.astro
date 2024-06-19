@@ -1,13 +1,15 @@
 ---
 import { supabase } from "../database/supabase/client";
-import { db } from "../database/databaseUtils";
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
+
 import Basehead from "../layouts/basehead.astro";
 import SideBar from "../components/dashboard/desktopSideBar/desktopSideBar.astro";
 import BottomNavbar from "../components/dashboard/mobileNavbar/bottomNavbar.astro";
 import NavHeader from "../components/dashboard/navHeader/navHeader.astro";
 import MainViewport from "../layouts/dashboard/mainViewport.astro";
 import NewItemButton from "../components/dashboard/newItemButton.astro";
+import AccountStatsCard from "../components/dashboard/home/accountStatsCard.astro";
+import SavingGoalsCard from "../components/dashboard/home/savingStats/savingGoalsCard.astro";
 
 const { cookies, redirect } = Astro;
 
@@ -52,10 +54,19 @@ const translate = useTranslations(lang);
 
         <MainViewport>
             <div class="w-full h-full flex flex-col">
+                <div
+                    class="w-full grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8"
+                >
+                    <AccountStatsCard userId={data.user?.id} lang={lang} />
+                    <SavingGoalsCard />
+                </div>
             </div>
         </MainViewport>
 
-        <NewItemButton link="/dashboard/new/transaction" item={translate("dashboard.nav.transactions")} />
+        <NewItemButton
+            link="/dashboard/new/transaction"
+            item={translate("dashboard.nav.transactions")}
+        />
         <BottomNavbar lang={lang} location={location} />
     </body>
 </html>
