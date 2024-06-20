@@ -62,6 +62,8 @@ export const ui = {
         "dashboard.home.income": "Tổng thu nhập",
         "dashboard.home.expense": "Tổng chi tiêu",
         "dashboard.home.saving": "Mục tiêu tiết kiệm",
+        "dashboard.home.recent-transactions": "Giao dịch gần đây",
+        "dashboard.home.spending-categories": "Chi tiêu theo danh mục",
 
         "error.return": "Trang Chủ",
         "error.report": "Báo Lỗi",
