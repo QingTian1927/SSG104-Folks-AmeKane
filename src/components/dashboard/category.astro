@@ -1,0 +1,15 @@
+---
+import type { Tables } from '../../database/database.types';
+import type { ID } from '../../database/models';
+import type { languages } from '../../i18n/ui';
+
+interface Props {
+    lang?: keyof typeof languages;
+    userId?: ID;
+    transaction: Tables<"Transaction">;
+}
+---
+
+<a>
+    
+</a>
