@@ -1,0 +1,73 @@
+---
+import type { Tables } from "../../database/database.types";
+import { auth, db } from "../../database/databaseUtils";
+import type { ID } from "../../database/models";
+import { supabase } from "../../database/supabase/client";
+import type { languages } from "../../i18n/ui";
+import { useTranslations } from "../../i18n/utils";
+
+interface Props {
+    lang?: keyof typeof languages;
+    userId?: ID;
+    transaction: Tables<"Transaction">;
+}
+
+const {
+    lang = "vi",
+    userId = await auth.user.getId(),
+    transaction,
+} = Astro.props;
+const translate = useTranslations(lang);
+
+if (!userId) {
+    return Astro.redirect("/500");
+}
+
+const { data: account, error: accountError } = await supabase
+    .from("Account")
+    .select()
+    .eq("id", transaction.account_id);
+if (accountError) {
+    console.error(accountError);
+    return Astro.redirect("/500");
+}
+
+const { data: preferences, error: preferencesError } =
+    await db.select.preferences(userId);
+if (preferencesError) {
+    console.error(preferencesError);
+    return Astro.redirect("/500");
+}
+
+const { currency } = preferences[0];
+const { title: accountTitle } = account[0];
+const transactionDate = new Date(transaction.date);
+---
+
+<a href={`/dashboard/transaction/${transaction.id}`} class="w-full max-w-full overflow-x-hidden min-h-fit p-4 rounded-lg flex items-center justify-start gap-2 hover:bg-zinc-200 dark:hover:bg-zinc-800">
+    <div class="grow h-full flex items-center justify-start gap-4">
+        <div class="h-[85%] aspect-square">
+            <div class="size-full rounded-full bg-red-400"></div>
+        </div>
+
+        <div class="h-full flex flex-col items-start justify-start">
+            <span class="grow font-semibold truncate">{transaction.title}</span>
+            <span class="text-sm truncate"
+                >{accountTitle} • <time
+                    datetime={transactionDate.toLocaleString()}
+                    >{transactionDate.toLocaleDateString()}</time
+                ></span
+            >
+        </div>
+    </div>
+
+    <span
+        class:list={[
+            "shrink-0 min-w-fit font-semibold text-lg",
+            transaction.is_income ? "text-green-500" : "text-red-500",
+        ]}
+        >{transaction.is_income ? "+" : "-"}
+        {transaction.value}
+        {currency}</span
+    >
+</a>
