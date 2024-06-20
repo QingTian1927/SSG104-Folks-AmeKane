@@ -12,8 +12,11 @@ interface Props {
 const { lang = 'vi', userId = await auth.user.getId() } = Astro.props;
 const translate = useTranslations(lang);
 
-const { data: preferences, error: preferencesError } = await db.select.preferences(userId);
+if (!userId) {
+    return Astro.redirect("/500");
+}
 
+const { data: preferences, error: preferencesError } = await db.select.preferences(userId);
 if (preferencesError) {
     console.error(preferencesError);
     return Astro.redirect("/500");
