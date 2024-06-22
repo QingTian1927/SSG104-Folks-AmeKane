@@ -1,0 +1,25 @@
+---
+import type { Tables } from "../../../database/database.types";
+
+interface Props {
+    id: "is_saving" | "set_default";
+    text: string;
+    account?: Tables<"Account">;
+}
+const { id, text, account } = Astro.props;
+---
+
+<label for={id} class="self-start flex items-center justify-start gap-4">
+    <input
+        type="checkbox"
+        id={id}
+        name={id}
+        checked={account
+            ? id === "is_saving" && account.is_saving
+                ? true
+                : undefined
+            : undefined}
+        class="size-[1.25rem] lg:size-[1rem] bg-zinc-200 dark:bg-zinc-700 focus:outline-none focus:ring-transparent focus:ring-offset-0"
+    />
+    <span class="leading-none">{text}</span>
+</label>

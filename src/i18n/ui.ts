@@ -68,19 +68,28 @@ export const ui = {
 
         "dashboard.see-more": "Xem thêm",
         "dashboard.create": "Tạo Mới",
+        "dashboard.edit": "Chỉnh Sửa",
         "dashboard.word.income": "Thu Nhập",
         "dashboard.word.expense": "Chi Tiêu",
 
         "dashboard.select.account": "Lựa chọn tài khoản",
         "dashboard.select.category": "Lựa chọn danh mục",
         "dashboard.info.transaction": "Thông tin giao dịch",
+        "dashboard.info.account": "Thông tin tài khoản",
 
         "dashboard.new.transaction": "Tạo giao dịch mới",
         "dashboard.new.transaction.name": "Tên giao dịch",
         "dashboard.new.transaction.value": "Giá trị",
         "dashboard.new.transaction.description": "Mô tả",
 
+        "dashboard.new.account": "Tạo tài khoản mới",
+        "dashboard.new.account.name": "Tên tài khoản",
+        "dashboard.new.account.balance": "Số tiền",
+        "dashboard.new.account.is-saving": "Là sổ tiết kiệm",
+        "dashboard.new.account.set-default": "Đặt làm tài khoản mặc định",
+
         "dashboard.edit.transaction": "Chỉnh sửa giao dịch",
+        "dashboard.edit.account": "Chỉnh sửa tài khoản",
 
         "error.return": "Trang Chủ",
         "error.report": "Báo Lỗi",
