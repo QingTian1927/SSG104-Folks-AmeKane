@@ -1,0 +1,94 @@
+---
+import type { Tables } from "../../database/database.types";
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import Basehead from "../basehead.astro";
+import FormSubmitButton from "../../components/formSubmitButton.astro";
+import FormHeader from "../../components/dashboard/formHeader.astro";
+import AccountRadio from "../../components/dashboard/accountForm/accountRadio.astro";
+import InputField from "../../components/dashboard/accountForm/inputField.astro";
+
+interface Props {
+    title: string;
+    action: string;
+    text: string;
+    account?: Tables<"Account">;
+}
+const { title, action, account, text } = Astro.props;
+
+const lang = getLangFromUrl(Astro.url);
+const translate = useTranslations(lang);
+---
+
+<html lang={lang}>
+    <head>
+        <Basehead title={title} />
+    </head>
+
+    <body
+        class="w-full min-h-screen px-4 py-8 lg:p-8 flex flex-col items-center justify-start gap-8 text-zinc-800 bg-zinc-100 dark:text-zinc-100 dark:bg-zinc-900 selection:bg-cyan-500 dark:selection:bg-blue-700"
+    >
+        <FormHeader title={title} />
+
+        <main
+            class="grow w-full h-full flex items-start lg:items-center justify-center"
+        >
+            <form
+                action={action}
+                method="POST"
+                class="w-full h-full flex flex-col lg:flex-row items-start justify-center gap-8 lg:gap-16"
+            >
+                <div
+                    class="w-full lg:w-3/5 xl:w-2/5 flex flex-col items-center justify-start gap-4 lg:gap-8"
+                >
+                    <h2 class="self-start font-semibold text-xl lg:text-2xl">
+                        {translate("dashboard.info.account")}
+                    </h2>
+
+                    <InputField
+                        id="title"
+                        account={account}
+                        placeholder={translate("dashboard.new.account.name")}
+                    />
+                    <InputField
+                        id="balance"
+                        type="number"
+                        account={account}
+                        placeholder={translate("dashboard.new.account.balance")}
+                    />
+
+                    <div
+                        class="self-start w-full mt-4 lg:mt-0 flex items-stretch justify-between gap-4"
+                    >
+                        <div
+                            class="flex flex-col items-start justify-center gap-4"
+                        >
+                            <AccountRadio
+                                id="is_saving"
+                                text={translate(
+                                    "dashboard.new.account.is-saving"
+                                )}
+                                account={account}
+                            />
+                            <AccountRadio
+                                id="set_default"
+                                text={translate(
+                                    "dashboard.new.account.set-default"
+                                )}
+                                account={account}
+                            />
+                        </div>
+
+                        <button
+                            type="submit"
+                            class="hidden lg:block w-fit py-2 px-4 rounded-md font-medium bg-cyan-500 hover:bg-cyan-600 dark:bg-blue-700 dark:hover:bg-blue-900"
+                        >
+                            {text}
+                        </button>
+                    </div>
+                </div>
+
+                <FormSubmitButton text={text} />
+            </form>
+        </main>
+    </body>
+</html>
