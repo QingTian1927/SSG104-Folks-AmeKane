@@ -1,0 +1,40 @@
+---
+import type { Tables } from "../../../database/database.types";
+import { db } from "../../../database/databaseUtils";
+import type { ID } from "../../../database/models";
+
+interface Props {
+    userId: ID;
+    transaction?: Tables<"Transaction">;
+}
+const { userId, transaction } = Astro.props;
+
+const { data: categories, error } = await db.select.category(userId);
+if (error) {
+    console.error(error);
+    return Astro.redirect("/500");
+}
+---
+
+<div class="w-full flex flex-wrap items-center justify-start gap-4">
+    {
+        categories &&
+            categories.map((category) => (
+                <label
+                    for={category.id}
+                    class="group relative w-fit p-3 rounded-md font-medium flex items-center justify-center cursor-pointer"
+                >
+                    <span class="">{category.title}</span>
+                    <input
+                        type="radio"
+                        id={category.id}
+                        name="category_id"
+                        value={category.id}
+                        required
+                        checked={transaction ? ((category.id === transaction.category_id) ? true : undefined) : undefined}
+                        class="absolute -z-[1] size-full rounded-md border-none focus:ring-transparent focus:outline-none focus:ring-offset-0 focus:bg-none checked:bg-none bg-zinc-200 group-hover:bg-zinc-300 dark:bg-zinc-700 dark:group-hover:bg-zinc-600 text-cyan-500 dark:text-blue-700 checked:group-hover:bg-cyan-500 dark:checked:group-hover:bg-blue-700"
+                    />
+                </label>
+            ))
+    }
+</div>
