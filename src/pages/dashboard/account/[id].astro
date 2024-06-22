@@ -1,0 +1,33 @@
+---
+import { supabase } from "../../../database/supabase/client";
+import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
+import AccountForm from "../../../layouts/dashboard/accountForm.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const translate = useTranslations(lang);
+
+const { id } = Astro.params;
+if (id === undefined) {
+    throw new Error("Transaction ID is undefined");
+}
+
+const { data: accounts, error } = await supabase
+    .from("Account")
+    .select()
+    .eq("id", id);
+if (error) {
+    console.error(error);
+    return Astro.redirect("/500");
+}
+
+if (!accounts || accounts.length === 0) {
+    return Astro.redirect("/404");
+}
+---
+
+<AccountForm
+    title={translate("dashboard.edit.account")}
+    action="/api/update/account"
+    text={translate("dashboard.edit")}
+    account={accounts[0]}
+/>

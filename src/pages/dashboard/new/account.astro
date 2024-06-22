@@ -1,0 +1,13 @@
+---
+import AccountForm from "../../../layouts/dashboard/accountForm.astro";
+import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const translate = useTranslations(lang);
+---
+
+<AccountForm
+    title={translate("dashboard.new.account")}
+    action="/api/insert/account"
+    text={translate("dashboard.create")}
+/>
