@@ -1,0 +1,9 @@
+---
+import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
+import TransactionForm from "../../../layouts/dashboard/transactionForm.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const translate = useTranslations(lang);
+---
+
+<TransactionForm title={translate("dashboard.new.transaction")} />
