@@ -6,4 +6,8 @@ const lang = getLangFromUrl(Astro.url);
 const translate = useTranslations(lang);
 ---
 
-<TransactionForm title={translate("dashboard.new.transaction")} />
+<TransactionForm
+    title={translate("dashboard.new.transaction")}
+    action="/api/insert/transaction"
+    text={translate("dashboard.create")}
+/>

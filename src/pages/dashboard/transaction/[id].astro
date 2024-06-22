@@ -11,15 +11,23 @@ if (id === undefined) {
     throw new Error("Transaction ID is undefined");
 }
 
-const { data: transactions, error } = await supabase.from("Transaction").select().eq("id", id);
+const { data: transactions, error } = await supabase
+    .from("Transaction")
+    .select()
+    .eq("id", id);
 if (error) {
     console.error(error);
     return Astro.redirect("/500");
 }
 
-if (!transactions) {
+if (!transactions || transactions.length === 0) {
     return Astro.redirect("/404");
 }
 ---
 
-<TransactionForm title={translate("dashboard.edit.transaction")} transaction={transactions[0]} />
+<TransactionForm
+    title={translate("dashboard.edit.transaction")}
+    action="/api/update/transaction"
+    text={translate("dashboard.edit")}
+    transaction={transactions[0]}
+/>
