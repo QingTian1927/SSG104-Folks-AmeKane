@@ -1,0 +1,44 @@
+---
+import type { Tables } from "../../../database/database.types";
+import type { languages } from "../../../i18n/ui";
+import { useTranslations } from "../../../i18n/utils";
+
+interface Props {
+    id: "income" | "expense";
+    transaction?: Tables<"Transaction">;
+    lang?: keyof typeof languages;
+}
+
+const { id, transaction, lang = "vi" } = Astro.props;
+const translate = useTranslations(lang);
+---
+
+<label
+    for={id}
+    class="group relative w-fit py-2 px-4 rounded-md font-medium flex items-center justify-center cursor-pointer"
+>
+    <span>{translate(`dashboard.word.${id}`)}</span>
+    <input
+        type="radio"
+        id={id}
+        name="is_income"
+        value={id === "income" ? "true" : "false"}
+        checked={transaction
+            ? transaction.is_income
+                ? id === "income"
+                    ? true
+                    : undefined
+                : id === "expense"
+                  ? true
+                  : undefined
+            : id === "expense"
+              ? true
+              : undefined}
+        class:list={[
+            "absolute -z-[1] size-full rounded-md border-none focus:ring-transparent focus:outline-none focus:ring-offset-0 focus:bg-none checked:bg-none bg-zinc-200 group-hover:bg-zinc-300 dark:bg-zinc-700 dark:group-hover:bg-zinc-600",
+            id === "income"
+                ? "text-green-400 checked:group-hover:bg-green-400 dark:text-green-600 dark:checked:group-hover:bg-green-600"
+                : "text-red-400 checked:group-hover:bg-red-400 dark:text-red-600 dark:checked:group-hover:bg-red-600",
+        ]}
+    />
+</label>
