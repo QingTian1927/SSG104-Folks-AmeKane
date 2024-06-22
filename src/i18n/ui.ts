@@ -53,17 +53,34 @@ export const ui = {
         "dashboard.nav.help": "Trợ Giúp",
         "dashboard.nav.settings": "Cài Đặt",
         "dashboard.nav.signout": "Đăng Xuất",
+
         "dashboard.search.placeholder": "Tìm kiếm giao dịch",
         "dashboard.search.mobile-button": "Tìm kiếm",
         "dashboard.search.mobile-cancel": "Hủy",
         "dashboard.sidebar.close": "Đóng thanh công cụ",
-        "dashboard.see-more": "Xem thêm",
+
         "dashboard.home.total": "Tổng tài sản",
         "dashboard.home.income": "Tổng thu nhập",
         "dashboard.home.expense": "Tổng chi tiêu",
         "dashboard.home.saving": "Mục tiêu tiết kiệm",
         "dashboard.home.recent-transactions": "Giao dịch gần đây",
         "dashboard.home.spending-categories": "Chi tiêu theo danh mục",
+
+        "dashboard.see-more": "Xem thêm",
+        "dashboard.create": "Tạo Mới",
+        "dashboard.word.income": "Thu Nhập",
+        "dashboard.word.expense": "Chi Tiêu",
+
+        "dashboard.select.account": "Lựa chọn tài khoản",
+        "dashboard.select.category": "Lựa chọn danh mục",
+        "dashboard.info.transaction": "Thông tin giao dịch",
+
+        "dashboard.new.transaction": "Tạo giao dịch mới",
+        "dashboard.new.transaction.name": "Tên giao dịch",
+        "dashboard.new.transaction.value": "Giá trị",
+        "dashboard.new.transaction.description": "Mô tả",
+
+        "dashboard.edit.transaction": "Chỉnh sửa giao dịch",
 
         "error.return": "Trang Chủ",
         "error.report": "Báo Lỗi",
