@@ -17,5 +17,8 @@ export default {
             ...defaultTheme.screens,
         },
     },
-    plugins: [require("@tailwindcss/typography")],
+    plugins: [
+        require("@tailwindcss/typography"),
+        require("@tailwindcss/forms"),
+    ],
 };

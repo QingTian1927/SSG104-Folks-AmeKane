@@ -1,0 +1,157 @@
+---
+import { auth } from "../../database/databaseUtils";
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import type { Tables } from "../../database/database.types";
+import AccountListing from "../../components/dashboard/transactionForm/accountListing.astro";
+import CategoryListing from "../../components/dashboard/transactionForm/categoryListing.astro";
+import InputField from "../../components/dashboard/transactionForm/inputField.astro";
+import IsIncomeRadio from "../../components/dashboard/transactionForm/isIncomeRadio.astro";
+import Basehead from "../../layouts/basehead.astro";
+
+interface Props {
+    title: string;
+    transaction?: Tables<"Transaction">;
+}
+const { title, transaction } = Astro.props;
+
+const lang = getLangFromUrl(Astro.url);
+const translate = useTranslations(lang);
+
+const userId = await auth.user.getId();
+if (!userId) {
+    console.error("Cannot retrieve userId");
+    return Astro.redirect("/500");
+}
+---
+
+<html lang={lang}>
+    <head>
+        <Basehead title={title} />
+    </head>
+
+    <body
+        class="w-full min-h-screen px-4 py-8 lg:p-8 flex flex-col items-center justify-start gap-8 text-zinc-800 bg-zinc-100 dark:text-zinc-100 dark:bg-zinc-900 selection:bg-cyan-500 dark:selection:bg-blue-700"
+    >
+        <header class="w-full flex items-center justify-start gap-8">
+            <button id="back-button">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="100%"
+                    class="bi bi-arrow-left-circle-fill w-[1.5rem] lg:w-[2rem] fill-zinc-800 hover:fill-cyan-500 dark:fill-zinc-100 dark:hover:fill-blue-700"
+                    viewBox="0 0 16 16"
+                >
+                    <path
+                        d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0m3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"
+                    ></path>
+                </svg>
+            </button>
+
+            <script is:inline>
+                document
+                    .getElementById("back-button")
+                    .addEventListener("click", () => {
+                        window.history.back();
+                    });
+            </script>
+
+            <h1 class="font-bold text-xl lg:text-2xl">
+                {title}
+            </h1>
+        </header>
+
+        <main
+            class="grow w-full h-full flex items-start lg:items-center justify-center"
+        >
+            <form
+                action="/api/insert/transaction"
+                method="POST"
+                class="w-full h-full flex flex-col lg:flex-row items-start justify-center gap-8 lg:gap-16"
+            >
+                <div
+                    class="w-full lg:w-2/5 flex flex-col items-center justify-start gap-4 lg:gap-8"
+                >
+                    <h2 class="self-start font-semibold text-xl lg:text-2xl">
+                        {translate("dashboard.info.transaction")}
+                    </h2>
+
+                    <InputField
+                        id="title"
+                        placeholder={translate(
+                            "dashboard.new.transaction.name"
+                        )}
+                        transaction={transaction}
+                    />
+                    <InputField
+                        id="value"
+                        type="number"
+                        placeholder={translate(
+                            "dashboard.new.transaction.value"
+                        )}
+                        transaction={transaction}
+                    />
+                    <InputField
+                        id="description"
+                        placeholder={translate(
+                            "dashboard.new.transaction.description"
+                        )}
+                        transaction={transaction}
+                    />
+
+                    <div
+                        class="w-full mt-4 lg:mt-0 flex items-center justify-between gap-4"
+                    >
+                        <div class="flex items-center justify-start gap-4">
+                            <IsIncomeRadio id="expense" lang={lang} transaction={transaction} />
+                            <IsIncomeRadio id="income" lang={lang} transaction={transaction} />
+                        </div>
+
+                        <button
+                            type="submit"
+                            class="hidden lg:block py-2 px-4 rounded-md font-medium bg-cyan-500 hover:bg-cyan-600 dark:bg-blue-700 dark:hover:bg-blue-900 text-zinc-800 dark:text-zinc-100"
+                            >{translate("dashboard.create")}</button
+                        >
+                    </div>
+                </div>
+
+                <div
+                    class="w-full lg:w-2/5 h-full flex flex-col items-center justify-start gap-8"
+                >
+                    <div
+                        class="w-full flex flex-col items-center justify-center gap-4 lg:gap-8"
+                    >
+                        <h2
+                            class="self-start font-semibold text-xl lg:text-2xl"
+                        >
+                            {translate("dashboard.select.account")}
+                        </h2>
+
+                        <AccountListing userId={userId} transaction={transaction} />
+                    </div>
+
+                    <div
+                        class="w-full flex flex-col items-center justify-center gap-4 lg:gap-8"
+                    >
+                        <h2
+                            class="self-start p-0 lg:pt-4 font-semibold text-xl lg:text-2xl"
+                        >
+                            {translate("dashboard.select.category")}
+                        </h2>
+
+                        <CategoryListing userId={userId} transaction={transaction} />
+                    </div>
+                </div>
+
+                <div
+                    class="fixed bottom-0 left-0 w-screen mb-8 lg:hidden flex items-center justify-center"
+                >
+                    <button
+                        type="submit"
+                        class="w-[50%] py-2 px-4 rounded-md font-medium bg-cyan-500 hover:bg-cyan-600 dark:bg-blue-700 dark:hover:bg-blue-900 text-zinc-800 dark:text-zinc-100"
+                    >
+                        {translate("dashboard.create")}
+                    </button>
+                </div>
+            </form>
+        </main>
+    </body>
+</html>
