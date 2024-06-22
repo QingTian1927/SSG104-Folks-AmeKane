@@ -10,6 +10,8 @@ import MainViewport from "../layouts/dashboard/mainViewport.astro";
 import NewItemButton from "../components/dashboard/newItemButton.astro";
 import AccountStatsCard from "../components/dashboard/home/accountStatsCard.astro";
 import SavingGoalsCard from "../components/dashboard/home/savingStats/savingGoalsCard.astro";
+import RecentTransactions from "../components/dashboard/home/recentTransactions.astro";
+import SpendingByCategories from "../components/dashboard/home/spendingByCategories.astro";
 
 const { cookies, redirect } = Astro;
 
@@ -47,22 +49,28 @@ const translate = useTranslations(lang);
     </head>
 
     <body
-        class="w-screen bg-zinc-100 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-100 selection:bg-cyan-500 dark:selection:bg-blue-900"
+        class="w-full h-full bg-zinc-100 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-100 selection:bg-cyan-500 dark:selection:bg-blue-900"
     >
         <SideBar lang={lang} location={location} />
         <NavHeader lang={lang} title={translate("dashboard.nav.home")} />
 
         <MainViewport>
-            <div class="w-full h-full flex flex-col">
+            <div class="w-full h-full flex flex-col gap-4 lg:gap-8">
                 <div
                     class="w-full grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8"
                 >
                     <AccountStatsCard userId={data.user?.id} lang={lang} />
                     <SavingGoalsCard />
                 </div>
+
+                <div
+                    class="w-full h-full grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8"
+                >
+                    <RecentTransactions lang={lang} />
+                    <SpendingByCategories lang={lang} />
+                </div>
             </div>
         </MainViewport>
-
         <NewItemButton
             link="/dashboard/new/transaction"
             item={translate("dashboard.nav.transactions")}

@@ -1,0 +1,43 @@
+---
+import { auth } from '../../../database/databaseUtils';
+import type { ID } from '../../../database/models';
+import { supabase } from '../../../database/supabase/client';
+import type { languages } from '../../../i18n/ui';
+import { useTranslations } from '../../../i18n/utils';
+
+interface Props {
+    userId?: ID;
+    lang?: keyof typeof languages;
+}
+
+const { lang = "vi", userId = await auth.user.getId() } = Astro.props;
+const translate = useTranslations(lang);
+
+const { data: categories, error: categoriesError } = await supabase
+    .from("Transaction")
+    .select()
+    .limit(30);
+if (categoriesError) {
+    console.error(categoriesError);
+    return Astro.redirect("/500");
+}
+---
+
+<div
+    class="w-full h-full flex flex-col items-center justify-start gap-2 lg:gap-4"
+>
+    <div class="w-full flex items-center justify-start">
+        <h2 class="grow font-semibold text-xl">
+            {translate("dashboard.home.spending-categories")}
+        </h2>
+        <a
+            href="/dashboard/categories"
+            class="font-medium no-underline hover:underline text-xs lg:text-base text-zinc-600 dark:text-zinc-300"
+            >{translate("dashboard.see-more")}</a
+        >
+    </div>
+
+    <div class="w-full h-full flex flex-col items-start justify-start gap-4">
+        
+    </div>
+</div>
