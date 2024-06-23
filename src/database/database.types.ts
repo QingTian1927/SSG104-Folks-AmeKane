@@ -179,7 +179,7 @@ export type Database = {
                     is_income: boolean
                     is_transfer: boolean
                     title: string
-                    user_id: string
+                    user_id: string | null
                     value: number
                 }
                 Insert: {
@@ -192,7 +192,7 @@ export type Database = {
                     is_income?: boolean
                     is_transfer?: boolean
                     title: string
-                    user_id?: string
+                    user_id?: string | null
                     value?: number
                 }
                 Update: {
@@ -205,7 +205,7 @@ export type Database = {
                     is_income?: boolean
                     is_transfer?: boolean
                     title?: string
-                    user_id?: string
+                    user_id?: string | null
                     value?: number
                 }
                 Relationships: [
@@ -237,7 +237,24 @@ export type Database = {
             [_ in never]: never
         }
         Functions: {
-            [_ in never]: never
+            get_total_balance: {
+                Args: {
+                    query_user_id: string
+                }
+                Returns: number
+            }
+            get_total_expense: {
+                Args: {
+                    query_user_id: string
+                }
+                Returns: number
+            }
+            get_total_income: {
+                Args: {
+                    query_user_id: string
+                }
+                Returns: number
+            }
         }
         Enums: {
             Color:
@@ -534,6 +551,10 @@ export type Database = {
                     metadata: Json
                     updated_at: string
                 }[]
+            }
+            operation: {
+                Args: Record<PropertyKey, never>
+                Returns: string
             }
             search: {
                 Args: {

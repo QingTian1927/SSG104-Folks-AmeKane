@@ -23,6 +23,12 @@ export const auth = {
 }
 
 export const db = {
+    function: {
+        getTotalBalance: supaUtils.getTotalBalance,
+        getTotalExpense: supaUtils.getTotalExpense,
+        getTotalIncome: supaUtils.getTotalIncome,
+    },
+
     select: {
         account: supaUtils.getAccount,
         preferences: supaUtils.getPreferences,
