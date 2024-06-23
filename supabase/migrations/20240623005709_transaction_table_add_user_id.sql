@@ -1,5 +1,5 @@
 alter table public."Transaction"
-add column if not exists user_id uuid null default auth.uid();
+add column if not exists user_id uuid not null default auth.uid();
 
 alter table public."Transaction"
 add constraint transaction_user_id_fkey

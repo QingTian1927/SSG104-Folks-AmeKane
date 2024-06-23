@@ -378,3 +378,28 @@ export async function deleteTransaction(transactionId: ID) {
     }
     return await supabase.from("Transaction").delete().eq("id", transactionId).select();
 }
+
+// -------------------
+// AGGREGATE FUNCTIONS
+// -------------------
+
+export async function getTotalBalance(userId: ID) {
+    if (!userId) {
+        return errorResponse(userId, ERROR_MESSAGES.UNDEFINED_USER_ID);
+    }
+    return await supabase.rpc("get_total_balance", { query_user_id: userId });
+}
+
+export async function getTotalIncome(userId: ID) {
+    if (!userId) {
+        return errorResponse(userId, ERROR_MESSAGES.UNDEFINED_USER_ID);
+    }
+    return await supabase.rpc("get_total_income", { query_user_id: userId });
+}
+
+export async function getTotalExpense(userId: ID) {
+    if (!userId) {
+        return errorResponse(userId, ERROR_MESSAGES.UNDEFINED_USER_ID);
+    }
+    return await supabase.rpc("get_total_expense", { query_user_id: userId });
+}
