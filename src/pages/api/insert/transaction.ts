@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { db } from "../../../database/databaseUtils";
+import { auth, db } from "../../../database/databaseUtils";
 import { toBoolean, toNumber } from "../../../database/typeUtils";
 
 export const POST: APIRoute = async ({ request, redirect }) => {
@@ -19,9 +19,17 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         );
     }
 
+    const userId = await auth.user.getId();
+    if (!userId) {
+        return new Response(
+            "Could not retrieve the user ID", { status: 500 }
+        );
+    }
+
     const { data, error } = await db.insert.transaction({
         account_id: accountId,
         category_id: categoryId,
+        user_id: userId,
         is_income: toBoolean(isIncome),
         value: toNumber(value),
         title: title,
