@@ -179,6 +179,7 @@ export type Database = {
                     is_income: boolean
                     is_transfer: boolean
                     title: string
+                    user_id: string
                     value: number
                 }
                 Insert: {
@@ -191,6 +192,7 @@ export type Database = {
                     is_income?: boolean
                     is_transfer?: boolean
                     title: string
+                    user_id?: string
                     value?: number
                 }
                 Update: {
@@ -203,6 +205,7 @@ export type Database = {
                     is_income?: boolean
                     is_transfer?: boolean
                     title?: string
+                    user_id?: string
                     value?: number
                 }
                 Relationships: [
@@ -218,6 +221,13 @@ export type Database = {
                         columns: ["category_id"]
                         isOneToOne: false
                         referencedRelation: "Category"
+                        referencedColumns: ["id"]
+                    },
+                    {
+                        foreignKeyName: "transaction_user_id_fkey"
+                        columns: ["user_id"]
+                        isOneToOne: false
+                        referencedRelation: "users"
                         referencedColumns: ["id"]
                     },
                 ]
@@ -636,3 +646,4 @@ export type Enums<
     : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
     ? PublicSchema["Enums"][PublicEnumNameOrOptions]
     : never
+

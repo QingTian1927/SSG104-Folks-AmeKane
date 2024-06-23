@@ -41,7 +41,7 @@ if (transactionsError) {
     <div class="w-full h-full flex flex-col items-start justify-start">
         {
             transactions?.map((transaction) => (
-                <Transaction lang={lang} transaction={transaction} />
+                <Transaction lang={lang} transaction={transaction} userId={userId} />
             ))
         }
     </div>
