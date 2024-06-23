@@ -23,9 +23,9 @@ if (preferencesError) {
 }
 
 const { currency } = preferences[0];
-const totalBalance = "123 456 789";
-const totalIncome = "1234";
-const totalExpense = "5678";
+const totalBalance = await db.function.getTotalBalance(userId);
+const totalIncome = await db.function.getTotalIncome(userId);
+const totalExpense = await db.function.getTotalExpense(userId);
 ---
 
 <article
@@ -36,7 +36,7 @@ const totalExpense = "5678";
             {translate("dashboard.home.total")}
         </h2>
         <span class="font-bold text-4xl lg:text-5xl text-zinc-800 dark:text-zinc-100"
-            >{`${totalBalance} ${currency}`}</span
+            >{`${(totalBalance && totalBalance.data) ? totalBalance.data : 0} ${currency}`}</span
         >
     </div>
 
@@ -46,7 +46,7 @@ const totalExpense = "5678";
                 {translate("dashboard.home.income")}
             </h3>
             <span class="font-semibold text-xl text-zinc-900 dark:text-zinc-50"
-                >{`+ ${totalIncome} ${currency}`}</span
+                >{`+ ${(totalIncome && totalIncome.data) ? totalIncome.data : 0} ${currency}`}</span
             >
         </div>
 
@@ -55,7 +55,7 @@ const totalExpense = "5678";
                 {translate("dashboard.home.expense")}
             </h3>
             <span class="font-semibold text-xl text-zinc-900 dark:text-zinc-50"
-                >{`- ${totalExpense} ${currency}`}</span
+                >{`- ${(totalExpense && totalExpense.data) ? totalExpense.data : 0} ${currency}`}</span
             >
         </div>
     </div>
