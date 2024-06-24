@@ -1,6 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
 import { type Database } from "../database.types";
-import { ERROR_MESSAGES,errorResponse,type ID } from "../models";
 
 export const supabase = createClient<Database>(
     import.meta.env.SUPABASE_URL,
