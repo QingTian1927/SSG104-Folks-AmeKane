@@ -1,0 +1,87 @@
+---
+import type { Enums, Tables } from "../../../database/database.types";
+import type { languages } from "../../../i18n/ui";
+import { useTranslations } from "../../../i18n/utils";
+
+interface Props {
+    lang?: keyof typeof languages;
+    category?: Tables<"Category">;
+}
+
+const { category, lang = "vi" } = Astro.props;
+const translate = useTranslations(lang);
+
+export type CategoryColor = {
+    [colorName: string]: { bg: string; text: string; ring: string };
+};
+
+export const categoryColors: CategoryColor = {
+    blue: {
+        bg: "bg-sky-500 dark:bg-sky-600",
+        text: "text-sky-500 dark:text-sky-600",
+        ring: "focus:ring-sky-500 dark:focus:ring-sky-600 checked:ring-sky-500 dark:checked:ring-sky-600",
+    },
+    red: {
+        bg: "bg-red-500 dark:bg-red-600",
+        text: "text-red-500 dark:text-red-600",
+        ring: "focus:ring-red-500 dark:focus:ring-red-600 checked:ring-red-500 dark:checked:ring-red-600",
+    },
+    green: {
+        bg: "bg-green-500 dark:bg-green-600",
+        text: "text-green-500 dark:text-green-600",
+        ring: "focus:ring-green-500 dark:focus:ring-green-600 checked:ring-green-500 dark:checked:ring-green-600",
+    },
+    yellow: {
+        bg: "bg-yellow-500 dark:bg-yellow-600",
+        text: "text-yellow-500 dark:text-yellow-600",
+        ring: "focus:ring-yellow-500 dark:focus:ring-yellow-600 checked:ring-yellow-500 dark:checked:ring-yellow-600",
+    },
+    orange: {
+        bg: "bg-orange-500 dark:bg-orange-600",
+        text: "text-orange-500 dark:text-orange-600",
+        ring: "focus:ring-orange-500 dark:focus:ring-orange-600 checked:ring-orange-500 dark:checked:ring-orange-600",
+    },
+    purple: {
+        bg: "bg-purple-500 dark:bg-purple-600",
+        text: "text-purple-500 dark:text-purple-600",
+        ring: "focus:ring-purple-500 dark:focus:ring-purple-600 checked:ring-purple-500 dark:checked:ring-purple-600",
+    },
+    pink: {
+        bg: "bg-pink-500 dark:bg-pink-600",
+        text: "text-pink-500 dark:text-pink-600",
+        ring: "focus:ring-pink-500 dark:focus:ring-pink-600 checked:ring-pink-500 dark:checked:ring-pink-600",
+    },
+};
+---
+
+<div class="w-full h-12 py-1 flex flex-wrap items-center justify-start gap-8">
+    {
+        Object.keys(categoryColors).map((color) => (
+                <label
+                    for={`category-${color}`}
+                    class="group relative h-full aspect-square rounded-full font-medium flex items-center justify-center cursor-pointer"
+                >
+                    <span class="hidden">{color}</span>
+
+                    <input
+                        type="radio"
+                        id={`category-${color}`}
+                        name="this_color"
+                        value={color}
+                        required
+                        checked={
+                            category
+                                ? color === category.this_color
+                                    ? true
+                                    : undefined
+                                : undefined
+                        }
+                        class:list={[
+                            "relative -z-[1] size-full rounded-full border-none focus:bg-none checked:bg-none focus:ring-3 focus:ring-offset-4 focus:ring-offset-zinc-100 focus:dark:ring-offset-zinc-900 checked:ring-2 checked:ring-offset-4 checked:ring-offset-zinc-100 checked:dark:ring-offset-zinc-900",
+                            ...Object.values(categoryColors[color]),
+                        ]}
+                    />
+                </label>
+            ))
+    }
+</div>
