@@ -6,7 +6,7 @@ import type { Enums } from "../../../database/database.types";
 export const POST: APIRoute = async ({ request, redirect }) => {
     const formData = await request.formData();
 
-    const categoryId = formData.get("category_id")?.toString();
+    const categoryId = formData.get("id")?.toString();
     const title = formData.get("title")?.toString();
     const description = formData.get("description")?.toString();
     const spendingLimit = formData.get("spending_limit")?.toString();
