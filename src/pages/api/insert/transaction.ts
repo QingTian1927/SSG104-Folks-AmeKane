@@ -1,6 +1,7 @@
 import type { APIRoute } from "astro";
 import { auth, db } from "../../../database/databaseUtils";
 import { toBoolean, toNumber } from "../../../database/typeUtils";
+import { supabase } from "../../../database/supabase/client";
 
 export const POST: APIRoute = async ({ request, redirect }) => {
     const formData = await request.formData();
@@ -43,7 +44,33 @@ export const POST: APIRoute = async ({ request, redirect }) => {
             { status: 500 }
         );
     }
+    
+    const { data: account, error: accountError } = await supabase.from("Account").select().eq("id", accountId);
+    
+    if (accountError) {
+        return new Response(
+            "Could not retrieve account information for updating\n" + accountError.message,
+            { status: 500 }
+        );
+    }
 
+    let currentBalance = (account) ? account[0].balance : 0;
+    
+    if (toBoolean(isIncome)) {
+        currentBalance += toNumber(value);
+    } else {
+        currentBalance -= toNumber(value);
+    }
+    
+    const { data: updateDate, erorr: updateError } = await db.update.account(accountId, { balance: currentBalance });
+
+    if (updateError) {
+        return new Response(
+            "Failed to update the account balance\n" + updateError.message,
+            { status: 500 }
+        );
+    }
+    
     return new Response(
         JSON.stringify({ data }), { status: 200 }
     );
