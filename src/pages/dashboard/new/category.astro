@@ -1,0 +1,13 @@
+---
+import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
+import CategoryForm from "../../../layouts/dashboard/categoryForm.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const translate = useTranslations(lang);
+---
+
+<CategoryForm
+    title={translate("dashboard.new.category")}
+    action="/api/insert/category"
+    text={translate("dashboard.create")}
+/>

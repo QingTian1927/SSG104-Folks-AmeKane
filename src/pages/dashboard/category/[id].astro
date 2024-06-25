@@ -1,0 +1,31 @@
+---
+import { supabase } from "../../../database/supabase/client";
+import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
+import CategoryForm from "../../../layouts/dashboard/categoryForm.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const translate = useTranslations(lang);
+
+const { id } = Astro.params;
+if (id === undefined) {
+    throw new Error("Category ID is undefined");
+}
+
+const { data: categories, error } = await supabase.from("Category").select().eq("id", id);
+if (error) {
+    console.error(error);
+    return Astro.redirect("/500");
+}
+
+if (!categories || categories.length === 0) {
+    return Astro.redirect("/400");
+}
+---
+
+<CategoryForm
+    title={translate("dashboard.edit.category")}
+    text={translate("dashboard.edit")}
+    action="/api/insert/category"
+    deleteAction="/api/delete/category"
+    category={categories[0]}
+/>

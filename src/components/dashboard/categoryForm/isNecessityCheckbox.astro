@@ -1,0 +1,21 @@
+---
+import type { Tables } from "../../../database/database.types";
+
+interface Props {
+    text: string;
+    category?: Tables<"Category">;
+}
+
+const { text, category } = Astro.props;
+---
+
+<label for="is_necessity" class="self-start flex items-center justify-start gap-4">
+    <input
+        type="checkbox"
+        id="is_necessity"
+        name="is_necessity"
+        checked={category ? category.is_necessity : undefined}
+        class="size-[1.25rem] lg:size-[1rem] bg-zinc-200 dark:bg-zinc-700 focus:outline-none focus:ring-transparent focus:ring-offset-0"
+    />
+    <span class="leading-none">{text}</span>
+</label>
