@@ -5,7 +5,7 @@ import { toBoolean, toNumber } from "../../../database/typeUtils";
 export const POST: APIRoute = async ({ request, redirect }) => {
     const formData = await request.formData();
 
-    const accountId = formData.get("account_id")?.toString();
+    const accountId = formData.get("id")?.toString();
     const title = formData.get("title")?.toString();
     const balance = formData.get("balance")?.toString();
     const is_saving = formData.get("is_saving")?.toString();
