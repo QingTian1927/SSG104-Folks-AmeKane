@@ -44,9 +44,9 @@ export const POST: APIRoute = async ({ request, redirect }) => {
             { status: 500 }
         );
     }
-    
+
     const { data: account, error: accountError } = await supabase.from("Account").select().eq("id", accountId);
-    
+
     if (accountError) {
         return new Response(
             "Could not retrieve account information for updating\n" + accountError.message,
@@ -55,14 +55,14 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     }
 
     let currentBalance = (account) ? account[0].balance : 0;
-    
+
     if (toBoolean(isIncome)) {
         currentBalance += toNumber(value);
     } else {
         currentBalance -= toNumber(value);
     }
-    
-    const { data: updateDate, erorr: updateError } = await db.update.account(accountId, { balance: currentBalance });
+
+    const { error: updateError } = await db.update.account(accountId, { balance: currentBalance });
 
     if (updateError) {
         return new Response(
@@ -70,7 +70,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
             { status: 500 }
         );
     }
-    
+
     return new Response(
         JSON.stringify({ data }), { status: 200 }
     );
