@@ -1,8 +1,10 @@
 ---
 interface Props {
     title: string;
+    deleteAction?: string;
+    item?: { id: string };
 }
-const { title } = Astro.props;
+const { title, deleteAction, item } = Astro.props;
 ---
 
 <header class="w-full flex items-center justify-start gap-8">
@@ -28,4 +30,31 @@ const { title } = Astro.props;
     <h1 class="font-bold text-xl lg:text-2xl">
         {title}
     </h1>
+
+    {
+        deleteAction && item && (
+            <form
+                action={deleteAction}
+                method="POST"
+                class="grow flex items-center justify-end"
+            >
+                <input type="hidden" id="id" name="id" value={item.id} />
+
+                <button
+                    type="submit"
+                    class="p-2 rounded-lg hover:bg-red-400/20 dark:hover:bg-red-600/20"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="1.75rem"
+                        height="100%"
+                        class="bi bi-trash-fill fill-red-400 dark:fill-red-600"
+                        viewBox="0 0 16 16"
+                    >
+                        <path d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5M8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5m3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0" />
+                    </svg>
+                </button>
+            </form>
+        )
+    }
 </header>
