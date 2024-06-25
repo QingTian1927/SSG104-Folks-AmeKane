@@ -5,7 +5,6 @@ import { supabase } from "../../../database/supabase/client";
 
 export const POST: APIRoute = async ({ request, redirect }) => {
     const formData = await request.formData();
-    console.log(formData);
 
     const accountId = formData.get("account_id")?.toString();
     const categoryId = formData.get("category_id")?.toString();
@@ -45,25 +44,33 @@ export const POST: APIRoute = async ({ request, redirect }) => {
             { status: 500 }
         );
     }
-    let AccRe = {
-        balance: toNumber(value),
-    }
+    
     const { data: account, error: accountError } = await supabase.from("Account").select().eq("id", accountId);
-    let oddBal = (account) ? account[0].balance : 0;
+    
     if (accountError) {
         return new Response(
-            "Could not insert the newly created transaction\n" +
-                accountError.message,
+            "Could not retrieve account information for updating\n" + accountError.message,
             { status: 500 }
         );
     }
+
+    let currentBalance = (account) ? account[0].balance : 0;
+    
     if (toBoolean(isIncome)) {
-        oddBal += AccRe.balance;
+        currentBalance += toNumber(value);
     } else {
-        oddBal -= AccRe.balance;
+        currentBalance -= toNumber(value);
     }
-    AccRe.balance = oddBal;
-    db.update.account(accountId,AccRe);
+    
+    const { data: updateDate, erorr: updateError } = await db.update.account(accountId, { balance: currentBalance });
+
+    if (updateError) {
+        return new Response(
+            "Failed to update the account balance\n" + updateError.message,
+            { status: 500 }
+        );
+    }
+    
     return new Response(
         JSON.stringify({ data }), { status: 200 }
     );
