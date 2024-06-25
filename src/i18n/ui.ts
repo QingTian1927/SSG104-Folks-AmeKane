@@ -96,6 +96,9 @@ export const ui = {
         "error.404.title": "Vỡ Nợ :<",
         "error.404.subtitle": "Nội dung bạn đang tìm kiếm hiện không tồn tại.",
 
+        "error.500.title": "Phá Sản >:(",
+        "error.500.subtitle": "Trang web của chúng tôi hiện đang gặp phải một số vấn đề kỹ thuật. Mong bạn thông cảm.",
+
         "oauth.google": "Đăng nhập với Google",
         "oauth.facebook": "Đăng nhập với Facebook",
 

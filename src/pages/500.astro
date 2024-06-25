@@ -1,0 +1,44 @@
+---
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import Basehead from "../layouts/basehead.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const translate = useTranslations(lang);
+
+Astro.response.status = 500;
+---
+
+<html>
+    <head>
+        <Basehead title="500 - Lỗi Hệ Thống" />
+    </head>
+
+    <body
+        class="w-screen min-h-svh p-8 flex flex-col items-center justify-center bg-zinc-200 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-100 selection:bg-cyan-500 dark:selection:bg-blue-900"
+    >
+        <h1 class="w-full mb-16 font-extrabold text-center text-9xl sm:text-[16rem]">500</h1>
+
+        <div class="mb-8 w-full flex flex-col items-center text-center">
+            <h2 class="mb-4 font-semibold text-3xl sm:text-4xl">
+                {translate("error.500.title")}
+            </h2>
+            <p class="text-xl">{translate("error.500.subtitle")}</p>
+        </div>
+
+        <div class="w-full flex items-center justify-center">
+            <a
+                href="/"
+                class="py-4 px-8 rounded-md font-semibold text-base sm:text-lg bg-cyan-500 hover:bg-cyan-600 dark:bg-blue-700 dark:hover:bg-blue-900 text-zinc-800 dark:text-zinc-100 "
+            >
+                {translate("error.return")}
+            </a>
+
+            <a
+                href="https://github.com/QingTian1927/SSG104-Folks-AmeKane/issues"
+                class="py-4 px-8 underline font-semibold text-base sm:text-lg"
+            >
+                {translate("error.report")}
+            </a>
+        </div>
+    </body>
+</html>
