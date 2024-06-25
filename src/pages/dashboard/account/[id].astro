@@ -27,7 +27,8 @@ if (!accounts || accounts.length === 0) {
 
 <AccountForm
     title={translate("dashboard.edit.account")}
-    action="/api/update/account"
     text={translate("dashboard.edit")}
+    action="/api/update/account"
+    deleteAction="/api/delete/account"
     account={accounts[0]}
 />
