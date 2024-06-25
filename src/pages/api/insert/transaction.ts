@@ -1,9 +1,11 @@
 import type { APIRoute } from "astro";
 import { auth, db } from "../../../database/databaseUtils";
 import { toBoolean, toNumber } from "../../../database/typeUtils";
+import { supabase } from "../../../database/supabase/client";
 
 export const POST: APIRoute = async ({ request, redirect }) => {
     const formData = await request.formData();
+    console.log(formData);
 
     const accountId = formData.get("account_id")?.toString();
     const categoryId = formData.get("category_id")?.toString();
@@ -43,7 +45,25 @@ export const POST: APIRoute = async ({ request, redirect }) => {
             { status: 500 }
         );
     }
-
+    let AccRe = {
+        balance: toNumber(value),
+    }
+    const { data: account, error: accountError } = await supabase.from("Account").select().eq("id", accountId);
+    let oddBal = (account) ? account[0].balance : 0;
+    if (accountError) {
+        return new Response(
+            "Could not insert the newly created transaction\n" +
+                accountError.message,
+            { status: 500 }
+        );
+    }
+    if (toBoolean(isIncome)) {
+        oddBal += AccRe.balance;
+    } else {
+        oddBal -= AccRe.balance;
+    }
+    AccRe.balance = oddBal;
+    db.update.account(accountId,AccRe);
     return new Response(
         JSON.stringify({ data }), { status: 200 }
     );
