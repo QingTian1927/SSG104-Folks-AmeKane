@@ -4,6 +4,7 @@ import { db } from "../../../database/databaseUtils";
 import type { ID } from "../../../database/models";
 import type { languages } from "../../../i18n/ui";
 import { useTranslations } from "../../../i18n/utils";
+import { categoryColors } from "../categoryForm/colorListing.astro";
 
 interface Props {
     userId: ID;
@@ -24,7 +25,7 @@ if (error) {
 <div class="w-full flex flex-wrap items-center justify-start gap-4">
     <a
         href="/dashboard/new/category"
-        class="w-fit p-3 rounded-md font-medium flex items-center justify-center bg-zinc-200 hover:bg-zinc-300 dark:bg-zinc-700 dark:hover:bg-zinc-600"
+        class="w-fit p-3 px-6 rounded-full font-medium flex items-center justify-center bg-zinc-100 hover:bg-zinc-300 dark:bg-zinc-900 dark:hover:bg-zinc-800 outline outline-2 outline-offset-0 outline-zinc-300 dark:outline-zinc-700"
     >
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -44,7 +45,7 @@ if (error) {
             categories.map((category) => (
                 <label
                     for={category.id}
-                    class="group relative w-fit p-3 rounded-md font-medium flex items-center justify-center cursor-pointer"
+                    class={`group relative w-fit p-3 px-6 rounded-full font-medium flex items-center justify-center cursor-pointer ${categoryColors[category.this_color].text}`}
                 >
                     <span class="">{category.title}</span>
                     <input
@@ -53,8 +54,17 @@ if (error) {
                         name="category_id"
                         value={category.id}
                         required
-                        checked={transaction ? ((category.id === transaction.category_id) ? true : undefined) : undefined}
-                        class="absolute -z-[1] size-full rounded-md border-none focus:ring-transparent focus:outline-none focus:ring-offset-0 focus:bg-none checked:bg-none bg-zinc-200 group-hover:bg-zinc-300 dark:bg-zinc-700 dark:group-hover:bg-zinc-600 text-cyan-500 dark:text-blue-700 checked:group-hover:bg-cyan-500 dark:checked:group-hover:bg-blue-700"
+                        checked={
+                            transaction
+                                ? category.id === transaction.category_id
+                                    ? true
+                                    : undefined
+                                : undefined
+                        }
+                        class:list={[
+                            "absolute -z-[1] size-full rounded-full border-none focus:bg-none focus:ring-0 focus:ring-offset-0 checked:bg-none bg-zinc-100 hover:bg-zinc-300 dark:bg-zinc-900 dark:hover:bg-zinc-800 text-zinc-100 dark:text-zinc-900 outline outline-2 outline-offset-0 outline-zinc-300 dark:outline-zinc-700",
+                            `${categoryColors[category.this_color].listing}`,
+                        ]}
                     />
                 </label>
             ))
