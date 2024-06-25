@@ -27,7 +27,8 @@ if (!transactions || transactions.length === 0) {
 
 <TransactionForm
     title={translate("dashboard.edit.transaction")}
-    action="/api/update/transaction"
     text={translate("dashboard.edit")}
+    action="/api/update/transaction"
+    deleteAction="/api/delete/transaction"
     transaction={transactions[0]}
 />
