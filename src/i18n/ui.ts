@@ -69,6 +69,7 @@ export const ui = {
         "dashboard.see-more": "Xem thêm",
         "dashboard.create": "Tạo Mới",
         "dashboard.edit": "Chỉnh Sửa",
+        "dashboard.delete": "Xóa",
         "dashboard.word.income": "Thu Nhập",
         "dashboard.word.expense": "Chi Tiêu",
 
