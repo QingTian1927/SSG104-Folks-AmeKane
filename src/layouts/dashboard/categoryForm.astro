@@ -13,19 +13,13 @@ interface Props {
     title: string;
     text: string;
     action: string;
-    deleteAction: string;
+    deleteAction?: string;
     category?: Tables<"Category">;
 }
 const { title, action, deleteAction, category, text } = Astro.props;
 
 const lang = getLangFromUrl(Astro.url);
 const translate = useTranslations(lang);
-
-const userId = await auth.user.getId();
-if (!userId) {
-    console.error("Cannot retrieve userId");
-    return Astro.redirect("/500");
-}
 ---
 
 <html lang={lang}>
