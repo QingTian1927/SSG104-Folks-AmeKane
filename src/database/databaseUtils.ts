@@ -56,6 +56,6 @@ export const db = {
         account: supaUtils.deleteAccount,
         category: supaUtils.deleteCategory,
         goal: supaUtils.deleteGoal,
-        transition: supaUtils.deleteTransaction,
+        transaction: supaUtils.deleteTransaction,
     },
 };

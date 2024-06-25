@@ -44,7 +44,10 @@ const { title: accountTitle } = account[0];
 const transactionDate = new Date(transaction.date);
 ---
 
-<a href={`/dashboard/transaction/${transaction.id}`} class="w-full max-w-full overflow-x-hidden min-h-fit p-4 rounded-lg flex items-center justify-start gap-2 hover:bg-zinc-200 dark:hover:bg-zinc-800">
+<a
+    href={`/dashboard/transaction/${transaction.id}`}
+    class="w-full max-w-full overflow-x-hidden min-h-fit p-4 rounded-lg flex items-center justify-start gap-2 hover:bg-zinc-200 dark:hover:bg-zinc-800"
+>
     <div class="grow h-full flex items-center justify-start gap-4">
         <div class="h-[85%] aspect-square">
             <div class="size-full rounded-full bg-red-400"></div>
@@ -68,6 +71,6 @@ const transactionDate = new Date(transaction.date);
         ]}
         >{transaction.is_income ? "+" : "-"}
         {transaction.value}
-        {currency}</span
-    >
+        {currency}
+    </span>
 </a>
