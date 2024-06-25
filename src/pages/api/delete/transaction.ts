@@ -3,7 +3,7 @@ import { db } from "../../../database/databaseUtils";
 
 export const POST: APIRoute = async ({ request, redirect }) => {
     const formData = await request.formData();
-    const transactionId = formData.get("transaction_id")?.toString();
+    const transactionId = formData.get("id")?.toString();
 
     if (!transactionId) {
         return new Response(
@@ -12,7 +12,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         );
     }
 
-    const { data, error } = await db.delete.category(transactionId);
+    const { data, error } = await db.delete.transaction(transactionId);
 
     if (error) {
         console.log(error);

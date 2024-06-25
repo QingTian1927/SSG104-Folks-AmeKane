@@ -3,7 +3,7 @@ import { db } from "../../../database/databaseUtils";
 
 export const POST: APIRoute = async ({ request, redirect }) => {
     const formData = await request.formData();
-    const categoryId = formData.get("category_id")?.toString();
+    const categoryId = formData.get("id")?.toString();
 
     if (!categoryId) {
         return new Response(
