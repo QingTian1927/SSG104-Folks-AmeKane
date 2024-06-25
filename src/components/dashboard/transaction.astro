@@ -5,6 +5,7 @@ import type { ID } from "../../database/models";
 import { supabase } from "../../database/supabase/client";
 import type { languages } from "../../i18n/ui";
 import { useTranslations } from "../../i18n/utils";
+import { categoryColors } from "./categoryForm/colorListing.astro";
 
 interface Props {
     lang?: keyof typeof languages;
@@ -32,6 +33,12 @@ if (accountError) {
     return Astro.redirect("/500");
 }
 
+const { data: category, error: categoryError } = await supabase.from("Category").select().eq("id", transaction.category_id);
+if (categoryError) {
+    console.error(categoryError);
+    return Astro.redirect("/500");
+}
+
 const { data: preferences, error: preferencesError } =
     await db.select.preferences(userId);
 if (preferencesError) {
@@ -42,6 +49,7 @@ if (preferencesError) {
 const { currency } = preferences[0];
 const { title: accountTitle } = account[0];
 const transactionDate = new Date(transaction.date);
+const backgroundColor = categoryColors[category[0].this_color].bg;
 ---
 
 <a
@@ -50,7 +58,7 @@ const transactionDate = new Date(transaction.date);
 >
     <div class="grow h-full flex items-center justify-start gap-4">
         <div class="h-[85%] aspect-square">
-            <div class="size-full rounded-full bg-red-400"></div>
+            <div class:list={[`size-full rounded-full ${backgroundColor}`]} title={category[0].title}></div>
         </div>
 
         <div class="h-full flex flex-col items-start justify-start">
