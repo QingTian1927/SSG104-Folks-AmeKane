@@ -1,6 +1,7 @@
 import type { APIRoute } from "astro";
 import { db } from "../../../database/databaseUtils";
 import { toBoolean, toNumber } from "../../../database/typeUtils";
+import { supabase } from "../../../database/supabase/client";
 
 export const POST: APIRoute = async ({ request, redirect }) => {
     const formData = await request.formData();
@@ -16,6 +17,48 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         return new Response(
             "Transaction ID is required",
             { status: 400 }
+        );
+    }
+
+    const { data: transaction, error: transactionError } = await supabase.from("Transaction").select().eq("id", transactionId);
+    if (transactionError) {
+        console.log(transactionError);
+        return new Response(
+            "Could not delete the given transaction\n" +
+                transactionError.message,
+            { status: 500 }
+        );
+    }
+    const oldisIncome = transaction[0].is_income;
+    const oldvalue = transaction[0].value;
+    const { data: account, error: accountError } = await supabase.from("Account").select().eq("id", transaction[0].account_id);
+    if (accountError) {
+        console.log(accountError);
+        return new Response(
+            "Could not delete the given transaction\n" + accountError.message,
+            { status: 500 }
+        );
+    }
+    let currentBalance = account ? account[0].balance : 0;
+
+    if (oldisIncome) {
+        currentBalance -= oldvalue;
+    } else {
+        currentBalance += oldvalue;
+    }
+
+    if (toBoolean(isIncome)) {
+        currentBalance += toNumber(value);
+    } else {
+        currentBalance -= toNumber(value);
+    }
+
+    const { error: updateError } = await db.update.account(account[0].id, { balance: currentBalance,});
+    if (updateError) {
+        console.log(updateError);
+        return new Response(
+            "Could not delete the given transaction\n" + updateError.message,
+            { status: 500 }
         );
     }
 
