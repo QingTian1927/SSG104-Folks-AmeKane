@@ -34,7 +34,7 @@ const defaultAccount = preferences[0].default_account;
 <div class="w-full flex flex-wrap items-center justify-start gap-4">
     <a
         href="/dashboard/new/account"
-        class="w-fit p-3 rounded-md font-medium flex items-center justify-center bg-zinc-200 hover:bg-zinc-300 dark:bg-zinc-700 dark:hover:bg-zinc-600"
+        class="w-fit py-3 px-6 rounded-md font-medium flex items-center justify-center bg-zinc-200 hover:bg-zinc-300 dark:bg-zinc-700 dark:hover:bg-zinc-600"
     >
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -54,7 +54,7 @@ const defaultAccount = preferences[0].default_account;
             accounts.map((account) => (
                 <label
                     for={account.id}
-                    class="group relative w-fit p-3 rounded-md font-medium flex items-center justify-center cursor-pointer"
+                    class="group relative w-fit py-3 px-6 rounded-md font-medium flex items-center justify-center cursor-pointer"
                 >
                     <span class="">{account.title}</span>
                     <input

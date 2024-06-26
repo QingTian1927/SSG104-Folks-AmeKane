@@ -1,5 +1,5 @@
 ---
-import type { Enums, Tables } from "../../../database/database.types";
+import type { Tables } from "../../../database/database.types";
 import type { languages } from "../../../i18n/ui";
 import { useTranslations } from "../../../i18n/utils";
 
@@ -13,16 +13,14 @@ const translate = useTranslations(lang);
 
 export type CategoryColor = {
     [colorName: string]: {
-        bg: string;
-        text: string;
-        ring: string;
-        listing: string;
+        [tailwindClass: string]: string;
     };
 };
 
 export const categoryColors: CategoryColor = {
     blue: {
         bg: "bg-sky-500 dark:bg-sky-600",
+        softBg: "hover:bg-sky-500/20 hover:bg-sky-600/20",
         text: "text-sky-500 dark:text-sky-600",
         ring: "focus:ring-sky-500 dark:focus:ring-sky-600 checked:ring-sky-500 dark:checked:ring-sky-600",
         listing:
@@ -30,6 +28,7 @@ export const categoryColors: CategoryColor = {
     },
     red: {
         bg: "bg-red-500 dark:bg-red-600",
+        softBg: "hover:bg-red-500/20 hover:bg-red-600/20",
         text: "text-red-500 dark:text-red-600",
         ring: "focus:ring-red-500 dark:focus:ring-red-600 checked:ring-red-500 dark:checked:ring-red-600",
         listing:
@@ -37,6 +36,7 @@ export const categoryColors: CategoryColor = {
     },
     green: {
         bg: "bg-green-500 dark:bg-green-600",
+        softBg: "hover:bg-green-500/20 hover:bg-green-600/20",
         text: "text-green-500 dark:text-green-600",
         ring: "focus:ring-green-500 dark:focus:ring-green-600 checked:ring-green-500 dark:checked:ring-green-600",
         listing:
@@ -44,6 +44,7 @@ export const categoryColors: CategoryColor = {
     },
     yellow: {
         bg: "bg-yellow-500 dark:bg-yellow-600",
+        softBg: "hover:bg-yellow-500/20 hover:bg-yellow-600/20",
         text: "text-yellow-500 dark:text-yellow-600",
         ring: "focus:ring-yellow-500 dark:focus:ring-yellow-600 checked:ring-yellow-500 dark:checked:ring-yellow-600",
         listing:
@@ -51,6 +52,7 @@ export const categoryColors: CategoryColor = {
     },
     orange: {
         bg: "bg-orange-500 dark:bg-orange-600",
+        softBg: "hover:bg-orange-500/20 hover:bg-orange-600/20",
         text: "text-orange-500 dark:text-orange-600",
         ring: "focus:ring-orange-500 dark:focus:ring-orange-600 checked:ring-orange-500 dark:checked:ring-orange-600",
         listing:
@@ -58,6 +60,7 @@ export const categoryColors: CategoryColor = {
     },
     purple: {
         bg: "bg-purple-500 dark:bg-purple-600",
+        softBg: "hover:bg-purple-500/20 hover:bg-purple-600/20",
         text: "text-purple-500 dark:text-purple-600",
         ring: "focus:ring-purple-500 dark:focus:ring-purple-600 checked:ring-purple-500 dark:checked:ring-purple-600",
         listing:
@@ -65,6 +68,7 @@ export const categoryColors: CategoryColor = {
     },
     pink: {
         bg: "bg-pink-500 dark:bg-pink-600",
+        softBg: "hover:bg-pink-500/20 hover:bg-pink-600/20",
         text: "text-pink-500 dark:text-pink-600",
         ring: "focus:ring-pink-500 dark:focus:ring-pink-600 checked:ring-pink-500 dark:checked:ring-pink-600",
         listing:
@@ -73,12 +77,12 @@ export const categoryColors: CategoryColor = {
 };
 ---
 
-<div class="w-full h-12 py-1 flex flex-wrap items-center justify-start gap-8">
+<div class="w-full h-fit py-1 flex flex-wrap items-center justify-start gap-8">
     {
         Object.keys(categoryColors).map((color) => (
             <label
                 for={`category-${color}`}
-                class="group relative h-full aspect-square rounded-full font-medium flex items-center justify-center cursor-pointer"
+                class="group relative h-10 aspect-square rounded-full font-medium flex items-center justify-center cursor-pointer"
             >
                 <span class="hidden">{color}</span>
 
@@ -97,7 +101,9 @@ export const categoryColors: CategoryColor = {
                     }
                     class:list={[
                         "relative -z-[1] size-full rounded-full border-none focus:bg-none checked:bg-none focus:ring-3 focus:ring-offset-4 focus:ring-offset-zinc-100 focus:dark:ring-offset-zinc-900 checked:ring-2 checked:ring-offset-4 checked:ring-offset-zinc-100 checked:dark:ring-offset-zinc-900",
-                        ...Object.values(categoryColors[color]),
+                        categoryColors[color].bg,
+                        categoryColors[color].text,
+                        categoryColors[color].ring,
                     ]}
                 />
             </label>

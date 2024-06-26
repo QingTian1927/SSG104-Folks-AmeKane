@@ -67,7 +67,7 @@ const translate = useTranslations(lang);
                     class="w-full h-full grid grid-cols-1 lg:grid-cols-2 gap-8"
                 >
                     <RecentTransactions lang={lang} userId={data.user?.id} />
-                    <SpendingByCategories lang={lang} />
+                    <SpendingByCategories lang={lang} userId={data.user?.id} />
                 </div>
             </div>
         </MainViewport>
