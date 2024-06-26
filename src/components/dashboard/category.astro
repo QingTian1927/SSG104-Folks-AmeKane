@@ -1,15 +1,70 @@
 ---
-import type { Tables } from '../../database/database.types';
-import type { ID } from '../../database/models';
-import type { languages } from '../../i18n/ui';
+import { auth, db } from "../../database/databaseUtils";
+import type { ID } from "../../database/models";
+import { supabase } from "../../database/supabase/client";
+import type { languages } from "../../i18n/ui";
+import { categoryColors } from "./categoryForm/colorListing.astro";
+import type { CategoryRanking } from "./home/spendingByCategories.astro";
 
 interface Props {
     lang?: keyof typeof languages;
     userId?: ID;
-    transaction: Tables<"Transaction">;
+    categoryRanking: CategoryRanking;
 }
+
+const {
+    lang = "vi",
+    userId = await auth.user.getId(),
+    categoryRanking,
+} = Astro.props;
+
+if (!userId) {
+    console.error("Cannot retrieve user ID");
+    return Astro.redirect("/500");
+}
+
+const { data: category, error: categoryError } = await supabase
+    .from("Category")
+    .select()
+    .eq("id", categoryRanking.category_id)
+    .single();
+if (categoryError) {
+    console.error(categoryError);
+    return Astro.redirect("/500");
+}
+
+const { data: preferences, error: preferencesError } =
+    await db.select.preferences(userId);
+if (preferencesError) {
+    console.error(preferencesError);
+    return Astro.redirect("/500");
+}
+
+const { currency } = preferences[0];
+const backgroundColor = categoryColors[category.this_color].bg;
+const softBackgroundColor = categoryColors[category.this_color].softBg;
 ---
 
-<a>
-    
+<a
+    href={`/dashboard/category/${category.id}`}
+    class={`w-full max-w-full overflow-x-hidden min-h-fit p-4 rounded-lg flex items-center justify-start gap-2 ${softBackgroundColor}`}
+>
+    <div class="grow h-full flex items-center justify-start gap-4">
+        <div class="h-[85%] min-h-[37.39px] aspect-square">
+            <div
+                class={`size-full rounded-full ${backgroundColor}`}
+                title={category.title}
+            >
+            </div>
+        </div>
+
+        <div class="grow h-full flex flex-col items-start justify-center">
+            <span class="font-semibold truncate">{category.title}</span>
+            <span class="text-sm truncate">{category.description}</span>
+        </div>
+
+        <span class="shrink-0 min-w-fit font-semibold text-lg">
+            {categoryRanking.money_spent} {currency}
+        </span>
+    </div>
 </a>

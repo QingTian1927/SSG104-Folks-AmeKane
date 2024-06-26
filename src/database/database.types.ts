@@ -179,7 +179,7 @@ export type Database = {
                     is_income: boolean
                     is_transfer: boolean
                     title: string
-                    user_id: string | null
+                    user_id: string
                     value: number
                 }
                 Insert: {
@@ -192,7 +192,7 @@ export type Database = {
                     is_income?: boolean
                     is_transfer?: boolean
                     title: string
-                    user_id?: string | null
+                    user_id?: string
                     value?: number
                 }
                 Update: {
@@ -205,7 +205,7 @@ export type Database = {
                     is_income?: boolean
                     is_transfer?: boolean
                     title?: string
-                    user_id?: string | null
+                    user_id?: string
                     value?: number
                 }
                 Relationships: [
@@ -237,6 +237,15 @@ export type Database = {
             [_ in never]: never
         }
         Functions: {
+            get_category_spending: {
+                Args: {
+                    query_user_id: string
+                }
+                Returns: {
+                    category_id: string
+                    money_spent: number
+                }[]
+            }
             get_total_balance: {
                 Args: {
                     query_user_id: string
