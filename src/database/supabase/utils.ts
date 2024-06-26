@@ -403,3 +403,14 @@ export async function getTotalExpense(userId: ID) {
     }
     return await supabase.rpc("get_total_expense", { query_user_id: userId });
 }
+
+export async function getTotalSpendingByCategory(userId: ID, limit?: number) {
+    if (!userId) {
+        return errorResponse(userId, ERROR_MESSAGES.UNDEFINED_USER_ID);
+    }
+
+    if (limit === undefined) {
+        return await supabase.rpc("get_category_spending", { query_user_id: userId });
+    }
+    return await supabase.rpc("get_category_spending", { query_user_id: userId }).limit(limit);
+}
