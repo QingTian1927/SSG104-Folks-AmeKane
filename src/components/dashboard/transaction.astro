@@ -54,15 +54,15 @@ const backgroundColor = categoryColors[category[0].this_color].bg;
 
 <a
     href={`/dashboard/transaction/${transaction.id}`}
-    class="w-full max-w-full overflow-x-hidden min-h-fit p-4 rounded-lg flex items-center justify-start gap-2 hover:bg-zinc-200 dark:hover:bg-zinc-800"
+    class="w-full max-w-full overflow-x-hidden min-h-fit p-4 rounded-lg flex items-center justify-between gap-2 hover:bg-zinc-200 dark:hover:bg-zinc-800"
 >
-    <div class="grow h-full flex items-center justify-start gap-4">
+    <div class="relative max-w-[80%] h-full flex items-center justify-start gap-4">
         <div class="h-[85%] aspect-square">
             <div class:list={[`size-full rounded-full ${backgroundColor}`]} title={category[0].title}></div>
         </div>
 
-        <div class="h-full flex flex-col items-start justify-start">
-            <span class="grow font-semibold truncate">{transaction.title}</span>
+        <div class="grow max-w-[85%] h-full flex flex-col items-start justify-start">
+            <span class="max-w-full font-semibold truncate">{transaction.title}</span>
             <span class="text-sm truncate"
                 >{accountTitle} • <time
                     datetime={transactionDate.toLocaleString()}
