@@ -12,11 +12,11 @@ interface Props {
 const { lang = "vi", userId = await auth.user.getId() } = Astro.props;
 const translate = useTranslations(lang);
 
-const savingGoals = [
-    { id: "1", current: 100, target: 500, title: "Saving Goal 1" },
-    { id: "2", current: 300, target: 700, title: "Saving Goal 2" },
-    { id: "3", current: 0, target: 300, title: "Saving Goal 3" },
-];
+const { data: goals, error: goalsError } = await db.select.goal(userId);
+if (goalsError) {
+    console.error(goalsError);
+    return Astro.redirect("/500");
+}
 ---
 
 <article
@@ -32,13 +32,13 @@ const savingGoals = [
         class="grow w-full mb-4 flex flex-col items-start justify-start gap-2 font-medium text-lg text-zinc-900 dark:text-zinc-50"
     >
         {
-            savingGoals &&
-                savingGoals.map((goal) => (
+            goals &&
+                goals.map((goal) => (
                     <a
-                        href={`/dashboard/transaction/${goal.id}`}
+                        href={`/dashboard/goal/${goal.id}`}
                         class="w-full flex items-center justify-start"
                     >
-                        <span class="grow truncate">{goal.title}</span>
+                        <span class="max-w-[40%] grow truncate">{goal.title}</span>
 
                         <div class="shrink-0 w-[40%] h-2.5 rounded-full bg-zinc-300 dark:bg-zinc-600">
                             <div
