@@ -1,0 +1,99 @@
+---
+import FormHeader from "../../components/dashboard/formHeader.astro";
+import InputField from "../../components/dashboard/goalForm/inputField.astro";
+import FormSubmitButton from "../../components/formSubmitButton.astro";
+import type { Tables } from "../../database/database.types";
+import type { languages } from "../../i18n/ui";
+import { useTranslations } from "../../i18n/utils";
+import Basehead from "../basehead.astro";
+
+interface Props {
+    title: string;
+    text: string;
+    action: string;
+    deleteAction?: string;
+    goal?: Tables<"Goal">;
+    lang?: keyof typeof languages;
+}
+
+const { title, text, action, deleteAction, goal, lang = "vi" } = Astro.props;
+const translate = useTranslations(lang);
+---
+
+<html lang={lang}>
+    <head>
+        <Basehead title={title} />
+    </head>
+
+    <body
+        class="w-full min-h-screen px-4 py-8 lg:p-8 flex flex-col items-center justify-start gap-8 text-zinc-800 bg-zinc-100 dark:text-zinc-100 dark:bg-zinc-900 selection:bg-cyan-500 dark:selection:bg-blue-700"
+    >
+        <FormHeader title={title} deleteAction={deleteAction} item={goal} />
+
+        <main
+            class="grow w-full h-full flex items-start lg:items-center justify-center"
+        >
+            <form
+                action={action}
+                method="POST"
+                class="w-full h-full flex flex-col lg:flex-row items-start justify-center gap-8 lg:gap-16"
+            >
+                <div
+                    class="w-full lg:w-3/5 xl:w-2/5 flex flex-col items-center justify-start gap-4 lg:gap-8"
+                >
+                    <h2 class="self-start font-semibold text-xl lg:text-2xl">
+                        {translate("dashboard.info.goal")}
+                    </h2>
+
+                    {
+                        goal && (
+                            <input
+                                type="hidden"
+                                id="id"
+                                name="id"
+                                value={goal ? goal.id : undefined}
+                            />
+                        )
+                    }
+
+                    <InputField
+                        id="title"
+                        goal={goal}
+                        placeholder={translate("dashboard.new.goal.name")}
+                    />
+
+                    <InputField
+                        id="target"
+                        type="number"
+                        goal={goal}
+                        placeholder={translate("dashboard.new.goal.target")}
+                    />
+
+                    <InputField
+                        id="current"
+                        type="number"
+                        goal={goal}
+                        placeholder={translate("dashboard.new.goal.current")}
+                    />
+
+                    <InputField
+                        id="description"
+                        goal={goal}
+                        placeholder={translate(
+                            "dashboard.new.goal.description"
+                        )}
+                    />
+
+                    <button
+                        type="submit"
+                        class="self-end hidden lg:block w-fit py-2 px-4 rounded-md font-medium bg-cyan-500 hover:bg-cyan-600 dark:bg-blue-700 dark:hover:bg-blue-900"
+                    >
+                        {text}
+                    </button>
+                </div>
+
+                <FormSubmitButton text={text} />
+            </form>
+        </main>
+    </body>
+</html>
