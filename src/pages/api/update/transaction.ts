@@ -24,27 +24,28 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     if (transactionError) {
         console.log(transactionError);
         return new Response(
-            "Could not delete the given transaction\n" +
-                transactionError.message,
+            "Failed to retrieve the original transaction information\n" + transactionError.message,
             { status: 500 }
         );
     }
-    const oldisIncome = transaction[0].is_income;
-    const oldvalue = transaction[0].value;
+
+    const oldIsIncome = transaction[0].is_income;
+    const oldValue = transaction[0].value;
+
     const { data: account, error: accountError } = await supabase.from("Account").select().eq("id", transaction[0].account_id);
     if (accountError) {
         console.log(accountError);
         return new Response(
-            "Could not delete the given transaction\n" + accountError.message,
+            "Failed to retrieve the account associated with the updated transaction\n" + accountError.message,
             { status: 500 }
         );
     }
-    let currentBalance = account ? account[0].balance : 0;
 
-    if (oldisIncome) {
-        currentBalance -= oldvalue;
+    let currentBalance = account ? account[0].balance : 0;
+    if (oldIsIncome) {
+        currentBalance -= oldValue;
     } else {
-        currentBalance += oldvalue;
+        currentBalance += oldValue;
     }
 
     if (toBoolean(isIncome)) {
@@ -57,7 +58,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     if (updateError) {
         console.log(updateError);
         return new Response(
-            "Could not delete the given transaction\n" + updateError.message,
+            "Failed to update the given transaction\n" + updateError.message,
             { status: 500 }
         );
     }
