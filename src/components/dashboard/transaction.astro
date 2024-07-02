@@ -61,7 +61,7 @@ const backgroundColor = categoryColors[category[0].this_color].bg;
     title={transaction.is_income ? `Khoản thu: +${transaction.value}` : `Khoản chi: -${transaction.value}`}
 >
     <div
-        class="relative max-w-[75%] sm:max-w-[85%] lg:max-w-[90%] xl:max-w-[85%] h-full flex items-center justify-start gap-4"
+        class="relative grow max-w-[75%] sm:max-w-[85%] lg:max-w-[90%] xl:max-w-[85%] h-full flex items-center justify-start gap-4"
     >
         <div class="h-[85%] aspect-square">
             <div
@@ -72,12 +72,12 @@ const backgroundColor = categoryColors[category[0].this_color].bg;
         </div>
 
         <div
-            class="max-w-[75%] xs:max-w-[90%] lg:max-w-[90%] xl:max-w-[85%] h-full flex flex-col items-start justify-start"
+            class="grow max-w-[75%] xs:max-w-[90%] lg:max-w-[90%] xl:max-w-[85%] h-full flex flex-col items-start justify-start"
         >
-            <span class="max-w-full font-semibold truncate text-sm lg:text-base"
+            <span class="grow max-w-full font-semibold truncate text-sm lg:text-base"
                 >{transaction.title}</span
             >
-            <span class="text-xs lg:text-sm truncate"
+            <span class="grow text-xs lg:text-sm truncate"
                 >{accountTitle} • <time
                     datetime={transactionDate.toLocaleString()}
                     >{transactionDate.toLocaleDateString()}</time
