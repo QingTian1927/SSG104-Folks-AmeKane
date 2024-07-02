@@ -12,9 +12,10 @@ interface Props {
 const { lang = "vi", userId = await auth.user.getId() } = Astro.props;
 const translate = useTranslations(lang);
 
-const { data: goals, error: goalsError } = await db.select.goal(userId);
-if (goalsError) {
-    console.error(goalsError);
+const { data: savingGoals, error: savingGoalsError } =
+    await db.function.getGoalProgress(userId, 3);
+if (savingGoalsError) {
+    console.error(savingGoalsError);
     return Astro.redirect("/500");
 }
 ---
@@ -32,19 +33,28 @@ if (goalsError) {
         class="grow w-full mb-4 flex flex-col items-start justify-start gap-2 font-medium text-lg text-zinc-900 dark:text-zinc-50"
     >
         {
-            goals &&
-                goals.map((goal) => (
+            savingGoals &&
+                savingGoals.map((goal) => (
                     <a
-                        href={`/dashboard/goal/${goal.id}`}
-                        class="w-full flex items-center justify-start"
+                        href={`/dashboard/goal/${goal.goal_id}`}
+                        class="group w-full p-2 lg:px-4 rounded-md flex items-center justify-between bg-zinc-200 hover:bg-cyan-500/20 dark:bg-zinc-700 dark:hover:bg-blue-700/20"
+                        title={`Đã tiết kiệm được tổng cộng ${goal.goal_current} / ${goal.goal_target}`}
                     >
-                        <span class="max-w-[40%] grow truncate">{goal.title}</span>
+                        <span class="max-w-[40%] truncate text-sm lg:text-base">
+                            {goal.goal_title}
+                        </span>
 
-                        <div class="shrink-0 w-[40%] h-2.5 rounded-full bg-zinc-300 dark:bg-zinc-600">
-                            <div
-                                class="h-2.5 rounded-full bg-cyan-500 dark:bg-blue-700"
-                                style={`width: ${(goal.current / goal.target) * 100}%`}
-                            />
+                        <div class="shrink-0 w-[50%] flex items-center justify-between gap-4">
+                            <div class="grow max-w-[80%] h-2.5 rounded-full bg-zinc-300 dark:bg-zinc-600">
+                                <div
+                                    class="h-2.5 rounded-full bg-cyan-500 dark:bg-blue-700"
+                                    style={`width: ${goal.progress}%`}
+                                />
+                            </div>
+
+                            <span class="text-sm lg:text-base text-zinc-700 dark:text-zinc-300">
+                                {goal.progress}%
+                            </span>
                         </div>
                     </a>
                 ))
