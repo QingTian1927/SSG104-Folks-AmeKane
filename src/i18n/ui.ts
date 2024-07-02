@@ -66,6 +66,8 @@ export const ui = {
         "dashboard.home.recent-transactions": "Giao dịch gần đây",
         "dashboard.home.spending-categories": "Chi tiêu theo danh mục",
 
+        "dashboard.categories.title": "Danh mục chi tiêu",
+
         "dashboard.see-more": "Xem thêm",
         "dashboard.create": "Tạo Mới",
         "dashboard.edit": "Chỉnh Sửa",
