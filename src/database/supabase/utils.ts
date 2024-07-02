@@ -408,9 +408,26 @@ export async function getTotalSpendingByCategory(userId: ID, limit?: number) {
     if (!userId) {
         return errorResponse(userId, ERROR_MESSAGES.UNDEFINED_USER_ID);
     }
+    if (limit && limit < 0) {
+        return errorResponse(limit, "Query limit must be equal or greater than 0");
+    }
 
     if (limit === undefined) {
         return await supabase.rpc("get_category_spending", { query_user_id: userId });
     }
     return await supabase.rpc("get_category_spending", { query_user_id: userId }).limit(limit);
+}
+
+export async function getGoalProgress(userId: ID, limit?: number) {
+    if (!userId) {
+        return errorResponse(userId, ERROR_MESSAGES.UNDEFINED_USER_ID);
+    }
+    if (limit && limit < 0) {
+        return errorResponse(limit, "Query limit must be equal or greater than 0");
+    }
+
+    if (limit === undefined) {
+        return await supabase.rpc("get_goal_progress", { query_user_id: userId });
+    }
+    return await supabase.rpc("get_goal_progress", { query_user_id: userId }).limit(limit);
 }

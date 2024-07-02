@@ -1,0 +1,13 @@
+---
+import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
+import GoalForm from "../../../layouts/dashboard/goalForm.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const translate = useTranslations(lang);
+---
+
+<GoalForm
+    title={translate("dashboard.new.goal")}
+    action="/api/insert/goal"
+    text={translate("dashboard.create")}
+/>

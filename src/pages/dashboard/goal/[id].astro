@@ -1,0 +1,31 @@
+---
+import { supabase } from "../../../database/supabase/client";
+import { getLangFromUrl, useTranslations } from "../../../i18n/utils"
+import GoalForm from "../../../layouts/dashboard/goalForm.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const translate = useTranslations(lang);
+
+const { id } = Astro.params;
+if (id === undefined) {
+    throw new Error("Goal ID is undefined");
+}
+
+const { data: goal, error } = await supabase.from("Goal").select().eq("id", id).single();
+if (error) {
+    console.error(error);
+    return Astro.redirect("/500");
+}
+
+if (!goal) {
+    return Astro.redirect("/404");
+}
+---
+
+<GoalForm
+    title={translate("dashboard.edit.goal")}
+    action="/api/insert/goal"
+    deleteAction="/api/delete/goal"
+    text={translate("dashboard.edit")}
+    goal={goal}
+/>

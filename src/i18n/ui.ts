@@ -66,6 +66,8 @@ export const ui = {
         "dashboard.home.recent-transactions": "Giao dịch gần đây",
         "dashboard.home.spending-categories": "Chi tiêu theo danh mục",
 
+        "dashboard.categories.title": "Danh mục chi tiêu",
+
         "dashboard.see-more": "Xem thêm",
         "dashboard.create": "Tạo Mới",
         "dashboard.edit": "Chỉnh Sửa",
@@ -79,6 +81,7 @@ export const ui = {
         "dashboard.info.transaction": "Thông tin giao dịch",
         "dashboard.info.account": "Thông tin tài khoản",
         "dashboard.info.category": "Thông tin danh mục",
+        "dashboard.info.goal": "Thông tin mục tiêu",
 
         "dashboard.new.transaction": "Tạo giao dịch mới",
         "dashboard.new.transaction.name": "Tên giao dịch",
@@ -97,9 +100,16 @@ export const ui = {
         "dashboard.new.category.description": "Mô tả",
         "dashboard.new.category.necessity": "Là mục tất yếu",
 
+        "dashboard.new.goal": "Tạo mục tiêu mới",
+        "dashboard.new.goal.name": "Tên mục tiêu",
+        "dashboard.new.goal.target": "Mục tiêu tiết kiệm",
+        "dashboard.new.goal.current": "Số tiền đã tiết kiệm được",
+        "dashboard.new.goal.description": "Mổ tả",
+
         "dashboard.edit.transaction": "Chỉnh sửa giao dịch",
         "dashboard.edit.account": "Chỉnh sửa tài khoản",
         "dashboard.edit.category": "Chỉnh sửa danh mục",
+        "dashboard.edit.goal": "Chỉnh sửa mục tiêu",
 
         "error.return": "Trang Chủ",
         "error.report": "Báo Lỗi",

@@ -3,7 +3,7 @@ import { auth, db } from "../../../database/databaseUtils";
 import type { ID } from "../../../database/models";
 import type { languages } from "../../../i18n/ui";
 import { useTranslations } from "../../../i18n/utils";
-import Category from "../category.astro";
+import Category from "../categoryWithSpending.astro";
 
 interface Props {
     userId?: ID;
@@ -38,7 +38,7 @@ if (rankingError) {
         >
     </div>
 
-    <div class="w-full h-full flex flex-col items-start justify-start">
+    <div class="w-full h-full flex flex-col items-start justify-start gap-2 lg:gap-0">
         {
             categoriesRanking &&
                 categoriesRanking.map((category) => (
