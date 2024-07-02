@@ -57,20 +57,21 @@ const translate = useTranslations(lang);
         <MainViewport>
             <div class="w-full h-full flex flex-col gap-8">
                 <div
-                    class="w-full grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-8"
+                    class="w-full grid grid-cols-1 xl:grid-cols-2 gap-4 lg:gap-8"
                 >
                     <AccountStatsCard userId={data.user?.id} lang={lang} />
                     <SavingGoalsCard />
                 </div>
 
                 <div
-                    class="w-full h-full grid grid-cols-1 lg:grid-cols-2 gap-8"
+                    class="w-full h-full grid grid-cols-1 xl:grid-cols-2 gap-8"
                 >
-                    <RecentTransactions lang={lang} userId={data.user?.id} />
                     <SpendingByCategories lang={lang} userId={data.user?.id} />
+                    <RecentTransactions lang={lang} userId={data.user?.id} />
                 </div>
             </div>
         </MainViewport>
+
         <NewItemButton
             link="/dashboard/new/transaction"
             item={translate("dashboard.nav.transactions")}

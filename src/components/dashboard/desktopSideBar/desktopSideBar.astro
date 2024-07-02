@@ -46,7 +46,7 @@ const linkIdPrefix = "sidebar-";
         </button>
     </div>
 
-    <div class="grow w-full h-full mb-4 overflow-y-auto flex flex-col items-center justify-start">
+    <div class="grow w-full h-full mb-4 overflow-y-auto overflow-x-hidden flex flex-col items-center justify-start">
         <div
             class="lg:grow w-full mb-4 flex flex-col items-center justify-start gap-4"
         >
@@ -113,8 +113,8 @@ const linkIdPrefix = "sidebar-";
 
             <NavLink
                 text={translate("dashboard.nav.savings")}
-                link="/dashboard/savings"
-                id={`${linkIdPrefix}savings`}
+                link="/dashboard/goals"
+                id={`${linkIdPrefix}goals`}
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"

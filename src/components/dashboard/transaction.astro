@@ -33,7 +33,10 @@ if (accountError) {
     return Astro.redirect("/500");
 }
 
-const { data: category, error: categoryError } = await supabase.from("Category").select().eq("id", transaction.category_id);
+const { data: category, error: categoryError } = await supabase
+    .from("Category")
+    .select()
+    .eq("id", transaction.category_id);
 if (categoryError) {
     console.error(categoryError);
     return Astro.redirect("/500");
@@ -54,16 +57,27 @@ const backgroundColor = categoryColors[category[0].this_color].bg;
 
 <a
     href={`/dashboard/transaction/${transaction.id}`}
-    class="w-full max-w-full overflow-x-hidden min-h-fit p-4 rounded-lg flex items-center justify-between gap-2 hover:bg-zinc-200 dark:hover:bg-zinc-800"
+    class="w-full max-w-full overflow-x-hidden p-2 lg:p-4 rounded-lg flex items-center justify-between gap-2 hover:bg-zinc-200 dark:hover:bg-zinc-800"
+    title={transaction.is_income ? `Khoản thu: +${transaction.value}` : `Khoản chi: -${transaction.value}`}
 >
-    <div class="relative max-w-[80%] h-full flex items-center justify-start gap-4">
+    <div
+        class="relative max-w-[75%] sm:max-w-[85%] lg:max-w-[90%] xl:max-w-[85%] h-full flex items-center justify-start gap-4"
+    >
         <div class="h-[85%] aspect-square">
-            <div class:list={[`size-full rounded-full ${backgroundColor}`]} title={category[0].title}></div>
+            <div
+                class:list={[`size-full rounded-full ${backgroundColor}`]}
+                title={category[0].title}
+            >
+            </div>
         </div>
 
-        <div class="grow max-w-[85%] h-full flex flex-col items-start justify-start">
-            <span class="max-w-full font-semibold truncate">{transaction.title}</span>
-            <span class="text-sm truncate"
+        <div
+            class="max-w-[75%] xs:max-w-[90%] lg:max-w-[90%] xl:max-w-[85%] h-full flex flex-col items-start justify-start"
+        >
+            <span class="max-w-full font-semibold truncate text-sm lg:text-base"
+                >{transaction.title}</span
+            >
+            <span class="text-xs lg:text-sm truncate"
                 >{accountTitle} • <time
                     datetime={transactionDate.toLocaleString()}
                     >{transactionDate.toLocaleDateString()}</time
@@ -74,7 +88,7 @@ const backgroundColor = categoryColors[category[0].this_color].bg;
 
     <span
         class:list={[
-            "shrink-0 min-w-fit font-semibold text-lg",
+            "shrink-0 min-w-fit font-semibold text-base lg:text-lg",
             transaction.is_income ? "text-green-500" : "text-red-500",
         ]}
         >{transaction.is_income ? "+" : "-"}

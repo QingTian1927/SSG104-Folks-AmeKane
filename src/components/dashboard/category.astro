@@ -47,11 +47,15 @@ const softBackgroundColor = categoryColors[category.this_color].softBg;
 
 <a
     href={`/dashboard/category/${category.id}`}
-    class={`w-full max-w-full overflow-x-hidden min-h-fit p-4 rounded-lg flex items-center justify-start gap-2 ${softBackgroundColor}`}
+    class={`w-full max-w-full overflow-x-hidden min-h-[52px] lg:min-h-[76px] p-2 lg:p-4 rounded-lg flex items-center justify-start gap-2 ${softBackgroundColor}`}
 >
     <div class="w-full h-full flex items-center justify-between gap-4">
-        <div class="max-w-[85%] h-full flex items-center justify-start gap-4">
-            <div class="h-[85%] min-h-[37.39px] aspect-square">
+        <div
+            class="max-w-[75%] sm:max-w-[85%] lg:max-w-[90%] xl:max-w-[85%] h-full flex items-center justify-start gap-4"
+        >
+            <div
+                class="h-[85%] min-h-[30.59px] lg:min-h-[37.39px] aspect-square"
+            >
                 <div
                     class={`size-full rounded-full ${backgroundColor}`}
                     title={category.title}
@@ -60,18 +64,19 @@ const softBackgroundColor = categoryColors[category.this_color].softBg;
             </div>
 
             <div
-                class="max-w-[85%] h-full flex flex-col items-start justify-center"
+                class="max-w-[75%] xs:max-w-[90%] lg:max-w-[90%] xl:max-w-[85%] h-full flex flex-col items-start justify-center"
             >
-                <span class="max-w-full font-semibold truncate"
+                <span
+                    class="max-w-full font-semibold truncate text-sm lg:text-base"
                     >{category.title}</span
                 >
-                <span class="max-w-full text-sm truncate"
+                <span class="max-w-full text-xs lg:text-sm truncate"
                     >{category.description}</span
                 >
             </div>
         </div>
 
-        <span class="shrink-0 min-w-fit font-semibold text-lg">
+        <span class="shrink-0 min-w-fit font-semibold text-base lg:text-lg">
             {categoryRanking.money_spent}
             {currency}
         </span>
