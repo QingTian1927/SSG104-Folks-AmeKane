@@ -246,6 +246,18 @@ export type Database = {
                     money_spent: number
                 }[]
             }
+            get_goal_progress: {
+                Args: {
+                    query_user_id: string
+                }
+                Returns: {
+                    goal_id: string
+                    goal_title: string
+                    goal_target: number
+                    goal_current: number
+                    progress: number
+                }[]
+            }
             get_total_balance: {
                 Args: {
                     query_user_id: string

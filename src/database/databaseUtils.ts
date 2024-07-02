@@ -28,6 +28,7 @@ export const db = {
         getTotalExpense: supaUtils.getTotalExpense,
         getTotalIncome: supaUtils.getTotalIncome,
         getTotalSpendingByCategory: supaUtils.getTotalSpendingByCategory,
+        getGoalProgress: supaUtils.getGoalProgress,
     },
 
     select: {
