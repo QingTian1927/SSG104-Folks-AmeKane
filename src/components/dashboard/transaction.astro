@@ -1,27 +1,17 @@
 ---
 import type { Tables } from "../../database/database.types";
-import { auth, db } from "../../database/databaseUtils";
-import type { ID } from "../../database/models";
 import { supabase } from "../../database/supabase/client";
-import type { languages } from "../../i18n/ui";
-import { useTranslations } from "../../i18n/utils";
 import { categoryColors } from "./categoryForm/colorListing.astro";
 
 interface Props {
-    lang?: keyof typeof languages;
-    userId?: ID;
+    currency?: string;
     transaction: Tables<"Transaction">;
 }
 
-const {
-    lang = "vi",
-    userId = await auth.user.getId(),
-    transaction,
-} = Astro.props;
-const translate = useTranslations(lang);
+const { currency = "đ", transaction } = Astro.props;
 
-if (!userId) {
-    return Astro.redirect("/500");
+if (!transaction) {
+    console.error("Transaction Component: no transaction received!");
 }
 
 const { data: account, error: accountError } = await supabase
@@ -42,14 +32,6 @@ if (categoryError) {
     return Astro.redirect("/500");
 }
 
-const { data: preferences, error: preferencesError } =
-    await db.select.preferences(userId);
-if (preferencesError) {
-    console.error(preferencesError);
-    return Astro.redirect("/500");
-}
-
-const { currency } = preferences[0];
 const { title: accountTitle } = account[0];
 const transactionDate = new Date(transaction.date);
 const backgroundColor = categoryColors[category[0].this_color].bg;
@@ -58,7 +40,9 @@ const backgroundColor = categoryColors[category[0].this_color].bg;
 <a
     href={`/dashboard/transaction/${transaction.id}`}
     class="w-full max-w-full overflow-x-hidden p-2 lg:p-4 rounded-lg flex items-center justify-between gap-2 hover:bg-zinc-200 dark:hover:bg-zinc-800"
-    title={transaction.is_income ? `Khoản thu: +${transaction.value}` : `Khoản chi: -${transaction.value}`}
+    title={transaction.is_income
+        ? `Khoản thu: +${transaction.value}`
+        : `Khoản chi: -${transaction.value}`}
 >
     <div
         class="relative grow max-w-[75%] sm:max-w-[85%] lg:max-w-[90%] xl:max-w-[85%] h-full flex items-center justify-start gap-4"
@@ -74,7 +58,8 @@ const backgroundColor = categoryColors[category[0].this_color].bg;
         <div
             class="grow max-w-[75%] xs:max-w-[90%] lg:max-w-[90%] xl:max-w-[85%] h-full flex flex-col items-start justify-start"
         >
-            <span class="grow max-w-full font-semibold truncate text-sm lg:text-base"
+            <span
+                class="grow max-w-full font-semibold truncate text-sm lg:text-base"
                 >{transaction.title}</span
             >
             <span class="grow text-xs lg:text-sm truncate"

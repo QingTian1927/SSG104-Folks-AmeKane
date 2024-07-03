@@ -1,0 +1,78 @@
+---
+import type { Tables } from "../../../database/database.types";
+import { auth, db } from "../../../database/databaseUtils";
+import type { ID } from "../../../database/models";
+import { supabase } from "../../../database/supabase/client";
+import Transaction from "../transaction.astro";
+
+interface Props {
+    userId?: ID;
+    currency?: string;
+}
+
+const { currency, userId = await auth.user.getId() } = Astro.props;
+if (!userId) {
+    console.error("Cannot retrieve userId");
+    return Astro.redirect("/500");
+}
+
+let currencySymbol;
+if (!currency) {
+    const { data: preferences, error: preferencesError } = await supabase
+        .from("Preferences")
+        .select("currency")
+        .eq("user_id", userId)
+        .single();
+    if (preferencesError) {
+        console.error(preferencesError);
+        return Astro.redirect("/500");
+    }
+    currencySymbol = preferences.currency;
+} else {
+    currencySymbol = currency;
+}
+
+const { data: transactions, error: transactionsError } = await supabase
+    .from("Transaction")
+    .select()
+    .eq("user_id", userId)
+    .order("date", { ascending: false });
+if (transactionsError) {
+    console.error(transactionsError);
+    return Astro.redirect("/500");
+}
+
+const transactionGroups = new Map();
+transactions.forEach((transaction) => {
+    const transactionDate = new Date(transaction.date).toLocaleDateString();
+
+    if (transactionGroups.has(transactionDate)) {
+        transactionGroups.get(transactionDate).push(transaction);
+        return;
+    }
+
+    transactionGroups.set(transactionDate, [transaction]);
+});
+---
+
+<div class="w-full h-full flex flex-col items-start justify-start gap-8">
+    {
+        transactionGroups &&
+            Array.from(transactionGroups.entries()).map((transactionGroup) => (
+                <div class="w-full h-full flex flex-col items-start justify-start gap-4">
+                    <h2 class="w-full font-semibold text-2xl">
+                        {transactionGroup[0]}
+                    </h2>
+
+                    <div class="w-full h-full flex flex-col items-start justify-start gap-2 lg:gap-0">
+                        {transactionGroup[1].map((t: Tables<"Transaction">) => (
+                            <Transaction
+                                transaction={t}
+                                currency={currencySymbol}
+                            />
+                        ))}
+                    </div>
+                </div>
+            ))
+    }
+</div>
