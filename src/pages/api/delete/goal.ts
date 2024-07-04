@@ -5,6 +5,8 @@ export const POST: APIRoute = async ({ request, redirect }) => {
     const formData = await request.formData();
     const goalId = formData.get("id")?.toString();
 
+    console.log(formData);
+
     if (!goalId) {
         return new Response(
             "Goal ID is required",
@@ -12,7 +14,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         );
     }
 
-    const { data, error } = await db.delete.category(goalId);
+    const { data, error } = await db.delete.goal(goalId);
 
     if (error) {
         console.log(error);

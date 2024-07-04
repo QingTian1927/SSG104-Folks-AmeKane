@@ -404,6 +404,13 @@ export async function getTotalExpense(userId: ID) {
     return await supabase.rpc("get_total_expense", { query_user_id: userId });
 }
 
+export async function getTotalSaving(userId: ID) {
+    if (!userId) {
+        return errorResponse(userId, ERROR_MESSAGES.UNDEFINED_USER_ID);
+    }
+    return await supabase.rpc("get_total_saving", { query_user_id: userId });
+}
+
 export async function getTotalSpendingByCategory(userId: ID, limit?: number) {
     if (!userId) {
         return errorResponse(userId, ERROR_MESSAGES.UNDEFINED_USER_ID);

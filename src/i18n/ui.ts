@@ -68,6 +68,11 @@ export const ui = {
 
         "dashboard.categories.title": "Danh mục chi tiêu",
 
+        "dashboard.goals.top.title": "Mục tiêu có tiến độ nhanh nhất",
+        "dashboard.goals.saved": "Đã tiết kiệm được tổng cộng",
+        "dashboard.goals.total-saved": "Tổng số tiền bạn đã tiết kiệm được",
+        "dashboard.goals.encouragement": "Cố lên bạn nhé :>",
+
         "dashboard.see-more": "Xem thêm",
         "dashboard.create": "Tạo Mới",
         "dashboard.edit": "Chỉnh Sửa",

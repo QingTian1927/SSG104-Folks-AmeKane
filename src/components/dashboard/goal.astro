@@ -1,0 +1,66 @@
+---
+import type { Tables } from "../../database/database.types";
+import type { languages } from "../../i18n/ui";
+import { useTranslations } from "../../i18n/utils";
+
+interface Props {
+    goal: Tables<"Goal">;
+    lang?: keyof typeof languages;
+    currency?: string;
+}
+
+const { goal, currency = "đ", lang = "vi" } = Astro.props;
+const translate = useTranslations(lang);
+
+if (!goal) {
+    console.error("Goal Component: no goal received!");
+}
+
+const goalProgress = Math.round((goal.current / goal.target) * 100);
+---
+
+<a
+    href={`/dashboard/goal/${goal.id}`}
+    class="w-full max-w-full overflow-x-hidden p-2 lg:p-4 rounded-lg flex flex-col items-center justify-between gap-2 border-2 border-zinc-300 dark:border-zinc-700 hover:border-cyan-500 dark:hover:border-blue-800"
+    title={`${translate("dashboard.goals.saved")} ${goal.current} / ${goal.target} ${currency}`}
+>
+    <div
+        class="w-full max-w-full overflow-x-hidden flex items-center justify-between gap-2"
+    >
+        <div
+            class="relative grow max-w-[80%] lg:max-w-[90%] h-full flex items-center justify-start gap-4"
+        >
+            <div
+                class="grow max-w-[90%] h-full flex flex-col items-start justify-start"
+            >
+                <span
+                    class="max-w-full mb-0 lg:mb-2 font-semibold truncate text-lg lg:text-xl"
+                    >{goal.title}</span
+                >
+
+                <span
+                    class="max-w-full truncate text-sm lg:text-base leading-6"
+                >
+                    <span class="hidden sm:inline-block"
+                        >{translate("dashboard.goals.saved")}</span
+                    >
+                    <span class="inline-block font-normal sm:font-medium"
+                        >{`${goal.current} / ${goal.target} ${currency}`}</span
+                    >
+                </span>
+            </div>
+        </div>
+
+        <span class="shrink-0 min-w-fit font-semibold text-xl lg:text-2xl">
+            {goalProgress}%
+        </span>
+    </div>
+
+    <div class="w-full mt-2 h-2.5 rounded-full bg-zinc-300 dark:bg-zinc-600">
+        <div
+            class="h-2.5 rounded-full bg-cyan-500 dark:bg-blue-700"
+            style={`width: ${goalProgress}%`}
+        >
+        </div>
+    </div>
+</a>

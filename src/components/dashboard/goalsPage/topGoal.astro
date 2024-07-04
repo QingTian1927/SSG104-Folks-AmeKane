@@ -1,0 +1,70 @@
+---
+import { auth, db } from "../../../database/databaseUtils";
+import type { ID } from "../../../database/models";
+import type { languages } from "../../../i18n/ui";
+import { useTranslations } from "../../../i18n/utils";
+
+interface Props {
+    userId?: ID;
+    lang?: keyof typeof languages;
+    currency?: string;
+}
+
+const {
+    currency = "đ",
+    lang = "vi",
+    userId = await auth.user.getId(),
+} = Astro.props;
+const translate = useTranslations(lang);
+
+const { data: topGoal, error: topGoalError } =
+    await db.function.getGoalProgress(userId, 1);
+if (topGoalError) {
+    console.error(topGoalError);
+    return Astro.redirect("/500");
+}
+---
+
+<article
+    class="w-full min-w-fit rounded-xl p-4 lg:p-8 flex flex-col items-start justify-start bg-zinc-200 dark:bg-zinc-700"
+>
+    <h2
+        class="w-full mb-4 font-medium text-xl lg:text-2xl text-zinc-600 dark:text-zinc-300"
+    >
+        {translate("dashboard.goals.top.title")}
+    </h2>
+
+    <a
+        class="w-full flex flex-col xs:flex-row items-center justify-start gap-4 lg:gap-8"
+        href={`/dashboard/goal/${topGoal[0].goal_id}`}
+    >
+        <div class="h-full flex items-center justify-center">
+            <span class="font-extrabold text-5xl sm:text-8xl hover:text-cyan-500 dark:hover:text-blue-700"
+                >{topGoal[0].progress}%</span
+            >
+        </div>
+
+        <div
+            class="grow w-full h-full py-2 flex flex-col items-start justify-between gap-2"
+        >
+            <span
+                class="max-w-full xs:max-w-[95%] text-pretty line-clamp-2 truncate font-semibold text-xl sm:text-2xl no-underline hover:underline"
+            >
+                {topGoal[0].goal_title}
+            </span>
+
+            <div
+                class="max-w-full xs:max-w-[95%] text-pretty line-clamp-2 truncate text-sm sm:text-base"
+            >
+                <span class="inline-block"
+                    >{translate("dashboard.goals.saved")}</span
+                >
+                <span class="inline-block font-medium"
+                    >{
+                        `${topGoal[0].goal_current} / ${topGoal[0].goal_target} ${currency}`
+                    }</span
+                >
+            </div>
+        </div>
+    </a>
+</article>

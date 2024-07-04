@@ -276,6 +276,12 @@ export type Database = {
                 }
                 Returns: number
             }
+            get_total_saving: {
+                Args: {
+                    query_user_id: string
+                }
+                Returns: number
+            }
         }
         Enums: {
             Color:
