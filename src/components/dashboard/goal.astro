@@ -2,6 +2,7 @@
 import type { Tables } from "../../database/database.types";
 import type { languages } from "../../i18n/ui";
 import { useTranslations } from "../../i18n/utils";
+import { categoryColors } from "./categoryForm/colorListing.astro";
 
 interface Props {
     goal: Tables<"Goal">;
@@ -17,6 +18,22 @@ if (!goal) {
 }
 
 const goalProgress = Math.round((goal.current / goal.target) * 100);
+let stateColor;
+
+if (goalProgress <= 25) {
+    stateColor = "red";
+} else if (goalProgress > 25 && goalProgress <= 50) {
+    stateColor = "orange";
+} else if (goalProgress > 50 && goalProgress <= 75) {
+    stateColor = "yellow";
+} else if (goalProgress > 75 && goalProgress <= 100) {
+    stateColor = "green";
+}
+
+let progressColor = "bg-cyan-500 dark:bg-blue-700";
+if (stateColor !== undefined) {
+    progressColor = categoryColors[stateColor].bg;
+}
 ---
 
 <a
@@ -58,7 +75,7 @@ const goalProgress = Math.round((goal.current / goal.target) * 100);
 
     <div class="w-full mt-2 h-2.5 rounded-full bg-zinc-300 dark:bg-zinc-600">
         <div
-            class="h-2.5 rounded-full bg-cyan-500 dark:bg-blue-700"
+            class={`h-2.5 rounded-full ${progressColor}`}
             style={`width: ${goalProgress}%`}
         >
         </div>
