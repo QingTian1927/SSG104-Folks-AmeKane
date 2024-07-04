@@ -1,0 +1,45 @@
+---
+import { auth, db } from '../../../database/databaseUtils';
+import type { ID } from '../../../database/models';
+import { supabase } from '../../../database/supabase/client';
+import Goal from '../goal.astro';
+
+interface Props {
+    userId?: ID;
+    currency?: string;
+}
+
+const { currency, userId = await auth.user.getId() } = Astro.props;
+if (!userId) {
+    console.error("Cannot retrieve userId");
+    return Astro.redirect("/500");
+}
+
+let currencySymbol;
+if (!currency) {
+    const { data: preferences, error: preferencesError } = await supabase
+        .from("Preferences")
+        .select("currency")
+        .eq("user_id", userId)
+        .single();
+    if (preferencesError) {
+        console.error(preferencesError);
+        return Astro.redirect("/500");
+    }
+    currencySymbol = preferences.currency;
+} else {
+    currencySymbol = currency;
+}
+
+const { data: goals, error: goalsError } = await db.select.goal(userId);
+if (goalsError) {
+    console.error({goalsError});
+    return Astro.redirect("/500");
+}
+---
+
+<div class="w-full h-full flex flex-col items-start justify-start gap-4">
+    {goals && goals.map((goal) => (
+        <Goal goal={goal} currency={currency} />
+    ))}
+</div>
