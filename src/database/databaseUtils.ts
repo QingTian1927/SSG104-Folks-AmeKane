@@ -27,6 +27,7 @@ export const db = {
         getTotalBalance: supaUtils.getTotalBalance,
         getTotalExpense: supaUtils.getTotalExpense,
         getTotalIncome: supaUtils.getTotalIncome,
+        getTotalSaving: supaUtils.getTotalSaving,
         getTotalSpendingByCategory: supaUtils.getTotalSpendingByCategory,
         getGoalProgress: supaUtils.getGoalProgress,
     },
