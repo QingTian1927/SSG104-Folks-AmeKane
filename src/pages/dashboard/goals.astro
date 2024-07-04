@@ -1,0 +1,80 @@
+---
+import { supabase } from "../../database/supabase/client";
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+
+import Basehead from "../../layouts/basehead.astro";
+import SideBar from "../../components/dashboard/desktopSideBar/desktopSideBar.astro";
+import BottomNavbar from "../../components/dashboard/mobileNavbar/bottomNavbar.astro";
+import NavHeader from "../../components/dashboard/navHeader/navHeader.astro";
+import MainViewport from "../../layouts/dashboard/mainViewport.astro";
+import NewItemButton from "../../components/dashboard/newItemButton.astro";
+import CategoryListing from "../../components/dashboard/categoriesPage/categoryListing.astro";
+import TopGoal from "../../components/dashboard/goalsPage/topGoal.astro";
+import TotalSaved from "../../components/dashboard/goalsPage/totalSaved.astro";
+import GoalListing from "../../components/dashboard/goalsPage/goalListing.astro";
+
+const { cookies, redirect } = Astro;
+
+const accessToken = cookies.get("sb-access-token");
+const refreshToken = cookies.get("sb-refresh-token");
+
+if (!accessToken || !refreshToken) {
+    return redirect("/signin");
+}
+
+const { data, error } = await supabase.auth.setSession({
+    refresh_token: refreshToken.value,
+    access_token: accessToken.value,
+});
+
+if (error) {
+    cookies.delete("sb-access-token", {
+        path: "/",
+    });
+    cookies.delete("sb-refresh-token", {
+        path: "/",
+    });
+
+    return redirect("/signin");
+}
+
+const location = "goals";
+const lang = getLangFromUrl(Astro.url);
+const translate = useTranslations(lang);
+---
+
+<html lang={lang}>
+    <head>
+        <Basehead title="Dashboard" />
+    </head>
+
+    <body
+        class="w-full h-full bg-zinc-100 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-100 selection:bg-cyan-500 dark:selection:bg-blue-900"
+    >
+        <SideBar lang={lang} location={location} />
+        <NavHeader lang={lang} title={translate("dashboard.nav.categories")} />
+
+        <MainViewport>
+            <div class="w-full h-full flex flex-col gap-8">
+                <div
+                    class="w-full grid grid-cols-1 xl:grid-cols-2 gap-4 lg:gap-8"
+                >
+                    <TotalSaved userId={data.user?.id} lang={lang} />
+                    <TopGoal userId={data.user?.id} lang={lang} />
+                </div>
+
+                <div
+                    class="w-full h-full grid grid-cols-1 gap-8"
+                >
+                    <GoalListing userId={data.user?.id} />
+                </div>
+            </div>
+        </MainViewport>
+
+        <NewItemButton
+            link="/dashboard/new/goal"
+            item={translate("dashboard.nav.savings")}
+        />
+        <BottomNavbar lang={lang} location={location} />
+    </body>
+</html>
