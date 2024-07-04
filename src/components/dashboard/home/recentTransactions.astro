@@ -64,12 +64,35 @@ if (transactionsError) {
         class="w-full h-full flex flex-col items-start justify-start gap-2 lg:gap-0"
     >
         {
-            transactions?.map((transaction) => (
-                <Transaction
-                    transaction={transaction}
-                    currency={currencySymbol}
-                />
-            ))
+            transactions &&
+                transactions.length > 0 &&
+                transactions.map((transaction) => (
+                    <Transaction
+                        transaction={transaction}
+                        currency={currencySymbol}
+                    />
+                ))
+        }
+
+        {
+            (!transactions || transactions.length == 0) && (
+                <div class="my-8 w-full h-full flex items-center justify-center gap-4">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="bi bi-cash h-[2rem] aspect-square fill-zinc-500"
+                        viewBox="0 0 16 16"
+                    >
+                        <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4" />
+                        <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2z" />
+                    </svg>
+
+                    <div class="flex flex-col items-start justify-center font-medium text-lg text-zinc-500">
+                        <span class="inline-block">
+                            {translate("dashboard.no.transaction")}.
+                        </span>
+                    </div>
+                </div>
+            )
         }
     </div>
 </div>

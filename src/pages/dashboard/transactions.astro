@@ -54,7 +54,7 @@ const translate = useTranslations(lang);
         <MainViewport>
             <div class="w-full h-full flex flex-col gap-8">
                 <div class="w-full grid grid-cols-1 gap-4 lg:gap-8">
-                    <TransactionListing userId={data.user?.id} />
+                    <TransactionListing userId={data.user?.id} lang={lang} />
                 </div>
             </div>
         </MainViewport>

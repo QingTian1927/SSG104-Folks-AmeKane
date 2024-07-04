@@ -3,14 +3,19 @@ import type { Tables } from "../../../database/database.types";
 import { auth, db } from "../../../database/databaseUtils";
 import type { ID } from "../../../database/models";
 import { supabase } from "../../../database/supabase/client";
+import type { languages } from "../../../i18n/ui";
+import { useTranslations } from "../../../i18n/utils";
 import Transaction from "../transaction.astro";
 
 interface Props {
     userId?: ID;
     currency?: string;
+    lang?: keyof typeof languages;
 }
 
-const { currency, userId = await auth.user.getId() } = Astro.props;
+const { currency, lang = "vi", userId = await auth.user.getId() } = Astro.props;
+const translate = useTranslations(lang);
+
 if (!userId) {
     console.error("Cannot retrieve userId");
     return Astro.redirect("/500");
@@ -55,24 +60,54 @@ transactions.forEach((transaction) => {
 });
 ---
 
-<div class="w-full h-full flex flex-col items-start justify-start gap-8">
-    {
-        transactionGroups &&
-            Array.from(transactionGroups.entries()).map((transactionGroup) => (
-                <div class="w-full h-full flex flex-col items-start justify-start gap-4">
-                    <h2 class="w-full font-semibold text-2xl">
-                        {transactionGroup[0]}
-                    </h2>
+{
+    transactions.length > 0 && (
+        <div class="w-full h-full flex flex-col items-start justify-start gap-8">
+            {transactionGroups &&
+                Array.from(transactionGroups.entries()).map(
+                    (transactionGroup) => (
+                        <div class="w-full h-full flex flex-col items-start justify-start gap-4">
+                            <h2 class="w-full font-semibold text-2xl">
+                                {transactionGroup[0]}
+                            </h2>
 
-                    <div class="w-full h-full flex flex-col items-start justify-start gap-2 lg:gap-0">
-                        {transactionGroup[1].map((t: Tables<"Transaction">) => (
-                            <Transaction
-                                transaction={t}
-                                currency={currencySymbol}
-                            />
-                        ))}
-                    </div>
-                </div>
-            ))
-    }
-</div>
+                            <div class="w-full h-full flex flex-col items-start justify-start gap-2 lg:gap-0">
+                                {transactionGroup[1].map(
+                                    (t: Tables<"Transaction">) => (
+                                        <Transaction
+                                            transaction={t}
+                                            currency={currencySymbol}
+                                        />
+                                    )
+                                )}
+                            </div>
+                        </div>
+                    )
+                )}
+        </div>
+    )
+}
+
+{
+    transactions.length == 0 && (
+        <div class="min-h-[65svh] w-full h-full flex flex-col items-center justify-center gap-4">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="bi bi-cash h-[15svh] aspect-square fill-zinc-500"
+                viewBox="0 0 16 16"
+            >
+                <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4" />
+                <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2z" />
+            </svg>
+
+            <div class="w-full flex flex-col items-center justify-center gap-2 font-medium text-lg text-zinc-500">
+                <span class="inline-block">
+                    {translate("dashboard.no.transaction")}.
+                </span>
+                <span class="inline-block">
+                    {translate("dashboard.item.create")}
+                </span>
+            </div>
+        </div>
+    )
+}
