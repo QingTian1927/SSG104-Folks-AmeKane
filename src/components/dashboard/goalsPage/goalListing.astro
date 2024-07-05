@@ -6,6 +6,7 @@ import { supabase } from "../../../database/supabase/client";
 import Goal from "../goal.astro";
 import { languages } from "../../../i18n/ui";
 import { useTranslations } from "../../../i18n/utils";
+import type { Tables } from "../../../database/database.types";
 
 interface Props {
     userId?: ID;
@@ -42,6 +43,19 @@ if (goalsError) {
     console.error({ goalsError });
     return Astro.redirect("/500");
 }
+
+goals.sort((a, b) => {
+    const progressA = a.current / a.target * 100;
+    const progressB = b.current / b.target * 100;
+
+    if (progressA === 100) {
+        return 1;
+    }
+    if (progressB === 100) {
+        return -1;
+    }
+    return 0;
+})
 ---
 
 {
