@@ -35,7 +35,7 @@ export const defaultThemes = ["system", "dark", "light", "time"];
     action="/api/update/preferences"
     method="POST"
 >
-    <h2 class="w-full font-bold text-3xl">
+    <h2 class="w-full font-bold text-2xl lg:text-3xl">
         {translate("dashboard.settings.preferences.title")}
     </h2>
 
@@ -43,7 +43,7 @@ export const defaultThemes = ["system", "dark", "light", "time"];
         class="w-full flex flex-col lg:flex-row items-center justify-start gap-8"
     >
         <div class="w-full flex flex-col items-start justify-center gap-2">
-            <label class="font-medium text-lg" for="currency"
+            <label class="font-medium text-base lg:text-lg" for="currency"
                 >{translate("dashboard.settings.preferences.currency")}</label
             >
             <input
@@ -60,7 +60,7 @@ export const defaultThemes = ["system", "dark", "light", "time"];
         </div>
 
         <div class="w-full flex flex-col items-start justify-center gap-2">
-            <label class="font-medium text-lg" for="default_theme"
+            <label class="font-medium text-base lg:text-lg" for="default_theme"
                 >{translate("dashboard.settings.preferences.theme")}</label
             >
             <select

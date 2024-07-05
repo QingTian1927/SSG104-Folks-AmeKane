@@ -27,7 +27,7 @@ const avatar = user.data.user.user_metadata.avatar_url;
     action="/api/update/user"
     method="POST"
 >
-    <h2 class="w-full font-bold text-3xl">
+    <h2 class="w-full font-bold text-2xl lg:text-3xl">
         {translate("dashboard.settings.account.title")}
     </h2>
 
@@ -65,7 +65,7 @@ const avatar = user.data.user.user_metadata.avatar_url;
         class="w-full flex flex-col lg:flex-row items-center justify-start gap-8"
     >
         <div class="w-full flex flex-col items-start justify-center gap-2">
-            <label class="font-medium text-lg" for="username"
+            <label class="font-medium text-base lg:text-lg" for="username"
                 >{translate("dashboard.settings.account.username")}</label
             >
             <input
@@ -81,7 +81,7 @@ const avatar = user.data.user.user_metadata.avatar_url;
         </div>
 
         <div class="w-full flex flex-col items-start justify-center gap-2">
-            <label class="font-medium text-lg" for="email"
+            <label class="font-medium text-base lg:text-lg" for="email"
                 >{translate("dashboard.settings.account.email")}</label
             >
             <input
