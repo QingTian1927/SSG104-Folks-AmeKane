@@ -19,6 +19,7 @@ export const auth = {
 
     admin: {
         deleteUser: supaUtils.deleteUser,
+        updateUserMetadata: supaUtils.updateUserMetadata,
     }
 }
 
