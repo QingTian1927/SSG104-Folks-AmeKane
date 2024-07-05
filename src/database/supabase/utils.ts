@@ -1,7 +1,7 @@
 import { supabase, supabaseElevated } from "./client";
 import type { TablesInsert, TablesUpdate } from "../database.types";
 import { ERROR_MESSAGES, errorResponse, isValidProvider, type ID } from "../models";
-import type { Provider } from "@supabase/supabase-js";
+import type { Provider, UserMetadata } from "@supabase/supabase-js";
 
 // ---------------
 // USER MANAGEMENT
@@ -42,6 +42,13 @@ export async function signInWithPassword(email: string, password: string) {
         email,
         password,
     });
+}
+
+export async function updateUserMetadata(userId: ID, metadata: UserMetadata) {
+    if (!userId) {
+        return errorResponse(userId, ERROR_MESSAGES.UNDEFINED_USER_ID);
+    }
+    return await supabaseElevated.auth.admin.updateUserById(userId, { user_metadata: metadata });
 }
 
 export async function deleteUser(userId: ID) {

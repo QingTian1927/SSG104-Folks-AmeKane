@@ -1,0 +1,42 @@
+---
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+
+import Basehead from "../../layouts/basehead.astro";
+import SideBar from "../../components/dashboard/desktopSideBar/desktopSideBar.astro";
+import BottomNavbar from "../../components/dashboard/mobileNavbar/bottomNavbar.astro";
+import NavHeader from "../../components/dashboard/navHeader/navHeader.astro";
+import MainViewport from "../../layouts/dashboard/mainViewport.astro";
+import { supabase } from "../../database/supabase/client";
+import UserMetadata from "../../components/dashboard/settingsPage/userMetadata.astro";
+import UserPreferences from "../../components/dashboard/settingsPage/userPreferences.astro";
+import AccountDeletion from "../../components/dashboard/settingsPage/accountDeletion.astro";
+
+const location = "settings";
+const lang = getLangFromUrl(Astro.url);
+const translate = useTranslations(lang);
+
+const user = await supabase.auth.getUser();
+---
+
+<html lang={lang}>
+    <head>
+        <Basehead title="User Settings" />
+    </head>
+
+    <body
+        class="w-full h-full bg-zinc-100 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-100 selection:bg-cyan-500 dark:selection:bg-blue-900"
+    >
+        <SideBar lang={lang} location={location} />
+        <NavHeader lang={lang} title={translate("dashboard.nav.settings")} />
+
+        <MainViewport>
+            <div class="w-full h-full flex flex-col gap-8">
+                <UserMetadata user={user} lang={lang} />
+                <UserPreferences userId={user.data.user?.id} lang={lang} />
+                <AccountDeletion userId={user.data.user?.id} lang={lang} />
+            </div>
+        </MainViewport>
+
+        <BottomNavbar lang={lang} location={location} />
+    </body>
+</html>

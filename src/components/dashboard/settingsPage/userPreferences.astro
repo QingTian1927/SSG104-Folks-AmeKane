@@ -1,0 +1,97 @@
+---
+import type { languages } from "../../../i18n/ui";
+import { useTranslations } from "../../../i18n/utils";
+import type { ID } from "../../../database/models";
+import { auth, db } from "../../../database/databaseUtils";
+
+interface Props {
+    userId?: ID;
+    lang?: keyof typeof languages;
+}
+
+const { lang = "vi", userId = await auth.user.getId() } = Astro.props;
+const translate = useTranslations(lang);
+
+if (!userId) {
+    console.error("userPreferences.astro: cannot retrieve user Id");
+    return Astro.redirect("/500");
+}
+
+const { data: preferences, error: preferencesError } =
+    await db.select.preferences(userId);
+if (preferencesError) {
+    console.error(`userPreferences.astro: ${preferencesError}`);
+    return Astro.redirect("/500");
+}
+
+const currency = preferences[0].currency;
+const userTheme = preferences[0].default_theme;
+
+export const defaultThemes = ["system", "dark", "light", "time"];
+---
+
+<form
+    class="w-full p-4 lg:p-8 rounded-lg flex flex-col items-start justify-start gap-8 border-2 border-zinc-300 dark:border-zinc-700"
+    action="/api/update/preferences"
+    method="POST"
+>
+    <h2 class="w-full font-bold text-2xl lg:text-3xl">
+        {translate("dashboard.settings.preferences.title")}
+    </h2>
+
+    <div
+        class="w-full flex flex-col lg:flex-row items-center justify-start gap-8"
+    >
+        <div class="w-full flex flex-col items-start justify-center gap-2">
+            <label class="font-medium text-base lg:text-lg" for="currency"
+                >{translate("dashboard.settings.preferences.currency")}</label
+            >
+            <input
+                type="text"
+                name="currency"
+                id="currency"
+                placeholder={translate(
+                    "dashboard.settings.preferences.currency"
+                )}
+                value={currency}
+                required
+                class="appearance-none w-full p-3 rounded-md border-none focus:ring-0 focus:ring-offset-0 bg-zinc-200 dark:bg-zinc-700 text-zinc-900 dark:text-zinc-50 placeholder:text-zinc-500 dark:placeholder:text-zinc-400 focus:outline focus:outline-cyan-500 dark:focus:outline-blue-700"
+            />
+        </div>
+
+        <div class="w-full flex flex-col items-start justify-center gap-2">
+            <label class="font-medium text-base lg:text-lg" for="default_theme"
+                >{translate("dashboard.settings.preferences.theme")}</label
+            >
+            <select
+                name="default_theme"
+                id="default_theme"
+                class="appearance-none w-full p-3 rounded-md border-none bg-zinc-200 dark:bg-zinc-700 text-zinc-800 dark:text-zinc-100 focus:ring-0 focus:ring-offset-0 focus:outline focus:outline-cyan-500 dark:focus:outline-blue-700"
+            >
+                {
+                    defaultThemes &&
+                        defaultThemes.map((theme) => (
+                            <option
+                                selected={
+                                    userTheme === theme ? true : undefined
+                                }
+                                value={theme}
+                            >
+                                {
+                                    /** @ts-expect-error */
+                                    translate(`dashboard.theme.${theme}`)
+                                }
+                            </option>
+                        ))
+                }
+            </select>
+        </div>
+    </div>
+
+    <button
+        type="submit"
+        class="self-end px-4 py-2 rounded-md font-medium bg-cyan-500 dark:bg-blue-700 hover:bg-cyan-600 hover:text-zinc-100 dark:hover:bg-blue-900"
+    >
+        {translate("dashboard.update")}
+    </button>
+</form>
