@@ -47,9 +47,9 @@ if (topGoalError) {
                         {topGoal[0]?.goal_title}
                     </span>
 
-                    <div class="max-w-full xs:max-w-[95%] text-pretty line-clamp-2 truncate text-sm sm:text-base">
+                    <div class="max-w-full xs:max-w-[95%] text-pretty line-clamp-2 whitespace-pre truncate text-sm sm:text-base">
                         <span class="inline-block">
-                            {translate("dashboard.goals.saved")}
+                            {translate("dashboard.goals.saved")}{" "}
                         </span>
                         <span class="inline-block font-medium">{`${topGoal[0]?.goal_current} / ${topGoal[0]?.goal_target} ${currency}`}</span>
                     </div>
