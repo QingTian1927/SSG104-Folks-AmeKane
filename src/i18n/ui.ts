@@ -82,6 +82,7 @@ export const ui = {
         "dashboard.create": "Tạo Mới",
         "dashboard.edit": "Chỉnh Sửa",
         "dashboard.delete": "Xóa",
+        "dashboard.update": "Cập Nhật",
         "dashboard.word.income": "Thu Nhập",
         "dashboard.word.expense": "Chi Tiêu",
 
@@ -120,6 +121,23 @@ export const ui = {
         "dashboard.edit.account": "Chỉnh sửa tài khoản",
         "dashboard.edit.category": "Chỉnh sửa danh mục",
         "dashboard.edit.goal": "Chỉnh sửa mục tiêu",
+
+        "dashboard.settings.account.title": "Thông tin người dùng",
+        "dashboard.settings.account.username": "Tên người dùng",
+        "dashboard.settings.account.email": "Địa chỉ email",
+        "dashboard.settings.preferences.title": "Cài đặt người dùng",
+        "dashboard.settings.preferences.currency": "Đơn vị tiền tệ",
+        "dashboard.settings.preferences.theme": "Giao diện ứng dụng",
+        "dashboard.settings.danger.title": "VÙNG NGUY HIỂM",
+        "dashboard.settings.danger.delete-account": "Xóa tài khoản",
+        "dashboard.settings.danger.delete-account-warning": "Tài khoản của bạn và các dữ liệu liên quan sẽ được xóa một cách vĩnh viễn và sẽ không thể khôi phục lại được.",
+        "dashboard.settings.danger.reconsider": "Vui lòng cân nhắc kỹ trước khi thực hiện thao tác trên.",
+        "dashboard.settings.danger.confirm": "Tôi xác nhận đã cân nhắc kỹ về quyết định của mình.",
+
+        "dashboard.theme.system": "Hệ thống",
+        "dashboard.theme.light": "Màu sáng",
+        "dashboard.theme.dark": "Màu tối",
+        "dashboard.theme.time": "Theo thời gian",
 
         "error.return": "Trang Chủ",
         "error.report": "Báo Lỗi",

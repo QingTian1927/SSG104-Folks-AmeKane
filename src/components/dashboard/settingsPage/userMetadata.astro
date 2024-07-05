@@ -1,0 +1,107 @@
+---
+import type { UserResponse } from "@supabase/supabase-js";
+import { supabase } from "../../../database/supabase/client";
+import type { languages } from "../../../i18n/ui";
+import { useTranslations } from "../../../i18n/utils";
+
+interface Props {
+    user?: UserResponse;
+    lang?: keyof typeof languages;
+}
+
+const { lang = "vi", user = await supabase.auth.getUser() } = Astro.props;
+const translate = useTranslations(lang);
+
+if (user.error) {
+    console.error({ userError: user.error });
+    return Astro.redirect("/500");
+}
+
+const username = user.data.user.user_metadata.name;
+const email = user.data.user.email;
+const avatar = user.data.user.user_metadata.avatar_url;
+---
+
+<form
+    class="w-full p-4 lg:p-8 rounded-lg flex flex-col items-start justify-start gap-8 border-2 border-zinc-300 dark:border-zinc-700"
+    action="/api/update/user"
+    method="POST"
+>
+    <h2 class="w-full font-bold text-3xl">
+        {translate("dashboard.settings.account.title")}
+    </h2>
+
+    <div class="w-full h-32 flex items-center justify-center">
+        {
+            avatar && (
+                <img
+                    src={avatar}
+                    alt={`${username}'s profile picture`}
+                    class="h-full aspect-square rounded-full"
+                />
+            )
+        }
+
+        {
+            !avatar && (
+                <div class="h-full aspect-square flex items-center justify-center">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="bi bi-person-circle aspect-square fill-zinc-800 dark:fill-zinc-100"
+                        viewBox="0 0 16 16"
+                    >
+                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                        <path
+                            fill-rule="evenodd"
+                            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"
+                        />
+                    </svg>
+                </div>
+            )
+        }
+    </div>
+
+    <div
+        class="w-full flex flex-col lg:flex-row items-center justify-start gap-8"
+    >
+        <div class="w-full flex flex-col items-start justify-center gap-2">
+            <label class="font-medium text-lg" for="username"
+                >{translate("dashboard.settings.account.username")}</label
+            >
+            <input
+                type="text"
+                name="username"
+                id="username"
+                placeholder={translate("dashboard.settings.account.username")}
+                value={username}
+                autocomplete="username"
+                required
+                class="appearance-none w-full p-3 rounded-md border-none focus:ring-0 focus:ring-offset-0 bg-zinc-200 dark:bg-zinc-700 text-zinc-900 dark:text-zinc-50 placeholder:text-zinc-500 dark:placeholder:text-zinc-400 focus:outline focus:outline-cyan-500 dark:focus:outline-blue-700"
+            />
+        </div>
+
+        <div class="w-full flex flex-col items-start justify-center gap-2">
+            <label class="font-medium text-lg" for="email"
+                >{translate("dashboard.settings.account.email")}</label
+            >
+            <input
+                type="email"
+                name="email"
+                id="email"
+                placeholder={translate("dashboard.settings.account.username")}
+                value={email}
+                autocomplete="off"
+                readonly
+                disabled
+                class="appearance-none w-full p-3 rounded-md border-none cursor-not-allowed focus:ring-0 focus:ring-offset-0 bg-zinc-200 dark:bg-zinc-700 text-zinc-900 dark:text-zinc-50 placeholder:text-zinc-500 dark:placeholder:text-zinc-400 disabled:text-zinc-500 dark:disabled:text-zinc-400 focus:outline focus:outline-cyan-500 dark:focus:outline-blue-700"
+            />
+        </div>
+    </div>
+
+    <button
+        type="submit"
+        class="self-end px-4 py-2 rounded-md font-medium bg-cyan-500 dark:bg-blue-700 hover:bg-cyan-600 hover:text-zinc-100 dark:hover:bg-blue-900"
+    >
+        {translate("dashboard.update")}
+    </button>
+</form>
