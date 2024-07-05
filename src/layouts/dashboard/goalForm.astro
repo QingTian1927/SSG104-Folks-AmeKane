@@ -95,5 +95,20 @@ const translate = useTranslations(lang);
                 <FormSubmitButton text={text} />
             </form>
         </main>
+
+        <script is:inline>
+            const targetInput = document.getElementById("target");
+            const currentInput = document.getElementById("current");
+
+            currentInput.setAttribute("max", targetInput.value);
+
+            targetInput.addEventListener("change", () => {
+                currentInput.setAttribute("max", targetInput.value);
+
+                if (currentInput.value > targetInput.value) {
+                    currentInput.value = targetInput.value;
+                }
+            })
+        </script>
     </body>
 </html>
