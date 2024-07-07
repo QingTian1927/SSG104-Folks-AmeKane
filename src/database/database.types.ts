@@ -237,6 +237,28 @@ export type Database = {
             [_ in never]: never
         }
         Functions: {
+            get_account_expense_ranking: {
+                Args: {
+                    query_user_id: string
+                }
+                Returns: {
+                    account_id: string
+                    account_title: string
+                    account_expense: number
+                }[]
+            }
+            get_account_total_expense: {
+                Args: {
+                    query_account_id: string
+                }
+                Returns: number
+            }
+            get_account_total_income: {
+                Args: {
+                    query_account_id: string
+                }
+                Returns: number
+            }
             get_category_spending: {
                 Args: {
                     query_user_id: string

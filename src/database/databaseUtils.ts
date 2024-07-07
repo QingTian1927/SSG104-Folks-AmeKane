@@ -1,13 +1,6 @@
 import * as supaUtils from "./supabase/utils";
 
-// TODO: use DOMPurify to sanitize input.
-function sanitizeInput(input: string) {
-    const result = "";
-    return result;
-}
-
 export const auth = {
-    sanitizeInput: sanitizeInput,
     exchangeCodeForSession: supaUtils.exchangeCodeForSession,
 
     user: {
@@ -29,8 +22,13 @@ export const db = {
         getTotalExpense: supaUtils.getTotalExpense,
         getTotalIncome: supaUtils.getTotalIncome,
         getTotalSaving: supaUtils.getTotalSaving,
+
+        getAccountTotalExpense: supaUtils.getAccountTotalExpense,
+        getAccountTotalIncome: supaUtils.getAccountTotalIncome,
+
         getTotalSpendingByCategory: supaUtils.getTotalSpendingByCategory,
         getGoalProgress: supaUtils.getGoalProgress,
+        getAccountExpenseRanking: supaUtils.getAccountExpenseRanking,
     },
 
     select: {
