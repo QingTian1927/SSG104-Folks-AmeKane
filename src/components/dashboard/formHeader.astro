@@ -19,13 +19,29 @@ const { title, deleteAction, item } = Astro.props;
                 d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0m3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"
             ></path>
         </svg>
-    </button>
 
-    <script is:inline>
-        document.getElementById("back-button").addEventListener("click", () => {
-            window.history.back();
-        });
-    </script>
+        <script is:inline>
+            document
+                .getElementById("back-button")
+                .addEventListener("click", () => {
+                    fetch("/api/popPreviousPage", { method: "POST" })
+                    .then((response) => {
+                        if (!response.ok) {
+                            console.error({response});
+                            window.history.back();
+                        }
+                        return response.json();
+                    })
+                    .then((json) => {
+                        if (!json || !json.previousPage) {
+                            console.error({json});
+                            window.history.back();
+                        }
+                        window.location.href = json.previousPage;
+                    })
+                });
+        </script>
+    </button>
 
     <h1 class="font-bold text-xl lg:text-2xl">
         {title}
