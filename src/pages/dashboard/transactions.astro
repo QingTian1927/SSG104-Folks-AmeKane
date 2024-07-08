@@ -9,6 +9,7 @@ import NavHeader from "../../components/dashboard/navHeader/navHeader.astro";
 import MainViewport from "../../layouts/dashboard/mainViewport.astro";
 import NewItemButton from "../../components/dashboard/newItemButton.astro";
 import TransactionListing from "../../components/dashboard/transactionsPage/transactionListing.astro";
+import SetPreviousPage from "../../components/dashboard/setPreviousPage.astro";
 
 const { cookies, redirect } = Astro;
 
@@ -43,6 +44,7 @@ const translate = useTranslations(lang);
 <html lang={lang}>
     <head>
         <Basehead title="Dashboard" />
+        <SetPreviousPage paths={["/dashboard/transactions"]} />
     </head>
 
     <body

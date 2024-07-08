@@ -9,6 +9,7 @@ import NavHeader from "../../../components/dashboard/navHeader/navHeader.astro";
 import MainViewport from "../../../layouts/dashboard/mainViewport.astro";
 import NewItemButton from "../../../components/dashboard/newItemButton.astro";
 import AccountsPageWrapper from "../../../components/dashboard/accountsPage/accountsPageWrapper.astro";
+import SetPreviousPage from "../../../components/dashboard/setPreviousPage.astro";
 
 const { cookies, redirect } = Astro;
 
@@ -72,6 +73,7 @@ if (accountNumber > accountCount) {
 <html lang={lang}>
     <head>
         <Basehead title="Dashboard" />
+        <SetPreviousPage paths={["/dashboard/accounts"]} />
     </head>
 
     <body
