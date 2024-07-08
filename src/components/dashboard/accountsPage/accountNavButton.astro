@@ -1,0 +1,48 @@
+---
+import type { languages } from "../../../i18n/ui";
+import { useTranslations } from "../../../i18n/utils";
+
+interface Props {
+    targetNumber: number | null;
+    direction: "prev" | "next";
+    lang?: keyof typeof languages;
+    hidden?: boolean;
+}
+
+const { targetNumber, direction, lang = "vi", hidden = false } = Astro.props;
+const translate = useTranslations(lang);
+---
+
+<a
+    class:list={[
+        "group max-w-[10%] h-full flex items-center justify-center",
+        hidden ? "invisible" : undefined,
+    ]}
+    href={`/dashboard/accounts/${targetNumber}`}
+>
+    {
+        direction === "prev" && (
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="bi bi-caret-left-fill h-[2.75rem] fill-zinc-700 dark:fill-zinc-200 group-hover:fill-cyan-500 dark:group-hover:fill-blue-700"
+                viewBox="0 0 16 16"
+            >
+                <path d="m3.86 8.753 5.482 4.796c.646.566 1.658.106 1.658-.753V3.204a1 1 0 0 0-1.659-.753l-5.48 4.796a1 1 0 0 0 0 1.506z" />
+                <title>{translate("dashboard.accounts.prev")}</title>
+            </svg>
+        )
+    }
+
+    {
+        direction === "next" && (
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="bi bi-caret-right-fill h-[2.75rem] fill-zinc-700 dark:fill-zinc-200 group-hover:fill-cyan-500 dark:group-hover:fill-blue-700"
+                viewBox="0 0 16 16"
+            >
+                <path d="m12.14 8.753-5.482 4.796c-.646.566-1.658.106-1.658-.753V3.204a1 1 0 0 1 1.659-.753l5.48 4.796a1 1 0 0 1 0 1.506z" />
+                <title>{translate("dashboard.accounts.next")}</title>
+            </svg>
+        )
+    }
+</a>

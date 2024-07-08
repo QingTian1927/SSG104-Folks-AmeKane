@@ -1,0 +1,77 @@
+---
+import { db } from "../../../database/databaseUtils";
+import type { ID } from "../../../database/models";
+import type { languages } from "../../../i18n/ui";
+import { useTranslations } from "../../../i18n/utils";
+
+interface Props {
+    userId: ID;
+    currency?: string;
+    lang?: keyof typeof languages;
+}
+
+const { userId, lang = "vi", currency = "đ" } = Astro.props;
+const translate = useTranslations(lang);
+
+const { data: accountRanking, error: accountRankingError } =
+    await db.function.getAccountExpenseRanking(userId, 3);
+if (accountRankingError) {
+    console.error({ accountRankingError });
+    return Astro.redirect("/500");
+}
+---
+
+<article
+    class="w-full min-w-fit rounded-xl p-4 lg:p-8 flex flex-col items-start justify-start border-2 border-zinc-300 dark:border-zinc-700"
+>
+    <h2
+        class="w-full mb-4 font-medium text-xl lg:text-2xl text-zinc-600 dark:text-zinc-300"
+    >
+        {translate("dashboard.accounts.ranking")}
+    </h2>
+
+    <div
+        class="grow w-full flex flex-col items-start justify-center font-medium text-lg gap-2 lg:gap-4"
+    >
+        {
+            accountRanking &&
+                accountRanking.length > 0 &&
+                accountRanking.map((ranking) => (
+                    <a
+                        href={`/dashboard/account/${ranking.account_id}`}
+                        class="group w-full p-2 lg:px-4 rounded-md flex items-center justify-between bg-zinc-200 hover:bg-cyan-500/20 dark:bg-zinc-700 dark:hover:bg-blue-700/20"
+                    >
+                        <span class="grow max-w-[70%] truncate text-base lg:text-lg">
+                            {ranking.account_title}
+                        </span>
+
+                        <span class="max-w-[30%] font-semibold text-lg lg:text-xl text-red-500 dark:text-red-600">
+                            {ranking.account_expense
+                                ? ranking.account_expense
+                                : 0}{" "}
+                            {currency}
+                        </span>
+                    </a>
+                ))
+        }
+
+        {
+            accountRanking.length == 0 && (
+                <div class="grow w-full flex items-center justify-center gap-4">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="bi bi-cash h-[2rem] aspect-square fill-zinc-500"
+                        viewBox="0 0 16 16"
+                    >
+                        <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4" />
+                        <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2z" />
+                    </svg>
+
+                    <span class="font-medium text-lg text-zinc-500 dark:text-zinc-400">
+                        {translate("dashboard.no.expense")}.
+                    </span>
+                </div>
+            )
+        }
+    </div>
+</article>

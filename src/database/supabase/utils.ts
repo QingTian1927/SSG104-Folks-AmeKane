@@ -418,6 +418,20 @@ export async function getTotalSaving(userId: ID) {
     return await supabase.rpc("get_total_saving", { query_user_id: userId });
 }
 
+export async function getAccountTotalExpense(accountId: ID) {
+    if (!accountId) {
+        return errorResponse(accountId, ERROR_MESSAGES.UNDEFINED_ACCOUNT_ID);
+    }
+    return await supabase.rpc("get_account_total_expense", { query_account_id: accountId });
+}
+
+export async function getAccountTotalIncome(accountId: ID) {
+    if (!accountId) {
+        return errorResponse(accountId, ERROR_MESSAGES.UNDEFINED_ACCOUNT_ID);
+    }
+    return await supabase.rpc("get_account_total_income", { query_account_id: accountId });
+}
+
 export async function getTotalSpendingByCategory(userId: ID, limit?: number) {
     if (!userId) {
         return errorResponse(userId, ERROR_MESSAGES.UNDEFINED_USER_ID);
@@ -444,4 +458,18 @@ export async function getGoalProgress(userId: ID, limit?: number) {
         return await supabase.rpc("get_goal_progress", { query_user_id: userId });
     }
     return await supabase.rpc("get_goal_progress", { query_user_id: userId }).limit(limit);
+}
+
+export async function getAccountExpenseRanking(userId: ID, limit?: number) {
+    if (!userId) {
+        return errorResponse(userId, ERROR_MESSAGES.UNDEFINED_USER_ID);
+    }
+    if (limit && limit < 0) {
+        return errorResponse(limit, "Query limit must be equal or greater than 0");
+    }
+
+    if (limit === undefined) {
+        return await supabase.rpc("get_account_expense_ranking", { query_user_id: userId });
+    }
+    return await supabase.rpc("get_account_expense_ranking", { query_user_id: userId }).limit(limit);
 }

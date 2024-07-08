@@ -1,0 +1,58 @@
+---
+import type { languages } from "../../../../i18n/ui";
+import { useTranslations } from "../../../../i18n/utils";
+import { getAdjacentPages } from "./script";
+import AccountNavButton from "../accountNavButton.astro";
+
+interface Props {
+    accountCount: number;
+    accountNumber: number;
+    lang?: keyof typeof languages;
+}
+
+const { accountCount, accountNumber, lang = "vi" } = Astro.props;
+const translate = useTranslations(lang);
+const [prevPage, nextPage] = getAdjacentPages(accountNumber, accountCount);
+---
+
+<div class="w-full flex items-center justify-center gap-4">
+    <AccountNavButton
+        direction="prev"
+        targetNumber={prevPage}
+        hidden={prevPage === null ? true : false}
+        lang={lang}
+    />
+
+    <div class="w-16 flex items-center justify-center gap-2">
+        <select
+            id="account-navigation"
+            class="appearance-none w-full h-full p-2 rounded-md font-medium border-none bg-zinc-200 dark:bg-zinc-700 text-zinc-800 dark:text-zinc-100 focus:ring-0 focus:ring-offset-0 focus:outline focus:outline-cyan-500 dark:focus:outline-blue-700"
+        >
+            {
+                [...Array(accountCount).keys()].map((num) => (
+                    <option
+                        selected={accountNumber === num + 1 ? true : undefined}
+                        value={num + 1}
+                    >
+                        {num + 1}
+                    </option>
+                ))
+            }
+        </select>
+
+        <script is:inline>
+            const accountNavigation = document.getElementById("account-navigation");
+
+            accountNavigation.addEventListener("change", () => {
+                window.location.href = `/dashboard/accounts/${accountNavigation.value}`;
+            })
+        </script>
+    </div>
+
+    <AccountNavButton
+        direction="next"
+        targetNumber={nextPage}
+        hidden={nextPage === null ? true : false}
+        lang={lang}
+    />
+</div>
