@@ -1,0 +1,78 @@
+---
+import type { Tables } from "../../../../database/database.types";
+import { db } from "../../../../database/databaseUtils";
+import type { languages } from "../../../../i18n/ui";
+import { useTranslations } from "../../../../i18n/utils";
+import PageNavigation from "./pageNavigation.astro";
+
+interface Props {
+    accountCount: number;
+    accountNumber: number;
+    account: Tables<"Account">;
+    preferences: Tables<"Preferences">;
+    lang?: keyof typeof languages;
+}
+
+const {
+    accountCount,
+    accountNumber,
+    account,
+    preferences,
+    lang = "vi",
+} = Astro.props;
+const translate = useTranslations(lang);
+
+const { data: accountTotalExpense, error: totalExpenseError } =
+    await db.function.getAccountTotalExpense(account?.id);
+if (totalExpenseError) {
+    console.error({ totalExpenseError });
+}
+
+const { data: accountTotalIncome, error: totalIncomeError } =
+    await db.function.getAccountTotalIncome(account?.id);
+if (totalIncomeError) {
+    console.error({ totalIncomeError });
+}
+---
+
+{
+    account && (
+        <article class="w-full p-4 lg:p-8 rounded-xl flex flex-col items-center justify-center gap-4 lg:gap-8 border-2 border-zinc-300 dark:border-zinc-700">
+            <a
+                class="group w-full rounded-xl flex flex-col items-start justify-start"
+                href={`/dashboard/account/${account.id}`}
+            >
+                <div class="grow w-full mb-8 min-w-fit">
+                    <h2 class="w-full max-w-full truncate mb-4 font-medium text-xl lg:text-2xl text-zinc-600 dark:text-zinc-300 group-hover:text-cyan-500 dark:group-hover:text-blue-700">
+                        {account.title}
+                    </h2>
+                    <span class="font-bold text-4xl lg:text-5xl text-zinc-800 dark:text-zinc-100 group-hover:text-cyan-500 dark:group-hover:text-blue-700">
+                        {account.balance} {preferences.currency}
+                    </span>
+                </div>
+
+                <div class="w-full flex items-center justify-between">
+                    <div class="w-1/2">
+                        <h3 class="mb-1 font-medium text-zinc-600 dark:text-zinc-200">
+                            {translate("dashboard.home.income")}
+                        </h3>
+                        <span class="font-semibold text-xl text-zinc-900 dark:text-zinc-50">{`+ ${accountTotalIncome ? accountTotalIncome : 0} ${preferences.currency}`}</span>
+                    </div>
+
+                    <div class="w-1/2">
+                        <h3 class="mb-1 font-medium text-zinc-600 dark:text-zinc-300">
+                            {translate("dashboard.home.expense")}
+                        </h3>
+                        <span class="font-semibold text-xl text-zinc-900 dark:text-zinc-50">{`- ${accountTotalExpense ? accountTotalExpense : 0} ${preferences.currency}`}</span>
+                    </div>
+                </div>
+            </a>
+
+            <PageNavigation
+                accountCount={accountCount}
+                accountNumber={accountNumber}
+                lang={lang}
+            />
+        </article>
+    )
+}
