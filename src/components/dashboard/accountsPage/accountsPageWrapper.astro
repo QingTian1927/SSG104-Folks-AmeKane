@@ -1,0 +1,65 @@
+---
+import { auth, db } from "../../../database/databaseUtils";
+import type { ID } from "../../../database/models";
+import { getLangFromUrl } from "../../../i18n/utils";
+import AccountCarousel from "./accountCarousel/accountCarousel.astro";
+import { selectAccount } from "./accountCarousel/script";
+import AccountRanking from "./accountRanking.astro";
+import TransactionListing from "./transactionListing.astro";
+
+interface Props {
+    accountCount: number;
+    accountNumber: number;
+    userId?: ID;
+}
+
+const {
+    accountCount,
+    accountNumber,
+    userId = await auth.user.getId(),
+} = Astro.props;
+
+const lang = getLangFromUrl(Astro.url);
+
+if (!userId) {
+    console.error("Cannot retrieve userId");
+    return Astro.redirect("/500");
+}
+
+const { data: preferences, error: preferencesError } =
+    await db.select.preferences(userId);
+if (preferencesError) {
+    console.error(preferencesError);
+    return Astro.redirect("/500");
+}
+
+const currentAccount = await selectAccount(
+    accountNumber,
+    userId,
+    preferences[0]
+);
+if (!currentAccount) {
+    console.error({ currentAccount });
+    return Astro.redirect("/500");
+}
+---
+
+<div class="w-full grid grid-cols-1 xl:grid-cols-2 gap-4 lg:gap-8">
+    <AccountRanking userId={userId} lang={lang} />
+
+    <AccountCarousel
+        accountCount={accountCount}
+        accountNumber={accountNumber}
+        account={currentAccount}
+        preferences={preferences[0]}
+        lang={lang}
+    />
+</div>
+
+<div class="w-full grid grid-cols-1 gap-4 lg:gap-8">
+    <TransactionListing
+        account={currentAccount}
+        currency={preferences[0].currency}
+        lang={lang}
+    />
+</div>
