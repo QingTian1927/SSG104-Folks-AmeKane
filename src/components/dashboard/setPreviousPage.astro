@@ -1,0 +1,46 @@
+---
+import type { AstroCookies } from "astro";
+
+interface Props {
+    paths: string[];
+}
+const { paths } = Astro.props;
+
+export type PreviousPages = {
+    value: string[];
+};
+
+export function getPreviousPages(cookies: AstroCookies): PreviousPages {
+    if (!cookies.has("previous-page")) {
+        return { value: [] };
+    }
+    return cookies.get("previous-page")?.json();
+}
+
+export function setPreviousPages(cookies: AstroCookies, value: PreviousPages) {
+    cookies.set("previous-page", JSON.stringify(value), {
+        path: "/",
+        maxAge: 60 * 5, // 5 mins
+    });
+}
+
+export function popPreviousPage(cookies: AstroCookies) {
+    const pages = getPreviousPages(cookies);
+    const poppedPage = pages.value.pop();
+
+    console.log(pages);
+
+    setPreviousPages(cookies, pages);
+    return poppedPage;
+}
+
+export function appendPreviousPage(cookies: AstroCookies, page: string) {
+    const pages = getPreviousPages(cookies);
+    const newLen = pages.value.push(page);
+
+    setPreviousPages(cookies, pages);
+    return newLen;
+}
+
+setPreviousPages(Astro.cookies, { value: paths });
+---

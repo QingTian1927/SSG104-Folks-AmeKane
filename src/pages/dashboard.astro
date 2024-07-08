@@ -12,9 +12,9 @@ import AccountStatsCard from "../components/dashboard/home/accountStatsCard.astr
 import SavingGoalsCard from "../components/dashboard/home/savingStats/savingGoalsCard.astro";
 import RecentTransactions from "../components/dashboard/home/recentTransactions.astro";
 import SpendingByCategories from "../components/dashboard/home/spendingByCategories.astro";
+import SetPreviousPage from "../components/dashboard/setPreviousPage.astro";
 
 const { cookies, redirect } = Astro;
-
 const accessToken = cookies.get("sb-access-token");
 const refreshToken = cookies.get("sb-refresh-token");
 
@@ -42,10 +42,10 @@ const location = "home";
 const lang = getLangFromUrl(Astro.url);
 const translate = useTranslations(lang);
 ---
-
 <html lang={lang}>
     <head>
         <Basehead title="Dashboard" />
+        <SetPreviousPage paths={["/dashboard"]} />
     </head>
 
     <body

@@ -1,7 +1,8 @@
 import type { APIRoute } from "astro";
 import { db } from "../../../database/databaseUtils";
+import { popPreviousPage } from "../../../components/dashboard/setPreviousPage.astro";
 
-export const POST: APIRoute = async ({ request, redirect }) => {
+export const POST: APIRoute = async ({ request, redirect, cookies }) => {
     const formData = await request.formData();
     const categoryId = formData.get("id")?.toString();
 
@@ -12,7 +13,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         );
     }
 
-    const { data, error } = await db.delete.category(categoryId);
+    const { error } = await db.delete.category(categoryId);
 
     if (error) {
         console.log(error);
@@ -22,7 +23,9 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         );
     }
 
-    return new Response(
-        JSON.stringify({ data }), { status: 200 }
-    );
+    const previousPage = popPreviousPage(cookies);
+    if (!previousPage) {
+        return redirect("/dashboard/categories");
+    }
+    return redirect(previousPage);
 }

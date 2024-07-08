@@ -1,8 +1,9 @@
 import type { APIRoute } from "astro";
 import { db } from "../../../database/databaseUtils";
 import { toNumber } from "../../../database/typeUtils";
+import { popPreviousPage } from "../../../components/dashboard/setPreviousPage.astro";
 
-export const POST: APIRoute = async ({ request, redirect }) => {
+export const POST: APIRoute = async ({ request, redirect, cookies }) => {
     const formData = await request.formData();
 
     const goalId = formData.get("id")?.toString();
@@ -17,7 +18,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         );
     }
 
-    const { data, error } = await db.update.goal(
+    const { error } = await db.update.goal(
         goalId,
         {
             title: title,
@@ -34,7 +35,9 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         );
     }
 
-    return new Response(
-        JSON.stringify({ data }), { status: 200 }
-    );
+    const previousPage = popPreviousPage(cookies);
+    if (!previousPage) {
+        return redirect("/dashboard/goals");
+    }
+    return redirect(previousPage);
 }

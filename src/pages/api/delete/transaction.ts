@@ -1,8 +1,9 @@
 import type { APIRoute } from "astro";
 import { db } from "../../../database/databaseUtils";
 import { supabase } from "../../../database/supabase/client";
+import { popPreviousPage } from "../../../components/dashboard/setPreviousPage.astro";
 
-export const POST: APIRoute = async ({ request, redirect }) => {
+export const POST: APIRoute = async ({ request, redirect, cookies }) => {
     const formData = await request.formData();
     const transactionId = formData.get("id")?.toString();
     if (!transactionId) {
@@ -49,7 +50,9 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         );
     }
 
-    return new Response(
-        JSON.stringify({ transaction }), { status: 200 }
-    );
+    const previousPage = popPreviousPage(cookies);
+    if (!previousPage) {
+        return redirect("/dashboard/transactions");
+    }
+    return redirect(previousPage);
 }
