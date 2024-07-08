@@ -1,0 +1,99 @@
+---
+import { supabase } from "../../../database/supabase/client";
+import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
+
+import Basehead from "../../../layouts/basehead.astro";
+import SideBar from "../../../components/dashboard/desktopSideBar/desktopSideBar.astro";
+import BottomNavbar from "../../../components/dashboard/mobileNavbar/bottomNavbar.astro";
+import NavHeader from "../../../components/dashboard/navHeader/navHeader.astro";
+import MainViewport from "../../../layouts/dashboard/mainViewport.astro";
+import NewItemButton from "../../../components/dashboard/newItemButton.astro";
+import AccountsPageWrapper from "../../../components/dashboard/accountsPage/accountsPageWrapper.astro";
+
+const { cookies, redirect } = Astro;
+
+const accessToken = cookies.get("sb-access-token");
+const refreshToken = cookies.get("sb-refresh-token");
+
+if (!accessToken || !refreshToken) {
+    return redirect("/signin");
+}
+
+const { data, error } = await supabase.auth.setSession({
+    refresh_token: refreshToken.value,
+    access_token: accessToken.value,
+});
+
+if (error) {
+    cookies.delete("sb-access-token", {
+        path: "/",
+    });
+    cookies.delete("sb-refresh-token", {
+        path: "/",
+    });
+
+    return redirect("/signin");
+}
+
+if (!data.user || !data.user.id) {
+    console.error("accounts/[slug].astro: user ID is undefined");
+    return redirect("/500");
+}
+
+const location = "accounts";
+const lang = getLangFromUrl(Astro.url);
+const translate = useTranslations(lang);
+
+const { slug } = Astro.params;
+if (slug === undefined) {
+    throw new Error("Accounts pagination [slug] is undefined");
+}
+const accountNumber = Number(slug);
+
+if (Number.isNaN(accountNumber) || accountNumber <= 0) {
+    return redirect("/404");
+}
+
+const { count, error: accountCountError } = await supabase
+    .from("Account")
+    .select("*", { count: "exact", head: true })
+    .eq("user_id", data.user.id);
+if (accountCountError) {
+    console.error(`accounts/[slug].astro: ${accountCountError}`);
+    return redirect("/500");
+}
+
+const accountCount = count ?? 0;
+if (accountNumber > accountCount) {
+    return redirect("/404");
+}
+---
+
+<html lang={lang}>
+    <head>
+        <Basehead title="Dashboard" />
+    </head>
+
+    <body
+        class="w-full h-full bg-zinc-100 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-100 selection:bg-cyan-500 dark:selection:bg-blue-900"
+    >
+        <SideBar lang={lang} location={location} />
+        <NavHeader lang={lang} title={translate("dashboard.nav.accounts")} />
+
+        <MainViewport>
+            <div class="w-full h-full flex flex-col gap-8">
+                <AccountsPageWrapper
+                    accountCount={accountCount}
+                    accountNumber={accountNumber}
+                    userId={data.user.id}
+                />
+            </div>
+        </MainViewport>
+
+        <NewItemButton
+            link="/dashboard/new/account"
+            item={translate("dashboard.nav.accounts")}
+        />
+        <BottomNavbar lang={lang} location={location} />
+    </body>
+</html>

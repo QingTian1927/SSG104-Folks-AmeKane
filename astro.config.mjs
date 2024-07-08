@@ -35,6 +35,7 @@ export default defineConfig({
         "/privacy": "/legal/privacy",
         "/terms": "/legal/terms",
         "/signout": "/api/auth/signout",
+        "/dashboard/accounts": "/dashboard/accounts/1",
     },
 
     integrations: [tailwind(), react(), sitemap()],
