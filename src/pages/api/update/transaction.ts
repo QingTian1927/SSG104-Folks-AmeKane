@@ -5,9 +5,11 @@ import { supabase } from "../../../database/supabase/client";
 
 export const POST: APIRoute = async ({ request, redirect }) => {
     const formData = await request.formData();
+    console.log(formData);
 
     const transactionId = formData.get("id")?.toString();
     const categoryId = formData.get("category_id")?.toString();
+    const accountId = formData.get("account_id")?.toString();
     const title = formData.get("title")?.toString();
     const description = formData.get("description")?.toString();
     const value = formData.get("value")?.toString();
@@ -54,7 +56,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         currentBalance -= toNumber(value);
     }
 
-    const { error: updateError } = await db.update.account(account[0].id, { balance: currentBalance,});
+    const { error: updateError } = await db.update.account(account[0].id, { balance: currentBalance, });
     if (updateError) {
         console.log(updateError);
         return new Response(
@@ -63,10 +65,38 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         );
     }
 
+    if (accountId && accountId !== account[0].id) {
+        const { data: newAccount, error: newAccountError } = await supabase.from("Account").select("balance").eq("id", accountId);
+        if (newAccountError) {
+            console.log({newAccountError});
+            return new Response(
+                "Failed to retrieve the new account associated with the updated transaction\n" + newAccountError.message,
+                { status: 500 }
+            );
+        }
+
+        let newBalance = newAccount[0].balance;
+        if (transaction[0].is_income) {
+            newBalance += transaction[0].value;
+        } else {
+            newBalance -= transaction[0].value;
+        }
+
+        const { error: updateError } = await db.update.account(accountId, { balance: newBalance });
+        if (updateError) {
+            console.log({updateError});
+            return new Response(
+                "Failed to update the given transaction\n" + updateError.message,
+                { status: 500 }
+            );
+        }
+    }
+
     const { data, error } = await db.update.transaction(
         transactionId,
         {
             category_id: categoryId,
+            account_id: accountId,
             title: title,
             description: description,
             value: toNumber(value) || undefined,
