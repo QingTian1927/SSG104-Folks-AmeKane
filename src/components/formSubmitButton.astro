@@ -21,29 +21,28 @@ const { text, isTransactionForm = false } = Astro.props;
         <script is:inline>
             const mobileSubmitButton = document.getElementById("mobile-form-submit-button");
             const submitButton = document.getElementById("form-submit-button");
+            const transactionForm = document.getElementById("transaction-form");
+            const accountsLength = document.getElementById("accounts-length").innerHTML;
+            const categoriesLength = document.getElementById("categories-length").innerHTML;
 
             mobileSubmitButton.addEventListener("click", (e) => {
-                const accountsLength = document.getElementById("accounts-length").innerHTML;
-            const categoriesLength = document.getElementById("categories-length").innerHTML;
-e.preventDefault();
+                e.preventDefault();
 
                 if (accountsLength === "0" || categoriesLength === "0") {
                     alert("Vui lòng tạo tài khoản và danh mục trước khi tạo giao dịch");
                     return;
                 }
-                mobileSubmitButton.submit();
+                transactionForm.submit();
             });
 
             submitButton.addEventListener("click", (e) => {
-                const accountsLength = document.getElementById("accounts-length").innerHTML;
-            const categoriesLength = document.getElementById("categories-length").innerHTML;
-e.preventDefault();
+                e.preventDefault();
 
                 if (accountsLength === "0" || categoriesLength === "0") {
                     alert("Vui lòng tạo tài khoản và danh mục trước khi tạo giao dịch");
                     return;
                 }
-                submitButton.submit();
+                transactionForm.submit();
             })
         </script>
     )}
