@@ -21,6 +21,7 @@ export function setPreviousPages(cookies: AstroCookies, value: PreviousPages) {
     cookies.set("previous-page", JSON.stringify(value), {
         path: "/",
         maxAge: 60 * 5, // 5 mins
+        sameSite: "lax",
     });
 }
 
