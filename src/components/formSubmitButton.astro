@@ -19,13 +19,13 @@ const { text, isTransactionForm = false } = Astro.props;
 
     {isTransactionForm && (
         <script is:inline>
-            const accountsLength = document.getElementById("accounts-length").innerHTML;
-            const categoriesLength = document.getElementById("categories-length").innerHTML;
             const mobileSubmitButton = document.getElementById("mobile-form-submit-button");
             const submitButton = document.getElementById("form-submit-button");
 
             mobileSubmitButton.addEventListener("click", (e) => {
-                e.preventDefault();
+                const accountsLength = document.getElementById("accounts-length").innerHTML;
+            const categoriesLength = document.getElementById("categories-length").innerHTML;
+e.preventDefault();
 
                 if (accountsLength === "0" || categoriesLength === "0") {
                     alert("Vui lòng tạo tài khoản và danh mục trước khi tạo giao dịch");
@@ -35,7 +35,9 @@ const { text, isTransactionForm = false } = Astro.props;
             });
 
             submitButton.addEventListener("click", (e) => {
-                e.preventDefault();
+                const accountsLength = document.getElementById("accounts-length").innerHTML;
+            const categoriesLength = document.getElementById("categories-length").innerHTML;
+e.preventDefault();
 
                 if (accountsLength === "0" || categoriesLength === "0") {
                     alert("Vui lòng tạo tài khoản và danh mục trước khi tạo giao dịch");
