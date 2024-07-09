@@ -41,11 +41,11 @@ if (accountRankingError) {
                         href={`/dashboard/account/${ranking.account_id}`}
                         class="group w-full p-2 lg:px-4 rounded-md flex items-center justify-between bg-zinc-200 hover:bg-cyan-500/20 dark:bg-zinc-700 dark:hover:bg-blue-700/20"
                     >
-                        <span class="grow max-w-[70%] truncate text-base lg:text-lg">
+                        <span class="grow max-w-[60%] lg:max-w-[70%] truncate text-base lg:text-lg">
                             {ranking.account_title}
                         </span>
 
-                        <span class="max-w-[30%] font-semibold text-lg lg:text-xl text-red-500 dark:text-red-600">
+                        <span class="max-w-[40%] lg:max-w-[30%] truncate font-semibold text-lg lg:text-xl text-red-500 dark:text-red-600">
                             {ranking.account_expense
                                 ? ranking.account_expense
                                 : 0}{" "}
