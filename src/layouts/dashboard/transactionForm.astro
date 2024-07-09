@@ -110,6 +110,7 @@ if (!userId) {
 
                         <button
                             type="submit"
+                            id="form-submit-button"
                             class="hidden lg:block py-2 px-4 rounded-md font-medium bg-cyan-500 hover:bg-cyan-600 dark:bg-blue-700 dark:hover:bg-blue-900 text-zinc-800 dark:text-zinc-100"
                             >{text}</button
                         >
@@ -150,7 +151,7 @@ if (!userId) {
                     </div>
                 </div>
 
-                <FormSubmitButton text={text} />
+                <FormSubmitButton text={text} isTransactionForm={true} />
             </form>
         </main>
     </body>

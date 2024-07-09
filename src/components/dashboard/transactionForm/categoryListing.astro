@@ -70,6 +70,8 @@ const previousPage = Astro.url.pathname;
                 });
         </script>
     </button>
+
+    <output id="categories-length" class="hidden" aria-hidden="true">{categories.length}</output>
     {
         categories &&
             categories.map((category) => (
