@@ -12,6 +12,9 @@ export const ui = {
         "navbar.about": "Giới Thiệu",
         "navbar.signin": "Đăng Nhập",
 
+        "home.hero.image.alt": "Ảnh minh họa chức năng công cụ",
+        "home.features.image.first": "Ảnh minh họa công cụ trên điện thoại",
+
         "footer.copyright": `© ${currentYear} Folks.`,
         "footer.privacy": "Quyền Riêng Tư",
         "footer.terms": "Điều Khoản",
