@@ -109,7 +109,7 @@ export async function createAccount(account: TablesInsert<"Account">) {
         return errorResponse(account.user_id, ERROR_MESSAGES.UNDEFINED_USER_ID);
     }
 
-    if (!account.balance || account.balance < 0 || isNaN(account.balance)) {
+    if (account.balance === null || account.balance === undefined || isNaN(account.balance)) {
         account.balance = 0;
     }
     account.is_saving ??= false;
@@ -200,7 +200,7 @@ export async function updateAccount(
         return errorResponse(accountId, ERROR_MESSAGES.UNDEFINED_ACCOUNT_ID);
     }
 
-    if (!contents.balance || isNaN(contents.balance)) {
+    if (contents.balance === null || contents.balance === undefined || isNaN(contents.balance)) {
         return errorResponse(
             contents.balance,
             ERROR_MESSAGES.INVALID_ACCOUNT_BALANCE
