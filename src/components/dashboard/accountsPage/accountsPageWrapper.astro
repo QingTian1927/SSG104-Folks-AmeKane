@@ -1,7 +1,7 @@
 ---
 import { auth, db } from "../../../database/databaseUtils";
 import type { ID } from "../../../database/models";
-import { getLangFromUrl } from "../../../i18n/utils";
+import { getLangFromUrl, useTranslations } from "../../../i18n/utils";
 import AccountCarousel from "./accountCarousel/accountCarousel.astro";
 import { selectAccount } from "./accountCarousel/script";
 import AccountRanking from "./accountRanking.astro";
@@ -20,6 +20,7 @@ const {
 } = Astro.props;
 
 const lang = getLangFromUrl(Astro.url);
+const translate = useTranslations(lang);
 
 if (!userId) {
     console.error("Cannot retrieve userId");
@@ -33,33 +34,60 @@ if (preferencesError) {
     return Astro.redirect("/500");
 }
 
-const currentAccount = await selectAccount(
-    accountNumber,
-    userId,
-    preferences[0]
-);
-if (!currentAccount) {
-    console.error({ currentAccount });
-    return Astro.redirect("/500");
+let currentAccount = undefined;
+if (accountCount !== 0) {
+    currentAccount = await selectAccount(accountNumber, userId, preferences[0]);
+    if (!currentAccount) {
+        console.error({ currentAccount });
+        return Astro.redirect("/500");
+    }
 }
 ---
 
-<div class="w-full grid grid-cols-1 xl:grid-cols-2 gap-4 lg:gap-8">
-    <AccountRanking userId={userId} lang={lang} />
+{
+    currentAccount && accountCount > 0 && (
+        <>
+            <div class="w-full grid grid-cols-1 xl:grid-cols-2 gap-4 lg:gap-8">
+                <AccountRanking userId={userId} lang={lang} />
 
-    <AccountCarousel
-        accountCount={accountCount}
-        accountNumber={accountNumber}
-        account={currentAccount}
-        preferences={preferences[0]}
-        lang={lang}
-    />
-</div>
+                <AccountCarousel
+                    accountCount={accountCount}
+                    accountNumber={accountNumber}
+                    account={currentAccount}
+                    preferences={preferences[0]}
+                    lang={lang}
+                />
+            </div>
+            <div class="w-full grid grid-cols-1 gap-4 lg:gap-8">
+                <TransactionListing
+                    account={currentAccount}
+                    currency={preferences[0].currency}
+                    lang={lang}
+                />
+            </div>
+        </>
+    )
+}
 
-<div class="w-full grid grid-cols-1 gap-4 lg:gap-8">
-    <TransactionListing
-        account={currentAccount}
-        currency={preferences[0].currency}
-        lang={lang}
-    />
-</div>
+{
+    !currentAccount && accountCount === 0 && (
+        <div class="min-h-[65svh] w-full h-full flex flex-col items-center justify-center gap-4">
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="bi bi-credit-card-fill h-[15svh] aspect-square fill-zinc-500"
+                viewBox="0 0 16 16"
+            >
+                <path d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v1H0zm0 3v5a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7zm3 2h1a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1v-1a1 1 0 0 1 1-1" />
+            </svg>
+
+            <div class="w-full mt-4 flex flex-col items-center justify-center gap-2 font-medium text-lg text-zinc-500">
+                <span class="inline-block">
+                    {translate("dashboard.no.account")}.
+                </span>
+                <span class="inline-block">
+                    {translate("dashboard.item.create")}
+                </span>
+            </div>
+        </div>
+    )
+}

@@ -65,7 +65,7 @@ if (accountCountError) {
 }
 
 const accountCount = count ?? 0;
-if (accountNumber > accountCount) {
+if (accountCount !== 0 && accountNumber > accountCount) {
     return redirect("/404");
 }
 ---
