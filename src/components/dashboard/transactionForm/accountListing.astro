@@ -78,6 +78,8 @@ const previousPage = Astro.url.pathname;
                 });
         </script>
     </button>
+
+    <output id="accounts-length" class="hidden" aria-hidden="true">{accounts.length}</output>
     {
         accounts &&
             accounts.map((account) => (

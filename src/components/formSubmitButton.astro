@@ -1,8 +1,9 @@
 ---
 interface Props {
     text: string;
+    isTransactionForm?: boolean;
 }
-const { text } = Astro.props;
+const { text, isTransactionForm = false } = Astro.props;
 ---
 
 <div
@@ -10,8 +11,38 @@ const { text } = Astro.props;
 >
     <button
         type="submit"
+        id={isTransactionForm ? "mobile-form-submit-button" : undefined}
         class="w-full py-2 px-4 rounded-md font-medium bg-cyan-500 hover:bg-cyan-600 dark:bg-blue-700 dark:hover:bg-blue-900 text-zinc-800 dark:text-zinc-100"
     >
         {text}
     </button>
+
+    {isTransactionForm && (
+        <script is:inline>
+            const accountsLength = document.getElementById("accounts-length").innerHTML;
+            const categoriesLength = document.getElementById("categories-length").innerHTML;
+            const mobileSubmitButton = document.getElementById("mobile-form-submit-button");
+            const submitButton = document.getElementById("form-submit-button");
+
+            mobileSubmitButton.addEventListener("click", (e) => {
+                e.preventDefault();
+
+                if (accountsLength === "0" || categoriesLength === "0") {
+                    alert("Vui lòng tạo tài khoản và danh mục trước khi tạo giao dịch");
+                    return;
+                }
+                mobileSubmitButton.submit();
+            });
+
+            submitButton.addEventListener("click", (e) => {
+                e.preventDefault();
+
+                if (accountsLength === "0" || categoriesLength === "0") {
+                    alert("Vui lòng tạo tài khoản và danh mục trước khi tạo giao dịch");
+                    return;
+                }
+                submitButton.submit();
+            })
+        </script>
+    )}
 </div>
