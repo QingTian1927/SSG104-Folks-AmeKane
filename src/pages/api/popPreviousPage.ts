@@ -9,6 +9,5 @@ export const POST: APIRoute = async ({ cookies }) => {
     }
 
     const previousPage = popPreviousPage(cookies);
-    console.log({previousPage})
     return new Response(JSON.stringify({previousPage}), { status: 200 });
 }

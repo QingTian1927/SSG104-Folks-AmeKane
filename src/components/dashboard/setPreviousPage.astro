@@ -28,8 +28,6 @@ export function popPreviousPage(cookies: AstroCookies) {
     const pages = getPreviousPages(cookies);
     const poppedPage = pages.value.pop();
 
-    console.log(pages);
-
     setPreviousPages(cookies, pages);
     return poppedPage;
 }
