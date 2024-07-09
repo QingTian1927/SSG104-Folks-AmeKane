@@ -75,6 +75,7 @@ export const ui = {
 
         "dashboard.no.goal": "Bạn chưa có mục tiêu nào",
         "dashboard.no.category": "Bạn chưa có danh mục nào",
+        "dashboard.no.account": "Bạn chưa có tài khoản nào",
         "dashboard.no.transaction": "Bạn chưa có giao dịch nào",
         "dashboard.no.expense": "Bạn chưa có chi tiêu nào",
         "dashboard.item.create": "Ấn nút + để tạo mới",
