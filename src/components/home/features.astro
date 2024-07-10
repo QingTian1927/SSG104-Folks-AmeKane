@@ -11,14 +11,14 @@ const translate = useTranslations(lang);
 ---
 
 <div
-    class="w-full lg:w-3/4 xl:w-3/5 p-8 grid grid-cols-1 md:grid-cols-2 gap-8 text-zinc-800 dark:text-zinc-100"
+    class="w-full lg:w-3/4 xl:w-3/5 p-8 md:pb-16 grid grid-cols-1 md:grid-cols-2 gap-8 text-zinc-800 dark:text-zinc-100"
 >
-    <div class="w-full grid grid-cols-1 md:grid-cols-1 gap-8">
+    <div class="w-full grid grid-cols-1 gap-16 xl:gap-8">
         <div>
-            <h2 class="font-bold text-3xl mb-4">
+            <h3 class="font-bold text-2xl md:text-3xl mb-4">
                 <span class="inline-block">Quản lý tài chính</span>
                 <span class="inline-block">mọi lúc, mọi nơi</span>
-            </h2>
+            </h3>
 
             <p class="text-pretty text-lg">
                 Với Rainboot, bạn có thể quản lý tài chính cá nhân của mình ở
@@ -29,10 +29,10 @@ const translate = useTranslations(lang);
         </div>
 
         <div>
-            <h2 class="font-bold text-3xl mb-4">
+            <h3 class="font-bold text-2xl md:text-3xl mb-4">
                 <span class="inline-block">Phân chia chi tiêu</span>
                 <span class="inline-block">rõ ràng, hiệu quả</span>
-            </h2>
+            </h3>
 
             <p class="text-pretty text-lg">
                 Rainboot giúp bạn phân loại và quản lý chi tiêu một cách khoa
@@ -42,10 +42,10 @@ const translate = useTranslations(lang);
         </div>
 
         <div class="w-full">
-            <h2 class="font-bold text-3xl mb-4">
+            <h3 class="font-bold text-2xl md:text-3xl mb-4">
                 <span class="inline-block">Khuyến khích tiết kiệm</span>
                 <span class="inline-block">mỗi ngày, một chút</span>
-            </h2>
+            </h3>
 
             <p class="text-pretty text-lg">
                 Chúng tôi khuyến khích bạn tiết kiệm một chút mỗi ngày. Những
@@ -55,7 +55,7 @@ const translate = useTranslations(lang);
         </div>
     </div>
 
-    <div class="size-full px-8">
+    <div class="size-full px-0 md:px-8">
         <img
             src="/home/features.gif"
             alt={translate("home.features.image.first")}
