@@ -10,11 +10,11 @@ interface Props {
 
 const {
     title,
-    description = "No description provided",
+    description = "Công cụ theo dõi chi tiêu online Rainboot.",
     url = Astro.url.toString(),
     type = "website",
     locale = "vi_VN",
-    image = undefined,
+    image = "/social/Rainboot.png",
 } = Astro.props;
 ---
 
@@ -25,6 +25,7 @@ const {
 <meta name="generator" content={Astro.generator} />
 <title>{ title }</title>
 
+<meta property="og:site_name" content="Công cụ theo dõi chi tiêu online Rainboot" />
 <meta property="og:title" content={ title } />
 <meta property="og:description" content={ description } />
 <meta property="og:type" content={ type } />
