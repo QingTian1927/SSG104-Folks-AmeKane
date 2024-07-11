@@ -1,0 +1,113 @@
+---
+import { supabase } from "../../database/supabase/client";
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+
+import Basehead from "../../layouts/basehead.astro";
+import SideBar from "../../components/dashboard/desktopSideBar/desktopSideBar.astro";
+import NavHeader from "../../components/dashboard/navHeader/navHeader.astro";
+import MainViewport from "../../layouts/dashboard/mainViewport.astro";
+import BottomNavbar from "../../components/dashboard/mobileNavbar/bottomNavbar.astro";
+import Transaction from "../../components/dashboard/transaction.astro";
+
+const { cookies, redirect } = Astro;
+const accessToken = cookies.get("sb-access-token");
+const refreshToken = cookies.get("sb-refresh-token");
+
+if (!accessToken || !refreshToken) {
+    return redirect("/signin");
+}
+
+const { data, error } = await supabase.auth.setSession({
+    refresh_token: refreshToken.value,
+    access_token: accessToken.value,
+});
+
+if (error) {
+    cookies.delete("sb-access-token", {
+        path: "/",
+    });
+    cookies.delete("sb-refresh-token", {
+        path: "/",
+    });
+
+    return redirect("/signin");
+}
+
+const userId = data.user?.id;
+if (!userId) {
+    console.error("User ID is undefined");
+    return Astro.redirect("/500");
+}
+
+const formData = await Astro.request.formData();
+const search = formData.get("search") ? formData.get("search") : "";
+
+const { data: transactions, error: transactionError } = await supabase
+    .from("Transaction")
+    .select()
+    .textSearch("fts", `'${search}'`);
+if (transactionError) {
+    console.error({transactionError});
+    return Astro.redirect("/500");
+}
+
+const { data: preferences, error: preferencesError } = await supabase.from("Preferences").select().eq("user_id", userId).single();
+if (preferencesError) {
+    console.error({preferencesError});
+    return Astro.redirect("/500");
+}
+
+const lang = getLangFromUrl(Astro.url);
+const translate = useTranslations(lang);
+const currency = preferences.currency;
+---
+
+<html>
+    <head>
+        <Basehead title="Dashboard" />
+    </head>
+    <body
+        class="w-full h-full bg-zinc-100 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-100 selection:bg-cyan-500 dark:selection:bg-blue-900"
+    >
+        <SideBar lang={lang} />
+        <NavHeader lang={lang} title="Kết quả tìm kiếm" />
+
+        <MainViewport>
+            {
+                transactions.length > 0 && (
+                    <div class="w-full h-full flex flex-col items-start justify-start gap-2 lg:gap-0">
+                        {transactions.map((transaction) => (
+                            <Transaction
+                                transaction={transaction}
+                                currency={currency}
+                            />
+                        ))}
+                    </div>
+                )
+            }
+
+            {
+                transactions.length == 0 && (
+                    <div class="min-h-[40svh] w-full h-full flex flex-col items-center justify-center gap-4">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            class="bi bi-cash h-[10svh] aspect-square fill-zinc-500"
+                            viewBox="0 0 16 16"
+                        >
+                            <path d="M8 10a2 2 0 1 0 0-4 2 2 0 0 0 0 4" />
+                            <path d="M0 4a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H1a1 1 0 0 1-1-1zm3 0a2 2 0 0 1-2 2v4a2 2 0 0 1 2 2h10a2 2 0 0 1 2-2V6a2 2 0 0 1-2-2z" />
+                        </svg>
+
+                        <div class="w-full flex flex-col items-center justify-center gap-2 font-medium text-lg text-zinc-500">
+                            <span class="inline-block">
+                                Không tìm thấy giao dịch nào.
+                            </span>
+                        </div>
+                    </div>
+                )
+            }
+        </MainViewport>
+
+        <BottomNavbar lang={lang} />
+    </body>
+</html>
