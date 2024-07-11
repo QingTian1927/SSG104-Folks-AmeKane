@@ -10,55 +10,57 @@ const { lang = "vi" } = Astro.props;
 const translate = useTranslations(lang);
 ---
 
-<div
-    class="w-full lg:w-3/4 xl:w-3/5 p-8 md:pb-16 grid grid-cols-1 md:grid-cols-2 gap-8 text-zinc-800 dark:text-zinc-100"
->
-    <div class="w-full grid grid-cols-1 gap-16 xl:gap-8">
-        <div>
-            <h3 class="font-bold text-2xl md:text-3xl mb-4">
-                <span class="inline-block">Quản lý tài chính</span>
-                <span class="inline-block">mọi lúc, mọi nơi</span>
-            </h3>
+<div class="w-full p-8 md:pb-16 flex flex-col items-center justify-center">
+    <div
+        class="w-full lg:w-3/4 xl:w-3/5 grid grid-cols-1 md:grid-cols-2 gap-8 text-zinc-800 dark:text-zinc-100"
+    >
+        <div class="w-full grid grid-cols-1 gap-16 xl:gap-8">
+            <div>
+                <h3 class="font-semibold text-2xl md:text-3xl mb-4">
+                    <span class="inline-block">Quản lý tài chính</span>
+                    <span class="inline-block">mọi lúc, mọi nơi</span>
+                </h3>
 
-            <p class="text-pretty text-lg">
-                Với Rainboot, bạn có thể quản lý tài chính cá nhân của mình ở
-                bất kỳ đâu, bất kỳ lúc nào. Chúng tôi cung cấp các công cụ trực
-                tuyến giúp bạn theo dõi thu nhập và chi tiêu một cách chi tiết
-                và minh bạch.
-            </p>
+                <p class="text-pretty text-base lg:text-lg">
+                    Với Rainboot, bạn có thể quản lý tài chính cá nhân của mình
+                    ở bất kỳ đâu, bất kỳ lúc nào. Chúng tôi cung cấp các công cụ
+                    trực tuyến giúp bạn theo dõi thu nhập và chi tiêu một cách
+                    chi tiết và minh bạch.
+                </p>
+            </div>
+
+            <div>
+                <h3 class="font-semibold text-2xl md:text-3xl mb-4">
+                    <span class="inline-block">Phân chia chi tiêu</span>
+                    <span class="inline-block">rõ ràng, hiệu quả</span>
+                </h3>
+
+                <p class="text-pretty text-base lg:text-lg">
+                    Rainboot giúp bạn phân loại và quản lý chi tiêu một cách
+                    khoa học. Bạn có thể dễ dàng theo dõi các khoản chi tiêu
+                    hàng ngày và tối ưu hóa ngân sách của mình.
+                </p>
+            </div>
+
+            <div class="w-full">
+                <h3 class="font-semibold text-2xl md:text-3xl mb-4">
+                    <span class="inline-block">Khuyến khích tiết kiệm</span>
+                    <span class="inline-block">mỗi ngày, một chút</span>
+                </h3>
+
+                <p class="text-pretty text-base lg:text-lg">
+                    Chúng tôi khuyến khích bạn tiết kiệm một chút mỗi ngày.
+                    Những thay đổi nhỏ trong thói quen chi tiêu hàng ngày có thể
+                    mang lại kết quả lớn trong tương lai.
+                </p>
+            </div>
         </div>
 
-        <div>
-            <h3 class="font-bold text-2xl md:text-3xl mb-4">
-                <span class="inline-block">Phân chia chi tiêu</span>
-                <span class="inline-block">rõ ràng, hiệu quả</span>
-            </h3>
-
-            <p class="text-pretty text-lg">
-                Rainboot giúp bạn phân loại và quản lý chi tiêu một cách khoa
-                học. Bạn có thể dễ dàng theo dõi các khoản chi tiêu hàng ngày và
-                tối ưu hóa ngân sách của mình.
-            </p>
+        <div class="size-full pl-0 md:pl-8">
+            <img
+                src="/home/features.gif"
+                alt={translate("home.features.image.first")}
+            />
         </div>
-
-        <div class="w-full">
-            <h3 class="font-bold text-2xl md:text-3xl mb-4">
-                <span class="inline-block">Khuyến khích tiết kiệm</span>
-                <span class="inline-block">mỗi ngày, một chút</span>
-            </h3>
-
-            <p class="text-pretty text-lg">
-                Chúng tôi khuyến khích bạn tiết kiệm một chút mỗi ngày. Những
-                thay đổi nhỏ trong thói quen chi tiêu hàng ngày có thể mang lại
-                kết quả lớn trong tương lai.
-            </p>
-        </div>
-    </div>
-
-    <div class="size-full px-0 md:px-8">
-        <img
-            src="/home/features.gif"
-            alt={translate("home.features.image.first")}
-        />
     </div>
 </div>
