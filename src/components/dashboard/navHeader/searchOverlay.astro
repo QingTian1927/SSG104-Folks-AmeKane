@@ -20,7 +20,7 @@ const translate = useTranslations(lang);
     </div>
 
     <form
-        action="/api/search/transactions"
+        action="/dashboard/search"
         method="POST"
         class="z-[12] w-[80%] md:w-[60%] h-fit p-8 rounded-lg bg-zinc-100 dark:bg-zinc-900"
     >
@@ -33,7 +33,7 @@ const translate = useTranslations(lang);
 
         <input
             type="search"
-            name="mobile-search-input"
+            name="search"
             id="mobile-search-input"
             required
             placeholder={translate("dashboard.search.mobile-button")}
