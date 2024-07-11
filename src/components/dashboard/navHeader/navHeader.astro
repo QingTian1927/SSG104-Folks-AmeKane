@@ -42,13 +42,13 @@ const translate = useTranslations(lang);
             class="hidden lg:w-2/3 xl:w-1/2 lg:flex items-center justify-center"
         >
             <form
-                action="/api/search/transactions"
+                action="/dashboard/search"
                 method="POST"
                 class="w-full flex items-center justify-center gap-2"
             >
                 <input
                     type="search"
-                    name="search-input"
+                    name="search"
                     id="search-input"
                     required
                     placeholder={translate("dashboard.search.placeholder") +
