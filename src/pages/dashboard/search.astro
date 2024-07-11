@@ -47,13 +47,17 @@ const { data: transactions, error: transactionError } = await supabase
     .select()
     .textSearch("fts", `'${search}'`);
 if (transactionError) {
-    console.error({transactionError});
+    console.error({ transactionError });
     return Astro.redirect("/500");
 }
 
-const { data: preferences, error: preferencesError } = await supabase.from("Preferences").select().eq("user_id", userId).single();
+const { data: preferences, error: preferencesError } = await supabase
+    .from("Preferences")
+    .select()
+    .eq("user_id", userId)
+    .single();
 if (preferencesError) {
-    console.error({preferencesError});
+    console.error({ preferencesError });
     return Astro.redirect("/500");
 }
 
@@ -66,6 +70,7 @@ const currency = preferences.currency;
     <head>
         <Basehead title="Dashboard" />
     </head>
+
     <body
         class="w-full h-full bg-zinc-100 dark:bg-zinc-900 text-zinc-800 dark:text-zinc-100 selection:bg-cyan-500 dark:selection:bg-blue-900"
     >

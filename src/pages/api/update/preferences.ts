@@ -16,7 +16,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         );
     }
 
-    const { data, error } = await db.update.preferences(
+    const { error } = await db.update.preferences(
         userId,
         {
             default_account: defaultAccount,
@@ -32,7 +32,5 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         );
     }
 
-    return new Response(
-        JSON.stringify({ data }), { status: 200 }
-    );
+    return redirect("/dashboard/settings");
 }
