@@ -2,6 +2,7 @@
 import Contact from "../components/home/contact.astro";
 import Features from "../components/home/features.astro";
 import Hero from "../components/home/hero.astro";
+import LastCTA from "../components/home/lastCTA.astro";
 import Footer from "../components/shared/footer.astro";
 import Navbar from "../components/shared/navbar.astro";
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
@@ -19,10 +20,13 @@ const translate = useTranslations(lang);
     <body class="selection:bg-cyan-500 dark:selection:bg-blue-900">
         <Navbar lang={lang} />
 
-        <main class="relative w-full h-full flex flex-col items-center justify-center gap-8 bg-zinc-100 dark:bg-zinc-900">
+        <main
+            class="relative w-full h-full flex flex-col items-center justify-center gap-8 bg-zinc-100 dark:bg-zinc-900"
+        >
             <Hero lang={lang} />
             <Features lang={lang} />
             <Contact lang={lang} />
+            <LastCTA lang={lang} />
         </main>
 
         <Footer />

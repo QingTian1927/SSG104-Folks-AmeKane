@@ -1,0 +1,38 @@
+---
+import type { languages } from "../../i18n/ui";
+import { useTranslations } from "../../i18n/utils";
+
+interface Props {
+    lang?: keyof typeof languages;
+}
+
+const { lang = "vi" } = Astro.props;
+const translate = useTranslations(lang);
+---
+
+<div class="w-full p-8 flex flex-col items-center justify-center">
+    <hr
+        class="w-full lg:w-3/4 xl:w-3/5 mx-0 mb-8 border-zinc-400 dark:border-zinc-600"
+    />
+
+    <header
+        class="w-full lg:w-3/4 xl:w-3/5 min-h-[20svh] flex flex-col items-center justify-center gap-8 text-center"
+    >
+        <h2
+            class="font-semibold text-3xl md:text-4xl tracking-wider text-pretty text-zinc-900 dark:text-zinc-50"
+        >
+            Làm chủ tài chính của bạn <wbr /> với Rainboot ngay hôm nay
+        </h2>
+    </header>
+
+    <div
+        class="w-full lg:w-3/4 xl:w-3/5 flex items-center justify-center gap-4 text-zinc-800 dark:text-zinc-100"
+    >
+        <a
+            href="/signin"
+            class="p-3 rounded-md font-semibold bg-cyan-500 dark:bg-blue-700 hover:bg-cyan-600 hover:text-zinc-100 dark:hover:bg-blue-900"
+        >
+            {translate("navbar.signin")}
+        </a>
+    </div>
+</div>
