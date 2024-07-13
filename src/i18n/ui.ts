@@ -30,7 +30,7 @@ export const ui = {
         "about.folks.subtitle": "Chúng tôi là nhóm Folks - người bạn đồng hành của sinh viên trên con đường tiết kiệm và quản lý tài chính",
         "about.project.name": "Ready for a Rainy Day",
         "about.project.slogan": "Vững Tài Chính, Chắc Tương Lai!",
-        "about.project.cause": "Rainboot là một trang web là giúp các bạn sinh viên quản lý tài chính cá nhân một cách thông minh và hiệu quả hơn. Chúng tôi hiểu rằng việc tiết kiệm tiền trong thời gian học đại học là một thách thức không nhỏ. Do đó, chúng tôi đã phát triển một dự án đặc biệt này nhằm cung cấp các công cụ và tài nguyên hỗ trợ sinh viên trong việc quản lý và tối ưu hóa chi tiêu",
+        "about.project.cause": "Rainboot là một trang web là giúp các bạn sinh viên quản lý tài chính cá nhân một cách thông minh và hiệu quả hơn. Chúng tôi hiểu rằng việc tiết kiệm tiền trong thời gian học đại học là một thách thức không nhỏ. Do đó, chúng tôi đã phát triển một dự án đặc biệt này nhằm cung cấp các công cụ và tài nguyên hỗ trợ sinh viên trong việc quản lý và tối ưu hóa chi tiêu.",
         "about.project.goal": "Tại Rainboot, chúng tôi tin rằng việc tiết kiệm tiền là một kỹ năng quan trọng mà mọi sinh viên cần phải học và phát triển. Mục tiêu của chúng tôi là cung cấp cho các bạn những công cụ và kiến thức cần thiết để quản lý tài chính một cách thông minh, từ việc lập kế hoạch ngân sách đến việc đầu tư và tiết kiệm cho tương lai, đồng thời trang bị cho các bạn các kiến thức cần thiết để có thể kiểm soát được nguồn tài chính của bản thân.",
         "about.members.title": "Thành Viên",
         "about.member.avatar.alt": "Ảnh đại diện của",

@@ -2,7 +2,7 @@
 title: "Chính sách về quyền riêng tư"
 date: "2024-06-07"
 ---
-**Rainboot** tôn trọng quyền riêng tư của mỗi cá nhân, vì thế nhóm **Folk** chúng tôi luôn cố gắng bảo vệ toàn bộ thông tin của mọi người. Chính sách về quyền riêng tư sẽ thể hiện quá trình chúng tôi thu thập, chuyển đổi, xử lý và sử dụng.
+**Rainboot** tôn trọng quyền riêng tư của mỗi cá nhân, vì thế nhóm **Folks** chúng tôi luôn cố gắng bảo vệ toàn bộ thông tin của người dùng. Chính sách về quyền riêng tư sẽ thể hiện quá trình chúng tôi thu thập, chuyển đổi, xử lý và sử dụng.
 
 Bằng việc cung cấp thông tin cá nhân, bạn đã đồng ý và chấp nhận việc trao đổi, xử lý, sử dụng và công bố thông tin được đề cập tại Chính sách này.
 

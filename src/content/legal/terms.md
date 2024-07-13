@@ -17,15 +17,12 @@ Chúng tôi đặt quyền riêng tư của bạn lên hàng đầu. Vui lòng x
 ## 4. Miễn trừ trách nhiệm
 
 Rainboot cung cấp dịch vụ “sẵn có”. Chúng tôi không đảm bảo tính chính xác, đáng tin cậy hoặc phù hợp của thông tin được cung cấp. Rainboot không chịu trách nhiệm đối với bất kỳ thiệt hại trực tiếp, gián tiếp, ngẫu nhiên hoặc phát sinh nào từ việc sử dụng dịch vụ của chúng tôi.
-## 5. Giới hạn trách nhiệm
 
-Rainboot không chịu trách nhiệm đối với bất kỳ thiệt hại trực tiếp, gián tiếp, ngẫu nhiên hoặc phát sinh nào từ việc sử dụng dịch vụ của chúng tôi.
-
-## 6. Thay đổi các điều khoản
+## 5. Thay đổi các điều khoản
 
 Chúng tôi giữ quyền thay đổi các điều khoản này bất kỳ lúc nào. Vui lòng kiểm tra trang này định kỳ để cập nhật.
 
-## 7. Liên hệ chúng tôi
+## 6. Liên hệ chúng tôi
 
 Nếu bạn có bất kỳ câu hỏi nào về Chính sách Bảo mật, vui lòng liên hệ tại: thefolks1104@gmail.com
 
