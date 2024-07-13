@@ -1,11 +1,11 @@
 ---
 interface Props {
-    title: string,
-    description?: string,
-    url?: string,
-    type?: string,
-    locale?: string,
-    image?: string,
+    title: string;
+    description?: string;
+    url?: string;
+    type?: string;
+    locale?: string;
+    image?: string;
 }
 
 const {
@@ -16,23 +16,73 @@ const {
     locale = "vi_VN",
     image = "https://rainboot.onrender.com/social/Rainboot.png",
 } = Astro.props;
+
+const userTheme = Astro.cookies.get("theme")?.value || "system";
 ---
 
 <meta charset="utf-8" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-<link rel="sitemap" href="/sitemap-index.xml" >
+<link rel="sitemap" href="/sitemap-index.xml" />
 <meta name="viewport" content="width=device-width" />
 <meta name="generator" content={Astro.generator} />
-<title>{ title }</title>
+<title>{title}</title>
 
-<meta property="og:site_name" content="Công cụ theo dõi chi tiêu online Rainboot" />
-<meta property="og:title" content={ title } />
-<meta property="og:description" content={ description } />
-<meta property="og:type" content={ type } />
-<meta property="og:locale" content={ locale } />
-<meta property="og:url" content={ url } />
-{ image && ( <meta property="og:image" content={ image } />) }
+<meta
+    property="og:site_name"
+    content="Công cụ theo dõi chi tiêu online Rainboot"
+/>
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:type" content={type} />
+<meta property="og:locale" content={locale} />
+<meta property="og:url" content={url} />
+{image && <meta property="og:image" content={image} />}
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+    rel="stylesheet"
+/>
+
+<script define:vars={{ userTheme }}>
+    function getSystemTheme() {
+        return window.matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light";
+    }
+
+    function changeTimeBasedTheme() {
+        const now = new Date(Date.now());
+
+        if (now.getHours() >= 6 && now.getHours() < 21) {
+            document.documentElement.classList.remove("dark");
+        } else if (now.getHours() >= 21) {
+            document.documentElement.classList.add("dark");
+        }
+    }
+
+    function changeTheme() {
+        const FIVE_MINUTES = 1000 * 60 * 5;
+
+        if (userTheme === "time") {
+            changeTimeBasedTheme();
+
+            setInterval(() => {
+                changeTimeBasedTheme();
+            }, FIVE_MINUTES);
+
+            return;
+        }
+
+        if (
+            userTheme === "dark" ||
+            (userTheme === "system" && getSystemTheme() === "dark")
+        ) {
+            document.documentElement.classList.add("dark");
+        } else {
+            document.documentElement.classList.remove("dark");
+        }
+    }
+    changeTheme();
+</script>
