@@ -2,7 +2,7 @@ import type { APIRoute } from "astro";
 import { db, auth } from "../../../database/databaseUtils";
 import type { Enums } from "../../../database/database.types";
 
-export const POST: APIRoute = async ({ request, redirect }) => {
+export const POST: APIRoute = async ({ request, redirect, cookies }) => {
     const formData = await request.formData();
 
     const defaultAccount = formData.get("default_account")?.toString();
@@ -16,7 +16,7 @@ export const POST: APIRoute = async ({ request, redirect }) => {
         );
     }
 
-    const { error } = await db.update.preferences(
+    const { data, error } = await db.update.preferences(
         userId,
         {
             default_account: defaultAccount,
@@ -31,6 +31,8 @@ export const POST: APIRoute = async ({ request, redirect }) => {
             { status: 500 }
         );
     }
+
+    cookies.set("theme", data[0].default_theme, { path: "/" });
 
     return redirect("/dashboard/settings");
 }

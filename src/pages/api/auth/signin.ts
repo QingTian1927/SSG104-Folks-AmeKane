@@ -1,5 +1,5 @@
 import type { APIRoute } from "astro";
-import { auth } from "../../../database/databaseUtils";
+import { auth, db } from "../../../database/databaseUtils";
 
 export const POST: APIRoute = async ({ request, cookies, redirect }) => {
     const formData = await request.formData();
@@ -43,6 +43,14 @@ export const POST: APIRoute = async ({ request, cookies, redirect }) => {
     cookies.set("sb-refresh-token", refresh_token, {
         path: "/",
     });
+
+    const { data: preferences, error: preferencesError } = await db.select.preferences(data.user.id);
+    if (preferencesError) {
+        console.error({preferencesError});
+    }
+
+    const userTheme = preferences ? preferences[0].default_theme : "system";
+    cookies.set("theme", userTheme, { path: "/" });
 
     return redirect("/dashboard");
 };
