@@ -37,8 +37,10 @@ if (loginError) {
 const requestUserAgent = Astro.request.headers.get("User-Agent");
 const UNSUPPORTED_EMBEDDED_BROWSERS = ["FBAN", "FBAV", "FB_IAB", "FB4A"];
 
-for (const userAgent in UNSUPPORTED_EMBEDDED_BROWSERS) {
-    if (requestUserAgent?.includes(userAgent)) {
+for (const userAgent of UNSUPPORTED_EMBEDDED_BROWSERS) {
+    const regex = new RegExp(userAgent);
+
+    if (requestUserAgent && !regex.test(userAgent)) {
         console.warn(`Unsupported user agent: '${requestUserAgent}'`);
         return Astro.redirect("/unsupported-browsers");
     }
