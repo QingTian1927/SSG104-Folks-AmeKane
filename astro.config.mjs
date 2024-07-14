@@ -36,6 +36,7 @@ export default defineConfig({
         "/terms": "/legal/terms",
         "/signout": "/api/auth/signout",
         "/dashboard/accounts": "/dashboard/accounts/1",
+        "/unsupported-browsers": "/blog/unsupported-browsers",
     },
 
     integrations: [tailwind(), react(), sitemap()],

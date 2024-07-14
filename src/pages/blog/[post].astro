@@ -1,0 +1,38 @@
+---
+import { getEntry } from "astro:content";
+import { getLangFromUrl } from "../../i18n/utils";
+
+import Basehead from "../../layouts/basehead.astro";
+import LegalPost from "../../layouts/legal/legalPost.astro";
+import Navbar from "../../components/shared/navbar.astro";
+import Footer from "../../components/shared/footer.astro";
+
+const lang = getLangFromUrl(Astro.url);
+const { post } = Astro.params;
+if (!post) {
+    throw new Error("Blog post slug [post] is undefined");
+}
+
+const entry = await getEntry("blog", post);
+if (!entry) {
+    return Astro.redirect("/404", 404);
+}
+---
+
+<html lang={lang}>
+    <head>
+        <Basehead title={entry.data.title} type="article" />
+    </head>
+
+    <body class="relative overflow-x-clip selection:bg-cyan-500 dark:selection:bg-blue-900">
+        <Navbar lang={lang} />
+
+        <main
+            class="relative w-full h-full flex items-center justify-center p-8 bg-zinc-100 dark:bg-zinc-900"
+        >
+            <LegalPost entry={entry} lang={lang} />
+        </main>
+
+        <Footer />
+    </body>
+</html>

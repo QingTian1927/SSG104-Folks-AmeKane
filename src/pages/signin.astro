@@ -33,6 +33,17 @@ if (loginError) {
         return redirect(getRelativeLocaleUrl(lang, "/500"));
     }
 }
+
+const requestUserAgent = Astro.request.headers.get("User-Agent");
+const UNSUPPORTED_EMBEDDED_BROWSERS = ["FBAN", "FBAV", "FB_IAB", "FB4A"];
+
+for (const userAgent in UNSUPPORTED_EMBEDDED_BROWSERS) {
+    if (requestUserAgent?.includes(userAgent)) {
+        console.warn(`Unsupported user agent: '${requestUserAgent}'`);
+        return Astro.redirect("/unsupported-browsers");
+    }
+}
+console.info(`Supported user agent: ${requestUserAgent}`);
 ---
 
 <html lang={lang}>
